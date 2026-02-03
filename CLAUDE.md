@@ -253,6 +253,11 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - CRITICAL: ALWAYS use `search-docs` tool for version-specific Pest documentation and updated code examples.
 - IMPORTANT: Activate `pest-testing` every time you're working with a Pest or testing-related task.
 
+## Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test` with a specific filename or filter.
+
 === laravel/fortify rules ===
 
 # Laravel Fortify
@@ -261,3 +266,17 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - IMPORTANT: Always use the `search-docs` tool for detailed Laravel Fortify patterns and documentation.
 - IMPORTANT: Activate `developing-with-fortify` skill when working with Fortify authentication features.
 </laravel-boost-guidelines>
+
+# DDEV Local Development
+
+We use DDEV for local Magento development. Run all commands inside the DDEV web container.
+
+## DDEV Executing Raw Commands in Containers
+
+Source: https://github.com/ddev/ddev/blob/main/docs/content/users/usage/cli.md
+
+Execute commands directly in a DDEV container without Bash interpretation using the `--raw` flag. This is useful for avoiding Bash complexities but means environment variables, pipes, and redirection are not supported.
+
+```bash
+ddev exec --raw <command> [args...]
+```
