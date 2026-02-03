@@ -280,3 +280,10 @@ Execute commands directly in a DDEV container without Bash interpretation using 
 ```bash
 ddev exec --raw <command> [args...]
 ```
+
+## Active Technologies
+- PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1 (001-home-asset-crud)
+- MariaDB 10.11 (via Laravel Eloquent; migrations only) (001-home-asset-crud)
+
+## Recent Changes
+- 001-home-asset-crud: Added PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1
