@@ -68,9 +68,37 @@
             <flux:button variant="ghost" size="sm" wire:click="startEdit">
                 {{ __('Edit') }}
             </flux:button>
-            <flux:button variant="ghost" size="sm">
-                {{ __('Archive') }}
-            </flux:button>
+
+            @if ($asset->status === \App\Enums\AssetStatus::Active)
+                <flux:modal.trigger name="confirm-archive">
+                    <flux:button variant="ghost" size="sm">
+                        {{ __('Archive') }}
+                    </flux:button>
+                </flux:modal.trigger>
+            @else
+                <flux:button variant="ghost" size="sm" wire:click="restore">
+                    {{ __('Restore') }}
+                </flux:button>
+            @endif
         </div>
+
+        <flux:modal name="confirm-archive" wire:model="confirmingArchive" class="min-w-[22rem]">
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">{{ __('Archive this asset?') }}</flux:heading>
+                    <flux:text class="mt-2">
+                        {{ __('This asset will be moved to the archived list and will no longer appear in your active assets.') }}
+                    </flux:text>
+                </div>
+
+                <div class="flex gap-2">
+                    <flux:spacer />
+                    <flux:modal.close>
+                        <flux:button variant="ghost">{{ __('Cancel') }}</flux:button>
+                    </flux:modal.close>
+                    <flux:button variant="danger" wire:click="archive">{{ __('Archive') }}</flux:button>
+                </div>
+            </div>
+        </flux:modal>
     @endif
 </div>

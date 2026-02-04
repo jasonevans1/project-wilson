@@ -198,3 +198,98 @@ test('user A cannot update user B asset', function () {
         ->set('name', 'Hacked')
         ->call('save');
 });
+
+// ─── US4: Archive and Restore a Home Asset ────────────────────────────────────
+
+test('archiving an active asset sets status to Archived and removes it from active list', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id, 'status' => AssetStatus::Active]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetDetail::class, ['asset' => $asset])
+        ->call('initiateArchive')
+        ->assertSet('confirmingArchive', true)
+        ->call('archive')
+        ->assertDispatched('asset-archived');
+
+    $asset->refresh();
+    expect($asset->status)->toBe(AssetStatus::Archived);
+
+    Livewire::test(AssetList::class)
+        ->assertCount('assets', 0);
+});
+
+test('cancelling archive confirmation leaves asset unchanged', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id, 'status' => AssetStatus::Active]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetDetail::class, ['asset' => $asset])
+        ->call('initiateArchive')
+        ->assertSet('confirmingArchive', true)
+        ->call('cancelArchive')
+        ->assertSet('confirmingArchive', false);
+
+    $asset->refresh();
+    expect($asset->status)->toBe(AssetStatus::Active);
+});
+
+test('toggling archived filter shows archived assets with badge', function () {
+    $user = User::factory()->create();
+    Asset::factory()->create(['user_id' => $user->id, 'status' => AssetStatus::Active]);
+    Asset::factory()->archived()->create(['user_id' => $user->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetList::class)
+        ->assertCount('assets', 1)
+        ->call('toggleArchived')
+        ->assertSet('showArchived', true)
+        ->assertCount('assets', 1)
+        ->assertSee('Archived');
+});
+
+test('restoring an archived asset sets status back to Active', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->archived()->create(['user_id' => $user->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetDetail::class, ['asset' => $asset])
+        ->call('restore')
+        ->assertDispatched('asset-restored');
+
+    $asset->refresh();
+    expect($asset->status)->toBe(AssetStatus::Active);
+
+    Livewire::test(AssetList::class)
+        ->assertCount('assets', 1);
+});
+
+test('user A cannot archive user B asset', function () {
+    $userA = User::factory()->create();
+    $userB = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $userB->id, 'status' => AssetStatus::Active]);
+
+    $this->actingAs($userA);
+
+    $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+
+    Livewire::test(AssetDetail::class, ['asset' => $asset])
+        ->call('archive');
+});
+
+test('user A cannot restore user B asset', function () {
+    $userA = User::factory()->create();
+    $userB = User::factory()->create();
+    $asset = Asset::factory()->archived()->create(['user_id' => $userB->id]);
+
+    $this->actingAs($userA);
+
+    $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+
+    Livewire::test(AssetDetail::class, ['asset' => $asset])
+        ->call('restore');
+});

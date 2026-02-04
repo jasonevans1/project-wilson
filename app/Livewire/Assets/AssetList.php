@@ -4,6 +4,7 @@ namespace App\Livewire\Assets;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class AssetList extends Component
@@ -49,6 +50,16 @@ class AssetList extends Component
         $this->showArchived = ! $this->showArchived;
         $this->selectedAssetId = null;
         $this->showCreateForm = false;
+    }
+
+    /**
+     * Reset the selected asset when its status changes so the list refreshes.
+     */
+    #[On('asset-archived')]
+    #[On('asset-restored')]
+    public function handleAssetStatusChange(): void
+    {
+        $this->selectedAssetId = null;
     }
 
     /**
