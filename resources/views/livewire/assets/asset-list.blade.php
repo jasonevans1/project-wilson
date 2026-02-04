@@ -15,7 +15,7 @@
         <livewire:assets.asset-form />
     {{-- Detail panel --}}
     @elseif ($selectedAssetId)
-        <livewire:assets.asset-detail :asset="$this->assets->first(fn ($a) => $a->id === $selectedAssetId) ?? \App\Models\Asset::find($selectedAssetId)" />
+        <livewire:assets.asset-detail :asset="$this->assets->first(fn ($a) => $a->id === $selectedAssetId) ?? \Illuminate\Support\Facades\Auth::user()->assets()->findOrFail($selectedAssetId)" />
     {{-- Empty state --}}
     @elseif ($this->assets->isEmpty())
         <div class="text-center py-16">
