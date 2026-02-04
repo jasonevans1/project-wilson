@@ -111,11 +111,11 @@
 
 > **NOTE: Write these tests FIRST, run them, confirm they FAIL, then proceed to implementation.**
 
-- [ ] T031 Write feature tests in `tests/Feature/AssetCrudTest.php` covering US3 acceptance scenarios: (a) authenticated user edits a valid field on their own asset → change persists and is visible in both detail and list; (b) clearing a required field (name or category) and submitting → validation error, original value preserved; (c) user A cannot update user B's asset (the form is never reachable for another user's asset, but verify the update action also enforces ownership via the scoped relationship).
+- [X] T031 Write feature tests in `tests/Feature/AssetCrudTest.php` covering US3 acceptance scenarios: (a) authenticated user edits a valid field on their own asset → change persists and is visible in both detail and list; (b) clearing a required field (name or category) and submitting → validation error, original value preserved; (c) user A cannot update user B's asset (the form is never reachable for another user's asset, but verify the update action also enforces ownership via the scoped relationship).
 
 ### Implementation for User Story 3
 
-- [ ] T032 Wire the Edit button in `resources/views/livewire/assets/asset-detail.blade.php`: connect it to `startEdit()` action in `AssetDetail.php`. When `editMode` is true, replace the read-only detail with `<livewire:assets.asset-form :asset="$asset" />`. Add a `cancelEdit()` action that sets `editMode = false`. Listen for the `asset-updated` event: refresh `$asset` from the database and set `editMode = false`. Listen for `close-panel` from the form: call `cancelEdit()`.
+- [X] T032 Wire the Edit button in `resources/views/livewire/assets/asset-detail.blade.php`: connect it to `startEdit()` action in `AssetDetail.php`. When `editMode` is true, replace the read-only detail with `<livewire:assets.asset-form :asset="$asset" />`. Add a `cancelEdit()` action that sets `editMode = false`. Listen for the `asset-updated` event: refresh `$asset` from the database and set `editMode = false`. Listen for `close-panel` from the form: call `cancelEdit()`.
 
 **Checkpoint**: Full create-read-update loop works end-to-end. Tests pass.
 

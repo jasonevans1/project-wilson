@@ -136,3 +136,65 @@ test('user A cannot see user B assets', function () {
     Livewire::test(AssetList::class)
         ->assertCount('assets', 2);
 });
+
+// ─── US3: Update an Existing Home Asset ───────────────────────────────────────
+
+test('authenticated user can update their own asset', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create([
+        'user_id' => $user->id,
+        'name' => 'Refrigerator',
+        'category' => AssetCategory::Appliance,
+        'location' => 'Kitchen',
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetForm::class, ['asset' => $asset])
+        ->set('name', 'New Refrigerator')
+        ->call('save')
+        ->assertHasNoErrors()
+        ->assertDispatched('asset-updated');
+
+    $asset->refresh();
+    expect($asset->name)->toBe('New Refrigerator');
+});
+
+test('updating an asset without name produces a validation error and preserves original', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create([
+        'user_id' => $user->id,
+        'name' => 'Refrigerator',
+        'category' => AssetCategory::Appliance,
+        'location' => 'Kitchen',
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetForm::class, ['asset' => $asset])
+        ->set('name', '')
+        ->call('save')
+        ->assertHasErrors(['name']);
+
+    $asset->refresh();
+    expect($asset->name)->toBe('Refrigerator');
+});
+
+test('user A cannot update user B asset', function () {
+    $userA = User::factory()->create();
+    $userB = User::factory()->create();
+    $asset = Asset::factory()->create([
+        'user_id' => $userB->id,
+        'name' => 'Water Heater',
+        'category' => AssetCategory::Plumbing,
+        'location' => 'Basement',
+    ]);
+
+    $this->actingAs($userA);
+
+    $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+
+    Livewire::test(AssetForm::class, ['asset' => $asset])
+        ->set('name', 'Hacked')
+        ->call('save');
+});

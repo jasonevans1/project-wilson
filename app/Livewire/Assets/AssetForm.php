@@ -63,7 +63,7 @@ class AssetForm extends Component
         ];
 
         if ($this->asset) {
-            $this->asset->update($data);
+            Auth::user()->assets()->findOrFail($this->asset->id)->update($data);
             $this->dispatch('asset-updated');
         } else {
             Auth::user()->assets()->create($data);
