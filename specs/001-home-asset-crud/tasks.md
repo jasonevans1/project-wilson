@@ -146,9 +146,9 @@
 
 **Purpose**: Final checks, formatting, and verification across the entire feature.
 
-- [ ] T036 Run `vendor/bin/pint --dirty` to auto-format all PHP files touched in this feature. Verify zero formatting violations remain.
-- [ ] T037 Run the full Pest test suite for this feature: `php artisan test --compact --filter=Asset`. Verify all tests in `AssetCrudTest.php` and `AssetModelTest.php` pass.
-- [ ] T038 Run `php artisan db:seed --no-interaction` and manually smoke-test the full flow end-to-end: log in, navigate to Assets via sidebar, create an asset, view it, edit it, archive it, toggle to archived view, restore it. Verify all seeded assets are visible and accurate.
+- [X] T036 Run `vendor/bin/pint --dirty` to auto-format all PHP files touched in this feature. Verify zero formatting violations remain.
+- [X] T037 Run the full Pest test suite for this feature: `php artisan test --compact --filter=Asset`. Verify all tests in `AssetCrudTest.php` and `AssetModelTest.php` pass.
+- [X] T038 Run `php artisan db:seed --no-interaction` and manually smoke-test the full flow end-to-end: log in, navigate to Assets via sidebar, create an asset, view it, edit it, archive it, toggle to archived view, restore it. Verify all seeded assets are visible and accurate.
 
 ---
 
