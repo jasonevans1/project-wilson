@@ -2,6 +2,9 @@
 
 namespace App\Concerns;
 
+use App\Enums\AssetCategory;
+use Illuminate\Validation\Rule;
+
 trait AssetValidationRules
 {
     /**
@@ -13,7 +16,7 @@ trait AssetValidationRules
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'enum:App\Enums\AssetCategory'],
+            'category' => ['required', Rule::enum(AssetCategory::class)],
             'location' => ['required', 'string', 'max:255'],
             'purchaseDate' => ['nullable', 'date'],
             'installDate' => ['nullable', 'date'],
