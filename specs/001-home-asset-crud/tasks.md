@@ -19,16 +19,16 @@
 
 **Purpose**: Create all skeleton files via `php artisan make:` commands. No logic is written in this phase — only the empty stubs that Laravel and Livewire generate. This keeps every subsequent task focused purely on implementation content.
 
-- [ ] T001 [P] Run `php artisan make:enum AssetCategory --backed=string --no-interaction` to create `app/Enums/AssetCategory.php`
-- [ ] T002 [P] Run `php artisan make:enum AssetStatus --backed=string --no-interaction` to create `app/Enums/AssetStatus.php`
-- [ ] T003 [P] Run `php artisan make:model Asset -mfs --no-interaction` to create `app/Models/Asset.php`, `database/migrations/*_create_assets_table.php`, `database/factories/AssetFactory.php`, and `database/seeders/AssetSeeder.php`
-- [ ] T004 [P] Run `php artisan make:livewire assets.asset-list --no-interaction` to create `app/Livewire/Assets/AssetList.php` and `resources/views/livewire/assets/asset-list.blade.php`
-- [ ] T005 [P] Run `php artisan make:livewire assets.asset-form --no-interaction` to create `app/Livewire/Assets/AssetForm.php` and `resources/views/livewire/assets/asset-form.blade.php`
-- [ ] T006 [P] Run `php artisan make:livewire assets.asset-detail --no-interaction` to create `app/Livewire/Assets/AssetDetail.php` and `resources/views/livewire/assets/asset-detail.blade.php`
-- [ ] T007 [P] Run `php artisan make:test --pest AssetCrudTest --no-interaction` to create `tests/Feature/AssetCrudTest.php`
-- [ ] T008 [P] Run `php artisan make:test --pest --unit AssetModelTest --no-interaction` to create `tests/Unit/AssetModelTest.php`
-- [ ] T009 Create `app/Concerns/AssetValidationRules.php` as an empty trait (run `php artisan make:class AssetValidationRules --no-interaction`, then move the generated file into `app/Concerns/` and convert it to a trait)
-- [ ] T010 Create `routes/assets.php` as an empty file
+- [X] T001 [P] Run `php artisan make:enum AssetCategory --backed=string --no-interaction` to create `app/Enums/AssetCategory.php`
+- [X] T002 [P] Run `php artisan make:enum AssetStatus --backed=string --no-interaction` to create `app/Enums/AssetStatus.php`
+- [X] T003 [P] Run `php artisan make:model Asset -mfs --no-interaction` to create `app/Models/Asset.php`, `database/migrations/*_create_assets_table.php`, `database/factories/AssetFactory.php`, and `database/seeders/AssetSeeder.php`
+- [X] T004 [P] Run `php artisan make:livewire assets.asset-list --no-interaction` to create `app/Livewire/Assets/AssetList.php` and `resources/views/livewire/assets/asset-list.blade.php`
+- [X] T005 [P] Run `php artisan make:livewire assets.asset-form --no-interaction` to create `app/Livewire/Assets/AssetForm.php` and `resources/views/livewire/assets/asset-form.blade.php`
+- [X] T006 [P] Run `php artisan make:livewire assets.asset-detail --no-interaction` to create `app/Livewire/Assets/AssetDetail.php` and `resources/views/livewire/assets/asset-detail.blade.php`
+- [X] T007 [P] Run `php artisan make:test --pest AssetCrudTest --no-interaction` to create `tests/Feature/AssetCrudTest.php`
+- [X] T008 [P] Run `php artisan make:test --pest --unit AssetModelTest --no-interaction` to create `tests/Unit/AssetModelTest.php`
+- [X] T009 Create `app/Concerns/AssetValidationRules.php` as an empty trait (run `php artisan make:class AssetValidationRules --no-interaction`, then move the generated file into `app/Concerns/` and convert it to a trait)
+- [X] T010 Create `routes/assets.php` as an empty file
 
 **Checkpoint**: All skeleton files exist. No logic has been written. `git status` should show every file listed in `quickstart.md`.
 
@@ -40,16 +40,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T011 [P] Populate `app/Enums/AssetCategory.php` with eight TitleCase backed cases: `Appliance`, `Hvac`, `Plumbing`, `Electrical`, `Roofing`, `Flooring`, `Exterior`, `Other` (backed values are the lowercase equivalents). Add a `label(): string` method that returns a human-readable label for each case (e.g., `Hvac` → `"HVAC"`, `Appliance` → `"Appliance"`).
-- [ ] T012 [P] Populate `app/Enums/AssetStatus.php` with two TitleCase backed cases: `Active` (value `active`), `Archived` (value `archived`).
-- [ ] T013 Populate the migration file in `database/migrations/*_create_assets_table.php`. Columns per data-model.md: `id` (bigIncrements), `user_id` (foreignId → users, cascading delete), `name` (string 255), `category` (string 255), `location` (string 255), `purchase_date` (date, nullable), `install_date` (date, nullable), `warranty_expiration_date` (date, nullable), `notes` (text, nullable), `status` (string 255, default `active`), `timestamps`. Run `php artisan migrate --no-interaction` to apply.
-- [ ] T014 Populate `app/Models/Asset.php`: add `HasFactory` trait, set `$fillable` array (name, category, location, purchase_date, install_date, warranty_expiration_date, notes, status), implement `casts()` method casting `category` to `AssetCategory::class`, `status` to `AssetStatus::class`, and all three date fields to `date`. Add `user(): BelongsTo` relationship method.
-- [ ] T015 Add `assets(): HasMany<Asset>` relationship method to `app/Models/User.php`.
-- [ ] T016 [P] Populate `app/Concerns/AssetValidationRules.php` as a trait with a `protected function assetRules(): array` method returning the validation rules from data-model.md (name required string max:255; category required enum; location required string max:255; purchase_date nullable date; install_date nullable date; warranty_expiration_date nullable date; notes nullable string max:2000). Add PHPDoc `@return` with array shape type.
-- [ ] T017 [P] Populate `database/factories/AssetFactory.php`: implement `definition()` using Faker — name from a hard-coded array of realistic home asset names (e.g., "Refrigerator", "HVAC Unit", "Water Heater", "Roof Shingles", "Dishwasher", "Electrical Panel", "Garage Door Opener", "Bathroom Tiles"), random `AssetCategory` case, location from a hard-coded array ("Kitchen", "Bathroom", "Basement", "Garage", "Attic", "Living Room"), nullable random dates within the last 10 years, 50 % chance of lorem notes. Add an `archived()` state that sets status to `AssetStatus::Archived`.
-- [ ] T018 Populate `database/seeders/AssetSeeder.php`: create 4 active assets and 1 archived asset for `User::first()` (assumes the default user from the existing seeder). Call `AssetSeeder` from `DatabaseSeeder`. Run `php artisan db:seed --class=AssetSeeder --no-interaction`.
-- [ ] T019 Populate `routes/assets.php` with a single route group: `Route::middleware(['auth', 'verified'])->group(function () { Route::livewire('assets', AssetList::class)->name('assets.index'); });`. Add `require __DIR__.'/assets.php';` to `routes/web.php`.
-- [ ] T020 Add the "Assets" sidebar item to `resources/views/layouts/app/sidebar.blade.php` inside the existing "Platform" `<flux:sidebar.group>`: `<flux:sidebar.item icon="wrench" :href="route('assets.index')" :current="request()->routeIs('assets.*')" wire:navigate>Assets</flux:sidebar.item>`
+- [X] T011 [P] Populate `app/Enums/AssetCategory.php` with eight TitleCase backed cases: `Appliance`, `Hvac`, `Plumbing`, `Electrical`, `Roofing`, `Flooring`, `Exterior`, `Other` (backed values are the lowercase equivalents). Add a `label(): string` method that returns a human-readable label for each case (e.g., `Hvac` → `"HVAC"`, `Appliance` → `"Appliance"`).
+- [X] T012 [P] Populate `app/Enums/AssetStatus.php` with two TitleCase backed cases: `Active` (value `active`), `Archived` (value `archived`).
+- [X] T013 Populate the migration file in `database/migrations/*_create_assets_table.php`. Columns per data-model.md: `id` (bigIncrements), `user_id` (foreignId → users, cascading delete), `name` (string 255), `category` (string 255), `location` (string 255), `purchase_date` (date, nullable), `install_date` (date, nullable), `warranty_expiration_date` (date, nullable), `notes` (text, nullable), `status` (string 255, default `active`), `timestamps`. Run `php artisan migrate --no-interaction` to apply.
+- [X] T014 Populate `app/Models/Asset.php`: add `HasFactory` trait, set `$fillable` array (name, category, location, purchase_date, install_date, warranty_expiration_date, notes, status), implement `casts()` method casting `category` to `AssetCategory::class`, `status` to `AssetStatus::class`, and all three date fields to `date`. Add `user(): BelongsTo` relationship method.
+- [X] T015 Add `assets(): HasMany<Asset>` relationship method to `app/Models/User.php`.
+- [X] T016 [P] Populate `app/Concerns/AssetValidationRules.php` as a trait with a `protected function assetRules(): array` method returning the validation rules from data-model.md (name required string max:255; category required enum; location required string max:255; purchase_date nullable date; install_date nullable date; warranty_expiration_date nullable date; notes nullable string max:2000). Add PHPDoc `@return` with array shape type.
+- [X] T017 [P] Populate `database/factories/AssetFactory.php`: implement `definition()` using Faker — name from a hard-coded array of realistic home asset names (e.g., "Refrigerator", "HVAC Unit", "Water Heater", "Roof Shingles", "Dishwasher", "Electrical Panel", "Garage Door Opener", "Bathroom Tiles"), random `AssetCategory` case, location from a hard-coded array ("Kitchen", "Bathroom", "Basement", "Garage", "Attic", "Living Room"), nullable random dates within the last 10 years, 50 % chance of lorem notes. Add an `archived()` state that sets status to `AssetStatus::Archived`.
+- [X] T018 Populate `database/seeders/AssetSeeder.php`: create 4 active assets and 1 archived asset for `User::first()` (assumes the default user from the existing seeder). Call `AssetSeeder` from `DatabaseSeeder`. Run `php artisan db:seed --class=AssetSeeder --no-interaction`.
+- [X] T019 Populate `routes/assets.php` with a single route group: `Route::middleware(['auth', 'verified'])->group(function () { Route::livewire('assets', AssetList::class)->name('assets.index'); });`. Add `require __DIR__.'/assets.php';` to `routes/web.php`.
+- [X] T020 Add the "Assets" sidebar item to `resources/views/layouts/app/sidebar.blade.php` inside the existing "Platform" `<flux:sidebar.group>`: `<flux:sidebar.item icon="wrench" :href="route('assets.index')" :current="request()->routeIs('assets.*')" wire:navigate>Assets</flux:sidebar.item>`
 
 **Checkpoint**: Foundation ready. Navigate to `/assets` — the page loads (empty Livewire component), the sidebar link appears, the database table exists with seed data, and the factory can generate assets in tests. User story implementation can now begin.
 
