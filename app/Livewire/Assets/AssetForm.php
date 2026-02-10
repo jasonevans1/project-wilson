@@ -56,9 +56,9 @@ class AssetForm extends Component
             'name' => $validated['name'],
             'category' => $validated['category'],
             'location' => $validated['location'],
-            'purchase_date' => $validated['purchaseDate'] ?? null,
-            'install_date' => $validated['installDate'] ?? null,
-            'warranty_expiration_date' => $validated['warrantyExpirationDate'] ?? null,
+            'purchase_date' => ! empty($validated['purchaseDate']) ? $validated['purchaseDate'] : null,
+            'install_date' => ! empty($validated['installDate']) ? $validated['installDate'] : null,
+            'warranty_expiration_date' => ! empty($validated['warrantyExpirationDate']) ? $validated['warrantyExpirationDate'] : null,
             'notes' => $validated['notes'] ?? null,
         ];
 

@@ -3,11 +3,27 @@
         <flux:heading size="xl">{{ __('Assets') }}</flux:heading>
 
         <div class="flex items-center gap-4">
-            <flux:switch wire:model.live="showArchived" :label="__('Show Archived')" />
+            <flux:switch wire:model.live="showArchived" wire:change="handleToggleChanged" :label="__('Show Archived')" />
             <flux:button variant="primary" wire:click="openCreateForm">
                 {{ __('Add Asset') }}
             </flux:button>
         </div>
+    </div>
+
+    {{-- Success banner --}}
+    <div
+        x-data="{ visible: $wire.showSuccess }"
+        x-init="$watch('$wire.showSuccess', val => { if (val) { visible = true; setTimeout(() => { visible = false; $wire.showSuccess = false; }, 3000); } })"
+        x-show="visible"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+        class="px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/30 dark:border-green-700 dark:text-green-300"
+    >
+        {{ __('Asset added.') }}
     </div>
 
     {{-- Create form panel --}}

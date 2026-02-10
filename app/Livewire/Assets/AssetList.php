@@ -6,14 +6,18 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class AssetList extends Component
 {
+    use WithPagination;
     public bool $showArchived = false;
 
     public ?int $selectedAssetId = null;
 
     public bool $showCreateForm = false;
+
+    public bool $showSuccess = false;
 
     /**
      * Open the create form and clear any selected asset.
@@ -27,6 +31,7 @@ class AssetList extends Component
     /**
      * Close the active panel (create form or detail).
      */
+    #[On('close-panel')]
     public function closePanel(): void
     {
         $this->showCreateForm = false;
@@ -43,13 +48,23 @@ class AssetList extends Component
     }
 
     /**
-     * Toggle between active and archived asset views.
+     * Handle the toggle change to clear selected asset and forms.
      */
-    public function toggleArchived(): void
+    public function handleToggleChanged(): void
     {
-        $this->showArchived = ! $this->showArchived;
         $this->selectedAssetId = null;
         $this->showCreateForm = false;
+        $this->resetPage();
+    }
+
+    /**
+     * Show the success banner when a new asset is created.
+     */
+    #[On('asset-created')]
+    public function handleAssetCreated(): void
+    {
+        $this->showCreateForm = false;
+        $this->showSuccess = true;
     }
 
     /**
@@ -60,6 +75,11 @@ class AssetList extends Component
     public function handleAssetStatusChange(): void
     {
         $this->selectedAssetId = null;
+
+        // If the current page is now empty, reset to page 1
+        if ($this->assets()->isEmpty() && $this->assets()->currentPage() > 1) {
+            $this->resetPage();
+        }
     }
 
     /**

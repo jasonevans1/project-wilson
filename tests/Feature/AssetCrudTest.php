@@ -30,6 +30,12 @@ test('authenticated verified user can create an asset', function () {
 
     expect(Asset::count())->toBe(1);
 
+    Livewire::test(AssetList::class)
+        ->dispatch('asset-created')
+        ->assertSet('showSuccess', true)
+        ->assertSet('showCreateForm', false)
+        ->assertSee('Asset added.');
+
     $asset = Asset::first();
     expect($asset->name)->toBe('Refrigerator');
     expect($asset->category)->toBe(AssetCategory::Appliance);
