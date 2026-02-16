@@ -36,21 +36,21 @@
 
 ### Tests (write FIRST, verify they FAIL)
 
-- [ ] T007 [P] Write unit tests for TemplateGroup model in `tests/Unit/TemplateModelTest.php`: test fillable fields, `templates()` HasMany relationship, `casts()` method, factory definition, slug uniqueness
-- [ ] T008 [P] Write unit tests for AssetTemplate model in `tests/Unit/TemplateModelTest.php`: test fillable fields, `group()` BelongsTo relationship, category cast to AssetCategory enum, factory definition, display_order default
+- [x] T007 [P] Write unit tests for TemplateGroup model in `tests/Unit/TemplateModelTest.php`: test fillable fields, `templates()` HasMany relationship, `casts()` method, factory definition, slug uniqueness
+- [x] T008 [P] Write unit tests for AssetTemplate model in `tests/Unit/TemplateModelTest.php`: test fillable fields, `group()` BelongsTo relationship, category cast to AssetCategory enum, factory definition, display_order default
 
 ### Implementation
 
-- [ ] T009 [P] Implement `template_groups` migration in `database/migrations/*_create_template_groups_table.php`: id, name (string 255), slug (string 255, unique), icon (string 100, nullable), display_order (integer, default 0), timestamps
-- [ ] T010 [P] Implement `asset_templates` migration in `database/migrations/*_create_asset_templates_table.php`: id, template_group_id (foreignIdFor with cascadeOnDelete), name (string 255), description (text, nullable), category (string), location (string 255), display_order (integer, default 0), timestamps
-- [ ] T011 [P] Implement TemplateGroup model in `app/Models/TemplateGroup.php`: fillable array, `templates()` HasMany relationship returning `HasMany<AssetTemplate>`, no casts needed (all string/int fields)
-- [ ] T012 [P] Implement AssetTemplate model in `app/Models/AssetTemplate.php`: fillable array, `group()` BelongsTo relationship returning `BelongsTo<TemplateGroup>`, `casts()` method casting category to `AssetCategory::class`
-- [ ] T013 [P] Implement TemplateGroupFactory in `database/factories/TemplateGroupFactory.php`: definition with realistic group name, slug from name, sequential display_order
-- [ ] T014 [P] Implement AssetTemplateFactory in `database/factories/AssetTemplateFactory.php`: definition with realistic template name, random AssetCategory, random location from predefined list, optional description, sequential display_order. Requires `template_group_id`
-- [ ] T015 Implement TemplateGroupSeeder in `database/seeders/TemplateGroupSeeder.php`: create 8 groups (Kitchen, Bathroom, Laundry Room, Living Areas, Bedroom, HVAC & Climate, Electrical & Safety, Exterior & Garage) with slugs, icons, and display_order per data-model.md
-- [ ] T016 Implement AssetTemplateSeeder in `database/seeders/AssetTemplateSeeder.php`: create 30+ templates distributed across all 8 groups with correct categories and locations per data-model.md (depends on T015)
-- [ ] T017 Register TemplateGroupSeeder and AssetTemplateSeeder in `database/seeders/DatabaseSeeder.php` (call after existing AssetSeeder)
-- [ ] T018 Run migrations and seeders, verify unit tests pass via `php artisan test --compact tests/Unit/TemplateModelTest.php`
+- [x] T009 [P] Implement `template_groups` migration in `database/migrations/*_create_template_groups_table.php`: id, name (string 255), slug (string 255, unique), icon (string 100, nullable), display_order (integer, default 0), timestamps
+- [x] T010 [P] Implement `asset_templates` migration in `database/migrations/*_create_asset_templates_table.php`: id, template_group_id (foreignIdFor with cascadeOnDelete), name (string 255), description (text, nullable), category (string), location (string 255), display_order (integer, default 0), timestamps
+- [x] T011 [P] Implement TemplateGroup model in `app/Models/TemplateGroup.php`: fillable array, `templates()` HasMany relationship returning `HasMany<AssetTemplate>`, no casts needed (all string/int fields)
+- [x] T012 [P] Implement AssetTemplate model in `app/Models/AssetTemplate.php`: fillable array, `group()` BelongsTo relationship returning `BelongsTo<TemplateGroup>`, `casts()` method casting category to `AssetCategory::class`
+- [x] T013 [P] Implement TemplateGroupFactory in `database/factories/TemplateGroupFactory.php`: definition with realistic group name, slug from name, sequential display_order
+- [x] T014 [P] Implement AssetTemplateFactory in `database/factories/AssetTemplateFactory.php`: definition with realistic template name, random AssetCategory, random location from predefined list, optional description, sequential display_order. Requires `template_group_id`
+- [x] T015 Implement TemplateGroupSeeder in `database/seeders/TemplateGroupSeeder.php`: create 8 groups (Kitchen, Bathroom, Laundry Room, Living Areas, Bedroom, HVAC & Climate, Electrical & Safety, Exterior & Garage) with slugs, icons, and display_order per data-model.md
+- [x] T016 Implement AssetTemplateSeeder in `database/seeders/AssetTemplateSeeder.php`: create 30+ templates distributed across all 8 groups with correct categories and locations per data-model.md (depends on T015)
+- [x] T017 Register TemplateGroupSeeder and AssetTemplateSeeder in `database/seeders/DatabaseSeeder.php` (call after existing AssetSeeder)
+- [x] T018 Run migrations and seeders, verify unit tests pass via `php artisan test --compact tests/Unit/TemplateModelTest.php`
 
 **Checkpoint**: Models, migrations, factories, and seeders complete. Database populated with 8 groups and 30+ templates. Unit tests green.
 

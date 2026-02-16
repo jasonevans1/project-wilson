@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AssetCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AssetTemplateFactory extends Factory
 {
+    /** @var list<string> */
+    protected static array $names = [
+        'Refrigerator', 'Dishwasher', 'Oven/Range', 'Microwave',
+        'Water Heater', 'Furnace', 'Central Air Conditioner', 'Thermostat',
+        'Garage Door Opener', 'Washing Machine', 'Dryer', 'Toilet',
+    ];
+
+    /** @var list<string> */
+    protected static array $locations = [
+        'Kitchen', 'Bathroom', 'Basement', 'Garage', 'Attic',
+        'Living Room', 'Laundry Room', 'Bedroom', 'Exterior',
+    ];
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +31,11 @@ class AssetTemplateFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->randomElement(self::$names),
+            'description' => fake()->boolean() ? fake()->sentence() : null,
+            'category' => fake()->randomElement(AssetCategory::cases()),
+            'location' => fake()->randomElement(self::$locations),
+            'display_order' => 0,
         ];
     }
 }

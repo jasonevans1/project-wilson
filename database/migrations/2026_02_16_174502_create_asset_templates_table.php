@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('asset_templates', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\TemplateGroup::class)->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('category');
+            $table->string('location');
+            $table->integer('display_order')->default(0);
             $table->timestamps();
+
+            $table->index('display_order');
         });
     }
 
