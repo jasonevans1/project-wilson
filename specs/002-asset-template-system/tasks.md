@@ -139,13 +139,13 @@
 
 **Purpose**: AssetList integration, empty state update, and final quality pass
 
-- [ ] T050 [P] Write feature test: AssetList empty state shows "Add from Templates" as primary CTA and "Add Manually" as secondary in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T051 [P] Write feature test: AssetList header includes "Add from Templates" button that links to template library in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T052 Update AssetList component in `app/Livewire/Assets/AssetList.php`: no logic changes needed — view-only updates
-- [ ] T053 Update asset list view in `resources/views/livewire/assets/asset-list.blade.php`: add "Add from Templates" `flux:button` in header area linking to `route('assets.templates')`, update empty state to promote templates as primary CTA with "Add Manually" as secondary (FR-016)
-- [ ] T054 Run all feature tests to verify no regressions via `php artisan test --compact`
-- [ ] T055 Run code formatting via `vendor/bin/pint --dirty`
-- [ ] T056 Final verification: run full test suite via `php artisan test --compact` and confirm all green
+- [x] T050 [P] Write feature test: AssetList empty state shows "Add from Templates" as primary CTA and "Add Manually" as secondary in `tests/Feature/TemplateLibraryTest.php`
+- [x] T051 [P] Write feature test: AssetList header includes "Add from Templates" button that links to template library in `tests/Feature/TemplateLibraryTest.php`
+- [x] T052 Update AssetList component in `app/Livewire/Assets/AssetList.php`: no logic changes needed — view-only updates
+- [x] T053 Update asset list view in `resources/views/livewire/assets/asset-list.blade.php`: add "Add from Templates" `flux:button` in header area linking to `route('assets.templates')`, update empty state to promote templates as primary CTA with "Add Manually" as secondary (FR-016)
+- [x] T054 Run all feature tests to verify no regressions via `php artisan test --compact`
+- [x] T055 Run code formatting via `vendor/bin/pint --dirty`
+- [x] T056 Final verification: run full test suite via `php artisan test --compact` and confirm all green
 
 ---
 

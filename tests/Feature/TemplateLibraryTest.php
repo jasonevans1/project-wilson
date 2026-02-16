@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\AssetCategory;
+use App\Livewire\Assets\AssetList;
 use App\Livewire\Assets\TemplateLibrary;
 use App\Models\Asset;
 use App\Models\AssetTemplate;
@@ -374,4 +375,26 @@ test('addTemplate allows duplicate entries for the same template', function () {
         ->call('addTemplate', $template->id)
         ->call('addTemplate', $template->id)
         ->assertSet('selectedTemplateIds', [$template->id, $template->id]);
+});
+
+// ─── Phase 6: AssetList Integration ──────────────────────────────────────────
+
+test('asset list empty state shows Add from Templates as primary CTA and Add Manually as secondary', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetList::class)
+        ->assertSee('Add from Templates')
+        ->assertSee('Add Manually');
+});
+
+test('asset list header includes Add from Templates button linking to template library', function () {
+    $user = User::factory()->create();
+    Asset::factory()->create(['user_id' => $user->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(AssetList::class)
+        ->assertSee('Add from Templates');
 });
