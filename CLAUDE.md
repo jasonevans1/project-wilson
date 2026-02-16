@@ -269,7 +269,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 # DDEV Local Development
 
-We use DDEV for local Magento development. Run all commands inside the DDEV web container.
+We use DDEV for local Magento development. Run all commands inside the DDEV web container. NOTE: Claude sandbox is enabled. Use Laravel Boost to run commands in the containers.
 
 ## DDEV Executing Raw Commands in Containers
 

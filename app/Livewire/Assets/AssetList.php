@@ -48,6 +48,15 @@ class AssetList extends Component
     }
 
     /**
+     * Toggle the archived filter and reset the panel state.
+     */
+    public function toggleArchived(): void
+    {
+        $this->showArchived = ! $this->showArchived;
+        $this->handleToggleChanged();
+    }
+
+    /**
      * Handle the toggle change to clear selected asset and forms.
      */
     public function handleToggleChanged(): void
