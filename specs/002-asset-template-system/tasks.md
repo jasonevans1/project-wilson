@@ -19,12 +19,12 @@
 
 **Purpose**: Scaffold all new files using Artisan commands and register routes
 
-- [ ] T001 Generate TemplateGroup model, migration, factory, and seeder via `php artisan make:model TemplateGroup -mfs --no-interaction`
-- [ ] T002 Generate AssetTemplate model, migration, factory, and seeder via `php artisan make:model AssetTemplate -mfs --no-interaction`
-- [ ] T003 Generate TemplateLibrary Livewire component via `php artisan make:livewire Assets/TemplateLibrary --no-interaction`
-- [ ] T004 [P] Generate feature test file via `php artisan make:test --pest TemplateLibraryTest --no-interaction` in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T005 [P] Generate unit test file via `php artisan make:test --pest --unit TemplateModelTest --no-interaction` in `tests/Unit/TemplateModelTest.php`
-- [ ] T006 Add template library route `assets/templates` to `routes/assets.php` pointing to `TemplateLibrary::class` with name `assets.templates`
+- [x] T001 Generate TemplateGroup model, migration, factory, and seeder via `php artisan make:model TemplateGroup -mfs --no-interaction`
+- [x] T002 Generate AssetTemplate model, migration, factory, and seeder via `php artisan make:model AssetTemplate -mfs --no-interaction`
+- [x] T003 Generate TemplateLibrary Livewire component via `php artisan make:livewire Assets/TemplateLibrary --no-interaction`
+- [x] T004 [P] Generate feature test file via `php artisan make:test --pest TemplateLibraryTest --no-interaction` in `tests/Feature/TemplateLibraryTest.php`
+- [x] T005 [P] Generate unit test file via `php artisan make:test --pest --unit TemplateModelTest --no-interaction` in `tests/Unit/TemplateModelTest.php`
+- [x] T006 Add template library route `assets/templates` to `routes/assets.php` pointing to `TemplateLibrary::class` with name `assets.templates`
 
 ---
 
