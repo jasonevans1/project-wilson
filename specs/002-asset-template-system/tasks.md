@@ -64,19 +64,19 @@
 
 ### Tests (write FIRST, verify they FAIL)
 
-- [ ] T019 [P] [US1] Write feature test: authenticated user can access template library page in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T020 [P] [US1] Write feature test: template library displays all template groups with their templates in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T021 [P] [US1] Write feature test: user can select a template and selectedTemplateIds updates in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T022 [P] [US1] Write feature test: user can select multiple templates and selectedCount reflects correct count in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T023 [P] [US1] Write feature test: user can deselect a template via toggleTemplate in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T024 [P] [US1] Write feature test: "already owned" badge shows when user has an asset with same name as a template in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T025 [P] [US1] Write feature test: unauthenticated user is redirected from template library page in `tests/Feature/TemplateLibraryTest.php`
+- [x] T019 [P] [US1] Write feature test: authenticated user can access template library page in `tests/Feature/TemplateLibraryTest.php`
+- [x] T020 [P] [US1] Write feature test: template library displays all template groups with their templates in `tests/Feature/TemplateLibraryTest.php`
+- [x] T021 [P] [US1] Write feature test: user can select a template and selectedTemplateIds updates in `tests/Feature/TemplateLibraryTest.php`
+- [x] T022 [P] [US1] Write feature test: user can select multiple templates and selectedCount reflects correct count in `tests/Feature/TemplateLibraryTest.php`
+- [x] T023 [P] [US1] Write feature test: user can deselect a template via toggleTemplate in `tests/Feature/TemplateLibraryTest.php`
+- [x] T024 [P] [US1] Write feature test: "already owned" badge shows when user has an asset with same name as a template in `tests/Feature/TemplateLibraryTest.php`
+- [x] T025 [P] [US1] Write feature test: unauthenticated user is redirected from template library page in `tests/Feature/TemplateLibraryTest.php`
 
 ### Implementation
 
-- [ ] T026 [US1] Implement TemplateLibrary component step 1 (browse) in `app/Livewire/Assets/TemplateLibrary.php`: properties ($step, $selectedTemplateIds, $expandedGroups), computed properties (templateGroups with eager-loaded templates, ownedAssetNames, selectedCount), actions (toggleTemplate, addTemplate, removeSelectedTemplate)
-- [ ] T027 [US1] Implement template library browse view in `resources/views/livewire/assets/template-library.blade.php`: header with "Back to Assets" link and selected count badge, template groups rendered as expandable sections using Alpine.js, each template as a `flux:card` with `flux:checkbox` for selection and `flux:badge` for "already owned" indicator, Flux UI components throughout
-- [ ] T028 [US1] Run feature tests for US1 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
+- [x] T026 [US1] Implement TemplateLibrary component step 1 (browse) in `app/Livewire/Assets/TemplateLibrary.php`: properties ($step, $selectedTemplateIds, $expandedGroups), computed properties (templateGroups with eager-loaded templates, ownedAssetNames, selectedCount), actions (toggleTemplate, addTemplate, removeSelectedTemplate)
+- [x] T027 [US1] Implement template library browse view in `resources/views/livewire/assets/template-library.blade.php`: header with "Back to Assets" link and selected count badge, template groups rendered as expandable sections using Alpine.js, each template as a `flux:card` with `flux:checkbox` for selection and `flux:badge` for "already owned" indicator, Flux UI components throughout
+- [x] T028 [US1] Run feature tests for US1 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
 
 **Checkpoint**: Template library page loads, displays grouped templates, supports selection with count, shows "already owned" badges. MVP browsing functional.
 
@@ -90,23 +90,23 @@
 
 ### Tests (write FIRST, verify they FAIL)
 
-- [ ] T029 [P] [US2] Write feature test: user can proceed to review step with selected templates and see editable fields in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T030 [P] [US2] Write feature test: user can edit a customized item field (e.g., name) during review in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T031 [P] [US2] Write feature test: user can remove an item from the review step in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T032 [P] [US2] Write feature test: confirmConversion creates assets in database with correct field values in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T033 [P] [US2] Write feature test: confirmConversion with customized values creates asset with those values (not template defaults) in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T034 [P] [US2] Write feature test: confirmConversion with multiple items creates all as separate active assets and sets createdCount in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T035 [P] [US2] Write feature test: confirmConversion validates all items and shows errors if a required field is cleared in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T036 [P] [US2] Write feature test: confirmConversion is atomic — no assets created if any item fails validation in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T037 [P] [US2] Write feature test: user can go back from review to browse without losing selectedTemplateIds in `tests/Feature/TemplateLibraryTest.php`
+- [x] T029 [P] [US2] Write feature test: user can proceed to review step with selected templates and see editable fields in `tests/Feature/TemplateLibraryTest.php`
+- [x] T030 [P] [US2] Write feature test: user can edit a customized item field (e.g., name) during review in `tests/Feature/TemplateLibraryTest.php`
+- [x] T031 [P] [US2] Write feature test: user can remove an item from the review step in `tests/Feature/TemplateLibraryTest.php`
+- [x] T032 [P] [US2] Write feature test: confirmConversion creates assets in database with correct field values in `tests/Feature/TemplateLibraryTest.php`
+- [x] T033 [P] [US2] Write feature test: confirmConversion with customized values creates asset with those values (not template defaults) in `tests/Feature/TemplateLibraryTest.php`
+- [x] T034 [P] [US2] Write feature test: confirmConversion with multiple items creates all as separate active assets and sets createdCount in `tests/Feature/TemplateLibraryTest.php`
+- [x] T035 [P] [US2] Write feature test: confirmConversion validates all items and shows errors if a required field is cleared in `tests/Feature/TemplateLibraryTest.php`
+- [x] T036 [P] [US2] Write feature test: confirmConversion is atomic — no assets created if any item fails validation in `tests/Feature/TemplateLibraryTest.php`
+- [x] T037 [P] [US2] Write feature test: user can go back from review to browse without losing selectedTemplateIds in `tests/Feature/TemplateLibraryTest.php`
 
 ### Implementation
 
-- [ ] T038 [US2] Implement TemplateLibrary component step 2 (review) in `app/Livewire/Assets/TemplateLibrary.php`: proceedToReview() hydrates customizedItems from selectedTemplateIds, removeCustomizedItem() removes by index, backToBrowse() returns to step 1. Use AssetValidationRules concern for validation
-- [ ] T039 [US2] Implement TemplateLibrary component step 3 (confirm) in `app/Livewire/Assets/TemplateLibrary.php`: confirmConversion() validates all customizedItems, creates assets in DB transaction via Auth::user()->assets()->create(), sets createdCount, transitions to step 3. backToAssets() redirects to assets.index
-- [ ] T040 [US2] Implement template library review view (step 2) in `resources/views/livewire/assets/template-library.blade.php`: list of customized items with editable `flux:input`, `flux:select`, `flux:textarea` fields per item, remove button per item, "Back" and "Create Assets" buttons, validation error display keyed per item index
-- [ ] T041 [US2] Implement template library confirmation view (step 3) in `resources/views/livewire/assets/template-library.blade.php`: success message showing createdCount, "Back to Assets" button linking to assets.index
-- [ ] T042 [US2] Run feature tests for US2 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
+- [x] T038 [US2] Implement TemplateLibrary component step 2 (review) in `app/Livewire/Assets/TemplateLibrary.php`: proceedToReview() hydrates customizedItems from selectedTemplateIds, removeCustomizedItem() removes by index, backToBrowse() returns to step 1. Use AssetValidationRules concern for validation
+- [x] T039 [US2] Implement TemplateLibrary component step 3 (confirm) in `app/Livewire/Assets/TemplateLibrary.php`: confirmConversion() validates all customizedItems, creates assets in DB transaction via Auth::user()->assets()->create(), sets createdCount, transitions to step 3. backToAssets() redirects to assets.index
+- [x] T040 [US2] Implement template library review view (step 2) in `resources/views/livewire/assets/template-library.blade.php`: list of customized items with editable `flux:input`, `flux:select`, `flux:textarea` fields per item, remove button per item, "Back" and "Create Assets" buttons, validation error display keyed per item index
+- [x] T041 [US2] Implement template library confirmation view (step 3) in `resources/views/livewire/assets/template-library.blade.php`: success message showing createdCount, "Back to Assets" button linking to assets.index
+- [x] T042 [US2] Run feature tests for US2 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
 
 **Checkpoint**: Full template-to-asset conversion flow works: browse → select → review/customize → confirm → assets created. US1 and US2 both independently functional.
 
