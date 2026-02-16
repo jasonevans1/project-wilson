@@ -19,10 +19,13 @@
 
         {{-- Template groups --}}
         @forelse ($this->templateGroups as $group)
-            <div wire:key="group-{{ $group->id }}" x-data="{ open: true }">
+            @php
+                $isExpanded = in_array($group->id, $expandedGroups);
+            @endphp
+            <div wire:key="group-{{ $group->id }}" x-data="{ open: @js($isExpanded) }">
                 <button
                     type="button"
-                    x-on:click="open = !open"
+                    x-on:click="open = !open; $wire.toggleGroup({{ $group->id }})"
                     class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
                 >
                     <div class="flex items-center gap-2">

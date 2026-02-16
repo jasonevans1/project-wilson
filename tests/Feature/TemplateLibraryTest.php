@@ -318,3 +318,60 @@ test('user can go back from review to browse without losing selectedTemplateIds'
         ->assertSet('step', 1)
         ->assertSet('selectedTemplateIds', [$template->id]);
 });
+
+// ─── US3: Browse Templates by Group ──────────────────────────────────────────
+
+test('template groups display item count badge', function () {
+    $user = User::factory()->create();
+    $group = TemplateGroup::factory()->create(['name' => 'Kitchen', 'slug' => 'kitchen']);
+    AssetTemplate::factory(5)->create(['template_group_id' => $group->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(TemplateLibrary::class)
+        ->assertSee('Kitchen')
+        ->assertSee('5');
+});
+
+test('user can expand and collapse individual groups via toggleGroup', function () {
+    $user = User::factory()->create();
+    $group = TemplateGroup::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(TemplateLibrary::class)
+        ->assertSet('expandedGroups', [])
+        ->call('toggleGroup', $group->id)
+        ->assertSet('expandedGroups', [$group->id])
+        ->call('toggleGroup', $group->id)
+        ->assertSet('expandedGroups', []);
+});
+
+test('selections are preserved when toggling group expansion', function () {
+    $user = User::factory()->create();
+    $group = TemplateGroup::factory()->create();
+    $template = AssetTemplate::factory()->create(['template_group_id' => $group->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(TemplateLibrary::class)
+        ->call('toggleTemplate', $template->id)
+        ->assertSet('selectedTemplateIds', [$template->id])
+        ->call('toggleGroup', $group->id)
+        ->assertSet('selectedTemplateIds', [$template->id])
+        ->call('toggleGroup', $group->id)
+        ->assertSet('selectedTemplateIds', [$template->id]);
+});
+
+test('addTemplate allows duplicate entries for the same template', function () {
+    $user = User::factory()->create();
+    $group = TemplateGroup::factory()->create();
+    $template = AssetTemplate::factory()->create(['template_group_id' => $group->id]);
+
+    $this->actingAs($user);
+
+    Livewire::test(TemplateLibrary::class)
+        ->call('addTemplate', $template->id)
+        ->call('addTemplate', $template->id)
+        ->assertSet('selectedTemplateIds', [$template->id, $template->id]);
+});

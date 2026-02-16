@@ -68,6 +68,21 @@ class TemplateLibrary extends Component
     }
 
     /**
+     * Toggle a group's expanded/collapsed state.
+     */
+    public function toggleGroup(int $groupId): void
+    {
+        $index = array_search($groupId, $this->expandedGroups);
+
+        if ($index !== false) {
+            array_splice($this->expandedGroups, $index, 1);
+            $this->expandedGroups = array_values($this->expandedGroups);
+        } else {
+            $this->expandedGroups[] = $groupId;
+        }
+    }
+
+    /**
      * Toggle a template ID in/out of the selection.
      */
     public function toggleTemplate(int $templateId): void

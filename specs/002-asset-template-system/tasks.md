@@ -120,16 +120,16 @@
 
 ### Tests (write FIRST, verify they FAIL)
 
-- [ ] T043 [P] [US3] Write feature test: template groups display item count in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T044 [P] [US3] Write feature test: user can expand and collapse individual groups via expandedGroups property in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T045 [P] [US3] Write feature test: selections are preserved when toggling group expansion in `tests/Feature/TemplateLibraryTest.php`
-- [ ] T046 [P] [US3] Write feature test: selecting the same template multiple times creates independent entries in selectedTemplateIds (FR-014) in `tests/Feature/TemplateLibraryTest.php`
+- [x] T043 [P] [US3] Write feature test: template groups display item count in `tests/Feature/TemplateLibraryTest.php`
+- [x] T044 [P] [US3] Write feature test: user can expand and collapse individual groups via expandedGroups property in `tests/Feature/TemplateLibraryTest.php`
+- [x] T045 [P] [US3] Write feature test: selections are preserved when toggling group expansion in `tests/Feature/TemplateLibraryTest.php`
+- [x] T046 [P] [US3] Write feature test: selecting the same template multiple times creates independent entries in selectedTemplateIds (FR-014) in `tests/Feature/TemplateLibraryTest.php`
 
 ### Implementation
 
-- [ ] T047 [US3] Add toggleGroup action to TemplateLibrary component in `app/Livewire/Assets/TemplateLibrary.php`: manages expandedGroups array to track which groups are expanded/collapsed
-- [ ] T048 [US3] Update template library browse view in `resources/views/livewire/assets/template-library.blade.php`: add expand/collapse toggle per group header with Alpine.js, display template count badge per group, conditionally show/hide group contents based on expandedGroups state
-- [ ] T049 [US3] Run feature tests for US3 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
+- [x] T047 [US3] Add toggleGroup action to TemplateLibrary component in `app/Livewire/Assets/TemplateLibrary.php`: manages expandedGroups array to track which groups are expanded/collapsed
+- [x] T048 [US3] Update template library browse view in `resources/views/livewire/assets/template-library.blade.php`: add expand/collapse toggle per group header with Alpine.js, display template count badge per group, conditionally show/hide group contents based on expandedGroups state
+- [x] T049 [US3] Run feature tests for US3 and verify all pass via `php artisan test --compact --filter="TemplateLibrary" tests/Feature/TemplateLibraryTest.php`
 
 **Checkpoint**: All three user stories independently functional. Group browsing with expand/collapse and preserved selections working.
 
