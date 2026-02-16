@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] I. Modularity: each new module has a single, declared purpose
+- [ ] II. Separation of Concerns: business logic lives outside controllers
+      and Livewire views; validation is in Form Requests
+- [ ] III. High Cohesion: related domain logic is grouped; no cross-domain
+      files added without justification
+- [ ] IV. Information Hiding: new public interfaces are minimal; internal
+      helpers are protected/private; all types are declared
+- [ ] V. Appropriate Coupling: dependency direction flows inward
+      (domain ← application ← infrastructure); no circular dependencies;
+      eager loading applied where relationships are traversed
 
 ## Project Structure
 
