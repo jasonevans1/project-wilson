@@ -65,7 +65,7 @@ test.describe('UI Responsiveness & Real-time Updates', () => {
 
     // Check that Second Asset is first in the list (most recent)
     const firstItem = page
-      .locator('.divide-y button')
+      .locator('[data-flux-card] button')
       .first();
     await expect(firstItem).toContainText('Second Asset');
   });

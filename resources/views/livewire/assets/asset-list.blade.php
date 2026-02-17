@@ -51,23 +51,25 @@
         </div>
     {{-- Asset list --}}
     @else
-        <div class="divide-y divide-zinc-200 dark:divide-zinc-700">
+        <div class="space-y-2">
             @foreach ($this->assets as $asset)
-                <button
-                    type="button"
-                    wire:click="selectAsset({{ $asset->id }})"
-                    class="w-full text-left px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                >
-                    <div class="flex items-center justify-between">
-                        <flux:text class="font-medium">{{ $asset->name }}</flux:text>
-                        @if ($asset->status === \App\Enums\AssetStatus::Archived)
-                            <flux:badge color="zinc">{{ __('Archived') }}</flux:badge>
-                        @endif
-                    </div>
-                    <flux:text size="sm" class="mt-0.5">
-                        {{ $asset->category->label() }} · {{ $asset->location }}
-                    </flux:text>
-                </button>
+                <flux:card wire:key="asset-{{ $asset->id }}" size="sm">
+                    <button
+                        type="button"
+                        wire:click="selectAsset({{ $asset->id }})"
+                        class="w-full text-left"
+                    >
+                        <div class="flex items-center justify-between">
+                            <flux:text class="font-medium">{{ $asset->name }}</flux:text>
+                            @if ($asset->status === \App\Enums\AssetStatus::Archived)
+                                <flux:badge color="zinc">{{ __('Archived') }}</flux:badge>
+                            @endif
+                        </div>
+                        <flux:text size="sm" class="mt-0.5">
+                            {{ $asset->category->label() }} · {{ $asset->location }}
+                        </flux:text>
+                    </button>
+                </flux:card>
             @endforeach
         </div>
 

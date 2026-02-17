@@ -44,7 +44,7 @@ test.describe('Pagination', () => {
 
     // Page 1 should show 15 assets
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
     await expect(listButtons).toHaveCount(15);
 
@@ -78,7 +78,7 @@ test.describe('Pagination', () => {
     }
 
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
 
     // Page 1: 15 assets
@@ -128,7 +128,7 @@ test.describe('Pagination', () => {
     await page.getByLabel('Show Archived').check();
 
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
 
     // Page 1: 15 archived assets
@@ -158,7 +158,7 @@ test.describe('Pagination', () => {
     }
 
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
 
     // Page 1 has 15, pagination exists
