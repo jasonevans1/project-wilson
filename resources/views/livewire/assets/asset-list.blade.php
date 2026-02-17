@@ -4,6 +4,9 @@
 
         <div class="flex items-center gap-4">
             <flux:switch wire:model.live="showArchived" wire:change="handleToggleChanged" :label="__('Show Archived')" />
+            <flux:button variant="ghost" href="{{ route('assets.templates') }}">
+                {{ __('Add from Templates') }}
+            </flux:button>
             <flux:button variant="primary" wire:click="openCreateForm">
                 {{ __('Add Asset') }}
             </flux:button>
@@ -34,29 +37,39 @@
         <livewire:assets.asset-detail :asset="$this->assets->first(fn ($a) => $a->id === $selectedAssetId) ?? \Illuminate\Support\Facades\Auth::user()->assets()->findOrFail($selectedAssetId)" />
     {{-- Empty state --}}
     @elseif ($this->assets->isEmpty())
-        <div class="text-center py-16">
+        <div class="text-center py-16 space-y-4">
             <flux:text class="text-lg">{{ __('No assets yet.') }}</flux:text>
-            <flux:text class="mt-2">{{ __('Click "Add Asset" to add your first home asset.') }}</flux:text>
+            <flux:text>{{ __('Get started quickly with pre-built templates or add items manually.') }}</flux:text>
+            <div class="flex items-center justify-center gap-3 mt-4">
+                <flux:button variant="primary" href="{{ route('assets.templates') }}">
+                    {{ __('Add from Templates') }}
+                </flux:button>
+                <flux:button variant="ghost" wire:click="openCreateForm">
+                    {{ __('Add Manually') }}
+                </flux:button>
+            </div>
         </div>
     {{-- Asset list --}}
     @else
-        <div class="divide-y divide-zinc-200 dark:divide-zinc-700">
+        <div class="space-y-2">
             @foreach ($this->assets as $asset)
-                <button
-                    type="button"
-                    wire:click="selectAsset({{ $asset->id }})"
-                    class="w-full text-left px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-                >
-                    <div class="flex items-center justify-between">
-                        <flux:text class="font-medium">{{ $asset->name }}</flux:text>
-                        @if ($asset->status === \App\Enums\AssetStatus::Archived)
-                            <flux:badge color="zinc">{{ __('Archived') }}</flux:badge>
-                        @endif
-                    </div>
-                    <flux:text size="sm" class="mt-0.5">
-                        {{ $asset->category->label() }} · {{ $asset->location }}
-                    </flux:text>
-                </button>
+                <flux:card wire:key="asset-{{ $asset->id }}" size="sm">
+                    <button
+                        type="button"
+                        wire:click="selectAsset({{ $asset->id }})"
+                        class="w-full text-left"
+                    >
+                        <div class="flex items-center justify-between">
+                            <flux:text class="font-medium">{{ $asset->name }}</flux:text>
+                            @if ($asset->status === \App\Enums\AssetStatus::Archived)
+                                <flux:badge color="zinc">{{ __('Archived') }}</flux:badge>
+                            @endif
+                        </div>
+                        <flux:text size="sm" class="mt-0.5">
+                            {{ $asset->category->label() }} · {{ $asset->location }}
+                        </flux:text>
+                    </button>
+                </flux:card>
             @endforeach
         </div>
 

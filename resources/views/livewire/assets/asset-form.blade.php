@@ -1,4 +1,4 @@
-<div>
+<flux:card>
     <form wire:submit="save" class="space-y-5">
         <flux:input
             wire:model="name"
@@ -65,4 +65,4 @@
             </flux:button>
         </div>
     </form>
-</div>
+</flux:card>

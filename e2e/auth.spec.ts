@@ -19,7 +19,7 @@ test.describe('Authentication & Access Control', () => {
     await expect(page.getByText('Assets', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('No assets yet.')).toBeVisible();
     await expect(
-      page.getByText('Click "Add Asset" to add your first home asset.'),
+      page.getByText('Get started quickly with pre-built templates or add items manually.'),
     ).toBeVisible();
   });
 

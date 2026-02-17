@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(AssetSeeder::class);
+        $this->call(TemplateGroupSeeder::class);
+        $this->call(AssetTemplateSeeder::class);
     }
 }

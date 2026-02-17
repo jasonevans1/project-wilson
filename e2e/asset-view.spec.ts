@@ -9,10 +9,13 @@ test.describe('Asset Viewing & Details', () => {
 
     await expect(page.getByText('No assets yet.')).toBeVisible();
     await expect(
-      page.getByText('Click "Add Asset" to add your first home asset.'),
+      page.getByText('Get started quickly with pre-built templates or add items manually.'),
     ).toBeVisible();
     await expect(
       page.getByRole('button', { name: 'Add Asset' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Add Manually' }),
     ).toBeVisible();
     await expect(page.getByLabel('Show Archived')).toBeVisible();
   });

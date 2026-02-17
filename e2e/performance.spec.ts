@@ -19,7 +19,7 @@ test.describe('Performance & Load Testing', () => {
 
     // Verify page 1 loads with 15 items
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
     await expect(listButtons).toHaveCount(15);
 
@@ -58,7 +58,7 @@ test.describe('Performance & Load Testing', () => {
 
     // Active list: 10 assets (1 page)
     const listButtons = page.locator(
-      'button[type="button"][class*="text-left"]',
+      '[data-flux-card] button[type="button"]',
     );
     await expect(listButtons).toHaveCount(10);
 
