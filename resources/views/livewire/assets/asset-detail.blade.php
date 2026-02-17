@@ -1,7 +1,9 @@
-<div class="space-y-5">
+<div>
     @if ($editMode)
         <livewire:assets.asset-form :asset="$asset" @asset-updated="handleAssetUpdated" @close-panel="cancelEdit" />
     @else
+        <flux:card>
+        <div class="space-y-5">
         <div class="flex items-center justify-between">
             <flux:heading size="lg">{{ $asset->name }}</flux:heading>
 
@@ -81,6 +83,8 @@
                 </flux:button>
             @endif
         </div>
+        </div>
+        </flux:card>
 
         <flux:modal name="confirm-archive" wire:model="confirmingArchive" class="min-w-[22rem]">
             <div class="space-y-6">
