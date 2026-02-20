@@ -70,4 +70,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Asset::class);
     }
+
+    /**
+     * Get the maintenance tasks owned by the user.
+     */
+    public function maintenanceTasks(): HasMany
+    {
+        return $this->hasMany(MaintenanceTask::class);
+    }
 }

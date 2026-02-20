@@ -7,6 +7,7 @@ use App\Enums\AssetStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Asset extends Model
 {
@@ -51,5 +52,13 @@ class Asset extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the maintenance tasks for this asset.
+     */
+    public function maintenanceTasks(): HasMany
+    {
+        return $this->hasMany(MaintenanceTask::class);
     }
 }
