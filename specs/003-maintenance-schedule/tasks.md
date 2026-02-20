@@ -19,8 +19,8 @@
 
 **Purpose**: Wire up the routing foundation that all user story Livewire components depend on.
 
-- [ ] T001 Create `routes/maintenance.php` with an `auth` + `verified` middleware group (routes will be added per user story phase)
-- [ ] T002 Add `require __DIR__.'/maintenance.php';` to `routes/web.php`
+- [x] T001 Create `routes/maintenance.php` with an `auth` + `verified` middleware group (routes will be added per user story phase)
+- [x] T002 Add `require __DIR__.'/maintenance.php';` to `routes/web.php`
 
 ---
 
