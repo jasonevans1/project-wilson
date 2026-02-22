@@ -19,23 +19,45 @@
                                 {{ __('Every') }} {{ $task->recurrence_count }} {{ ucfirst($task->recurrence_unit->value) }}
                             </flux:text>
                             @if ($task->pendingOccurrence)
-                                <flux:text size="sm">
-                                    {{ __('Due:') }} {{ $task->pendingOccurrence->due_date->format('M j, Y') }}
+                                <div class="flex items-center gap-2">
+                                    <flux:text size="sm">
+                                        {{ __('Due:') }} {{ $task->pendingOccurrence->due_date->format('M j, Y') }}
+                                    </flux:text>
                                     @if ($task->pendingOccurrence->isOverdue())
-                                        <flux:badge color="red" class="ml-1">{{ __('Overdue') }}</flux:badge>
+                                        <flux:badge color="red">{{ __('Overdue') }}</flux:badge>
                                     @endif
-                                </flux:text>
+                                </div>
                             @endif
                         </div>
 
-                        <flux:button
-                            variant="ghost"
-                            size="sm"
-                            wire:click="deactivateTask({{ $task->id }})"
-                            wire:confirm="{{ __('Deactivate this task? Its history will be preserved.') }}"
-                        >
-                            {{ __('Deactivate') }}
-                        </flux:button>
+                        <div class="flex items-center gap-2">
+                            @if ($task->pendingOccurrence)
+                                <flux:button
+                                    variant="ghost"
+                                    size="sm"
+                                    wire:click="completeOccurrence({{ $task->pendingOccurrence->id }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="completeOccurrence({{ $task->pendingOccurrence->id }})"
+                                    wire:key="complete-{{ $task->pendingOccurrence->id }}"
+                                >
+                                    <span wire:loading.remove wire:target="completeOccurrence({{ $task->pendingOccurrence->id }})">
+                                        {{ __('Mark Complete') }}
+                                    </span>
+                                    <span wire:loading wire:target="completeOccurrence({{ $task->pendingOccurrence->id }})">
+                                        {{ __('Saving…') }}
+                                    </span>
+                                </flux:button>
+                            @endif
+
+                            <flux:button
+                                variant="ghost"
+                                size="sm"
+                                wire:click="deactivateTask({{ $task->id }})"
+                                wire:confirm="{{ __('Deactivate this task? Its history will be preserved.') }}"
+                            >
+                                {{ __('Deactivate') }}
+                            </flux:button>
+                        </div>
                     </div>
                 </flux:card>
             @endforeach

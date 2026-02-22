@@ -103,13 +103,13 @@
 
 > **Write FIRST — verify FAIL before any implementation below**
 
-- [ ] T025 [P] [US3] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceOccurrenceTest`; write feature tests covering: `completeOccurrence` sets `completed_at`, next occurrence created with `due_date = prior due_date + interval` (NOT `completed_at + interval`), early completion does not shift next due date, completed occurrence visible in task history, cannot complete another user's occurrence (403) in `tests/Feature/Maintenance/MaintenanceOccurrenceTest.php`
+- [x] T025 [P] [US3] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceOccurrenceTest`; write feature tests covering: `completeOccurrence` sets `completed_at`, next occurrence created with `due_date = prior due_date + interval` (NOT `completed_at + interval`), early completion does not shift next due date, completed occurrence visible in task history, cannot complete another user's occurrence (403) in `tests/Feature/Maintenance/MaintenanceOccurrenceTest.php`
 
 ### Implementation for User Story 3
 
-- [ ] T026 [US3] Add `completeOccurrence(int $occurrenceId): void` action to `app/Livewire/Maintenance/MaintenanceSchedule.php` — load occurrence, verify `auth()->id() === $occurrence->task->user_id` (abort 403 on mismatch), call injected `MaintenanceScheduler::completeOccurrence()`, clear computed cache to trigger re-render
-- [ ] T027 [US3] Add `completeOccurrence(int $occurrenceId): void` action to `app/Livewire/Maintenance/MaintenanceTaskList.php` — same pattern as T026; clear computed cache to trigger re-render
-- [ ] T028 [US3] Update `resources/views/livewire/maintenance/maintenance-schedule.blade.php` and `resources/views/livewire/maintenance/maintenance-task-list.blade.php` to add a `<flux:button wire:click="completeOccurrence({{ $occurrence->id }})">Mark Complete</flux:button>` per pending occurrence row, with `wire:loading wire:target="completeOccurrence({{ $occurrence->id }})"` scoped loading indicator and `wire:key="occurrence-{{ $occurrence->id }}"` on each row
+- [x] T026 [US3] Add `completeOccurrence(int $occurrenceId): void` action to `app/Livewire/Maintenance/MaintenanceSchedule.php` — load occurrence, verify `auth()->id() === $occurrence->task->user_id` (abort 403 on mismatch), call injected `MaintenanceScheduler::completeOccurrence()`, clear computed cache to trigger re-render
+- [x] T027 [US3] Add `completeOccurrence(int $occurrenceId): void` action to `app/Livewire/Maintenance/MaintenanceTaskList.php` — same pattern as T026; clear computed cache to trigger re-render
+- [x] T028 [US3] Update `resources/views/livewire/maintenance/maintenance-schedule.blade.php` and `resources/views/livewire/maintenance/maintenance-task-list.blade.php` to add a `<flux:button wire:click="completeOccurrence({{ $occurrence->id }})">Mark Complete</flux:button>` per pending occurrence row, with `wire:loading wire:target="completeOccurrence({{ $occurrence->id }})"` scoped loading indicator and `wire:key="occurrence-{{ $occurrence->id }}"` on each row
 
 **Checkpoint**: Run `php artisan test --compact tests/Feature/Maintenance/MaintenanceOccurrenceTest.php` — all tests must pass. Confirm marking complete removes item from pending list and a new occurrence appears in the schedule.
 

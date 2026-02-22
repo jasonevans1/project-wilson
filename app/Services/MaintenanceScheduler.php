@@ -6,13 +6,14 @@ use App\Enums\RecurrenceUnit;
 use App\Models\MaintenanceOccurrence;
 use App\Models\MaintenanceTask;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\DB;
 
 class MaintenanceScheduler
 {
-    public function nextDueDate(Carbon $fromDate, RecurrenceUnit $unit, int $count): Carbon
+    public function nextDueDate(CarbonInterface $fromDate, RecurrenceUnit $unit, int $count): Carbon
     {
-        $date = $fromDate->copy();
+        $date = Carbon::parse($fromDate);
 
         return match ($unit) {
             RecurrenceUnit::Daily => $date->addDays($count),
