@@ -125,12 +125,12 @@
 
 > **Write FIRST — verify FAIL before any implementation below**
 
-- [ ] T029 [P] [US4] Add tests to `tests/Feature/Maintenance/MaintenanceOccurrenceTest.php` covering: `saveOccurrenceDueDate` updates only the targeted occurrence, other occurrences unaffected, past due date immediately makes occurrence overdue, `due_date` required validation, cannot edit another user's occurrence (403)
+- [x] T029 [P] [US4] Add tests to `tests/Feature/Maintenance/MaintenanceOccurrenceTest.php` covering: `saveOccurrenceDueDate` updates only the targeted occurrence, other occurrences unaffected, past due date immediately makes occurrence overdue, `due_date` required validation, cannot edit another user's occurrence (403)
 
 ### Implementation for User Story 4
 
-- [ ] T030 [US4] Add to `app/Livewire/Maintenance/MaintenanceTaskList.php`: public properties `$editingOccurrenceId = null` and `$editDueDate = null`; actions `startEditDueDate(int $occurrenceId)` (sets both properties, pre-fills `$editDueDate` from occurrence's current `due_date`), `saveOccurrenceDueDate()` (validates `$editDueDate` via `UpdateOccurrenceDueDateRequest` rules, auth check, updates occurrence, resets edit state, clears computed cache), `cancelEditDueDate()` (resets both properties)
-- [ ] T031 [US4] Update `resources/views/livewire/maintenance/maintenance-task-list.blade.php`: for each pending occurrence, conditionally render inline edit mode (a `<flux:input type="date">` bound to `wire:model="editDueDate"` with Save/Cancel `<flux:button>` elements) when `$editingOccurrenceId === $occurrence->id`, otherwise render due date display with an edit `<flux:button icon="pencil" wire:click="startEditDueDate({{ $occurrence->id }}">`
+- [x] T030 [US4] Add to `app/Livewire/Maintenance/MaintenanceTaskList.php`: public properties `$editingOccurrenceId = null` and `$editDueDate = null`; actions `startEditDueDate(int $occurrenceId)` (sets both properties, pre-fills `$editDueDate` from occurrence's current `due_date`), `saveOccurrenceDueDate()` (validates `$editDueDate` via `UpdateOccurrenceDueDateRequest` rules, auth check, updates occurrence, resets edit state, clears computed cache), `cancelEditDueDate()` (resets both properties)
+- [x] T031 [US4] Update `resources/views/livewire/maintenance/maintenance-task-list.blade.php`: for each pending occurrence, conditionally render inline edit mode (a `<flux:input type="date">` bound to `wire:model="editDueDate"` with Save/Cancel `<flux:button>` elements) when `$editingOccurrenceId === $occurrence->id`, otherwise render due date display with an edit `<flux:button icon="pencil" wire:click="startEditDueDate({{ $occurrence->id }}">`
 
 **Checkpoint**: Run `php artisan test --compact tests/Feature/Maintenance/MaintenanceOccurrenceTest.php` — all tests must pass. Confirm inline date editing works end-to-end on `/assets/{id}/maintenance`.
 

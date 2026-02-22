@@ -19,14 +19,32 @@
                                 {{ __('Every') }} {{ $task->recurrence_count }} {{ ucfirst($task->recurrence_unit->value) }}
                             </flux:text>
                             @if ($task->pendingOccurrence)
-                                <div class="flex items-center gap-2">
-                                    <flux:text size="sm">
-                                        {{ __('Due:') }} {{ $task->pendingOccurrence->due_date->format('M j, Y') }}
-                                    </flux:text>
-                                    @if ($task->pendingOccurrence->isOverdue())
-                                        <flux:badge color="red">{{ __('Overdue') }}</flux:badge>
-                                    @endif
-                                </div>
+                                @if ($editingOccurrenceId === $task->pendingOccurrence->id)
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <flux:input
+                                            type="date"
+                                            wire:model="editDueDate"
+                                            size="sm"
+                                        />
+                                        <flux:button size="sm" wire:click="saveOccurrenceDueDate">{{ __('Save') }}</flux:button>
+                                        <flux:button size="sm" variant="ghost" wire:click="cancelEditDueDate">{{ __('Cancel') }}</flux:button>
+                                    </div>
+                                @else
+                                    <div class="flex items-center gap-2">
+                                        <flux:text size="sm">
+                                            {{ __('Due:') }} {{ $task->pendingOccurrence->due_date->format('M j, Y') }}
+                                        </flux:text>
+                                        @if ($task->pendingOccurrence->isOverdue())
+                                            <flux:badge color="red">{{ __('Overdue') }}</flux:badge>
+                                        @endif
+                                        <flux:button
+                                            icon="pencil"
+                                            size="sm"
+                                            variant="ghost"
+                                            wire:click="startEditDueDate({{ $task->pendingOccurrence->id }})"
+                                        />
+                                    </div>
+                                @endif
                             @endif
                         </div>
 

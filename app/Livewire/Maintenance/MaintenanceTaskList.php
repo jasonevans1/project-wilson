@@ -3,6 +3,7 @@
 namespace App\Livewire\Maintenance;
 
 use App\Models\Asset;
+use App\Models\MaintenanceOccurrence;
 use App\Services\MaintenanceScheduler;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +49,36 @@ class MaintenanceTaskList extends Component
 
     public function completeOccurrence(int $occurrenceId, MaintenanceScheduler $scheduler): void
     {
-        $occurrence = \App\Models\MaintenanceOccurrence::findOrFail($occurrenceId);
+        $occurrence = MaintenanceOccurrence::findOrFail($occurrenceId);
         abort_if($occurrence->task->user_id !== Auth::id(), 403);
         $scheduler->completeOccurrence($occurrence);
         unset($this->tasks);
+    }
+
+    public function startEditDueDate(int $occurrenceId): void
+    {
+        $occurrence = MaintenanceOccurrence::findOrFail($occurrenceId);
+        $this->editingOccurrenceId = $occurrence->id;
+        $this->editDueDate = $occurrence->due_date->toDateString();
+    }
+
+    public function saveOccurrenceDueDate(): void
+    {
+        $this->validate(['editDueDate' => ['required', 'date']]);
+
+        $occurrence = MaintenanceOccurrence::findOrFail($this->editingOccurrenceId);
+        abort_if($occurrence->task->user_id !== Auth::id(), 403);
+
+        $occurrence->update(['due_date' => $this->editDueDate]);
+
+        $this->editingOccurrenceId = null;
+        $this->editDueDate = null;
+        unset($this->tasks);
+    }
+
+    public function cancelEditDueDate(): void
+    {
+        $this->editingOccurrenceId = null;
+        $this->editDueDate = null;
     }
 }

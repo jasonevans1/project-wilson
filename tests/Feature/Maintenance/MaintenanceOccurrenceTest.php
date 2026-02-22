@@ -215,3 +215,155 @@ test('mark complete button is visible for pending occurrence in task list', func
     Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
         ->assertSee('Mark Complete');
 });
+
+// ─── saveOccurrenceDueDate ────────────────────────────────────────────────────
+
+test('saveOccurrenceDueDate updates the targeted occurrence due date', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task = MaintenanceTask::factory()->create([
+        'user_id' => $user->id,
+        'asset_id' => $asset->id,
+        'is_active' => true,
+    ]);
+    $occurrence = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task->id,
+        'due_date' => today()->addDays(7),
+    ]);
+
+    $this->actingAs($user);
+
+    $newDate = today()->addDays(30)->toDateString();
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
+        ->call('startEditDueDate', $occurrence->id)
+        ->set('editDueDate', $newDate)
+        ->call('saveOccurrenceDueDate')
+        ->assertHasNoErrors();
+
+    expect($occurrence->fresh()->due_date->toDateString())->toBe($newDate);
+});
+
+test('saveOccurrenceDueDate does not affect other occurrences', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task1 = MaintenanceTask::factory()->create(['user_id' => $user->id, 'asset_id' => $asset->id, 'is_active' => true]);
+    $task2 = MaintenanceTask::factory()->create(['user_id' => $user->id, 'asset_id' => $asset->id, 'is_active' => true]);
+    $occurrence1 = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task1->id,
+        'due_date' => today()->addDays(7),
+    ]);
+    $occurrence2 = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task2->id,
+        'due_date' => today()->addDays(14),
+    ]);
+
+    $this->actingAs($user);
+
+    $newDate = today()->addDays(30)->toDateString();
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
+        ->call('startEditDueDate', $occurrence1->id)
+        ->set('editDueDate', $newDate)
+        ->call('saveOccurrenceDueDate');
+
+    expect($occurrence1->fresh()->due_date->toDateString())->toBe($newDate);
+    expect($occurrence2->fresh()->due_date->toDateString())->toBe(today()->addDays(14)->toDateString());
+});
+
+test('past due date makes occurrence immediately overdue', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task = MaintenanceTask::factory()->create([
+        'user_id' => $user->id,
+        'asset_id' => $asset->id,
+        'is_active' => true,
+    ]);
+    $occurrence = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task->id,
+        'due_date' => today()->addDays(7),
+    ]);
+
+    $this->actingAs($user);
+
+    $pastDate = today()->subDays(3)->toDateString();
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
+        ->call('startEditDueDate', $occurrence->id)
+        ->set('editDueDate', $pastDate)
+        ->call('saveOccurrenceDueDate');
+
+    expect($occurrence->fresh()->isOverdue())->toBeTrue();
+});
+
+test('saveOccurrenceDueDate requires due_date', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task = MaintenanceTask::factory()->create([
+        'user_id' => $user->id,
+        'asset_id' => $asset->id,
+        'is_active' => true,
+    ]);
+    $occurrence = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task->id,
+        'due_date' => today()->addDays(7),
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
+        ->call('startEditDueDate', $occurrence->id)
+        ->set('editDueDate', '')
+        ->call('saveOccurrenceDueDate')
+        ->assertHasErrors(['editDueDate']);
+});
+
+test('cannot edit another users occurrence due date (403)', function () {
+    $userA = User::factory()->create();
+    $userB = User::factory()->create();
+    $assetA = Asset::factory()->create(['user_id' => $userA->id]);
+    $assetB = Asset::factory()->create(['user_id' => $userB->id]);
+    $taskB = MaintenanceTask::factory()->create([
+        'user_id' => $userB->id,
+        'asset_id' => $assetB->id,
+        'is_active' => true,
+    ]);
+    $occurrenceB = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $taskB->id,
+        'due_date' => today()->addDays(7),
+    ]);
+    $originalDate = $occurrenceB->due_date->toDateString();
+
+    $this->actingAs($userA);
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $assetA])
+        ->call('startEditDueDate', $occurrenceB->id)
+        ->set('editDueDate', today()->addDays(30)->toDateString())
+        ->call('saveOccurrenceDueDate')
+        ->assertForbidden();
+
+    expect($occurrenceB->fresh()->due_date->toDateString())->toBe($originalDate);
+});
+
+test('cancelEditDueDate resets editing state', function () {
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task = MaintenanceTask::factory()->create([
+        'user_id' => $user->id,
+        'asset_id' => $asset->id,
+        'is_active' => true,
+    ]);
+    $occurrence = MaintenanceOccurrence::factory()->pending()->create([
+        'maintenance_task_id' => $task->id,
+        'due_date' => today()->addDays(7),
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(MaintenanceTaskList::class, ['asset' => $asset])
+        ->call('startEditDueDate', $occurrence->id)
+        ->assertSet('editingOccurrenceId', $occurrence->id)
+        ->call('cancelEditDueDate')
+        ->assertSet('editingOccurrenceId', null)
+        ->assertSet('editDueDate', null);
+});
