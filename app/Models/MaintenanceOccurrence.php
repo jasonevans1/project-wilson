@@ -41,7 +41,7 @@ class MaintenanceOccurrence extends Model
      */
     public function task(): BelongsTo
     {
-        return $this->belongsTo(MaintenanceTask::class);
+        return $this->belongsTo(MaintenanceTask::class, 'maintenance_task_id');
     }
 
     /**

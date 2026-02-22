@@ -81,13 +81,13 @@
 
 > **Write FIRST — verify FAIL before any implementation below**
 
-- [ ] T021 [P] [US2] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceScheduleTest`; write feature tests covering: all pending occurrences listed for auth user (not other users'), sorted ascending by due_date, overdue item detection (due_date in past + not completed), asset filter shows only that asset's occurrences, empty state when no occurrences exist in `tests/Feature/Maintenance/MaintenanceScheduleTest.php`
+- [x] T021 [P] [US2] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceScheduleTest`; write feature tests covering: all pending occurrences listed for auth user (not other users'), sorted ascending by due_date, overdue item detection (due_date in past + not completed), asset filter shows only that asset's occurrences, empty state when no occurrences exist in `tests/Feature/Maintenance/MaintenanceScheduleTest.php`
 
 ### Implementation for User Story 2
 
-- [ ] T022 [US2] Run `php artisan make:livewire Maintenance/MaintenanceSchedule --no-interaction`; implement `$filterAssetId = null`, `occurrences()` `#[Computed]` (pending occurrences for auth user via `maintenanceTasks()->active()->with('pendingOccurrence.task.asset')`, filtered by `$filterAssetId` when set, sorted by `due_date` ASC), `assets()` `#[Computed]` (active assets for auth user), `filterByAsset(?int $assetId)` action in `app/Livewire/Maintenance/MaintenanceSchedule.php`
-- [ ] T023 [US2] Implement `MaintenanceSchedule` blade view: asset filter `<flux:select>` bound to `wire:model.live="filterAssetId"`, occurrences list (task name, asset name, due date, inline `<flux:badge color="red">Overdue</flux:badge>` when `$occurrence->isOverdue()`), empty state message using Flux components in `resources/views/livewire/maintenance/maintenance-schedule.blade.php`
-- [ ] T024 [US2] Add `Route::livewire('maintenance', MaintenanceSchedule::class)->name('maintenance.schedule');` to `routes/maintenance.php`
+- [x] T022 [US2] Run `php artisan make:livewire Maintenance/MaintenanceSchedule --no-interaction`; implement `$filterAssetId = null`, `occurrences()` `#[Computed]` (pending occurrences for auth user via `maintenanceTasks()->active()->with('pendingOccurrence.task.asset')`, filtered by `$filterAssetId` when set, sorted by `due_date` ASC), `assets()` `#[Computed]` (active assets for auth user), `filterByAsset(?int $assetId)` action in `app/Livewire/Maintenance/MaintenanceSchedule.php`
+- [x] T023 [US2] Implement `MaintenanceSchedule` blade view: asset filter `<flux:select>` bound to `wire:model.live="filterAssetId"`, occurrences list (task name, asset name, due date, inline `<flux:badge color="red">Overdue</flux:badge>` when `$occurrence->isOverdue()`), empty state message using Flux components in `resources/views/livewire/maintenance/maintenance-schedule.blade.php`
+- [x] T024 [US2] Add `Route::livewire('maintenance', MaintenanceSchedule::class)->name('maintenance.schedule');` to `routes/maintenance.php`
 
 **Checkpoint**: Run `php artisan test --compact tests/Feature/Maintenance/MaintenanceScheduleTest.php` — all tests must pass. Confirm schedule at `/maintenance` shows correct sort and overdue badges.
 
