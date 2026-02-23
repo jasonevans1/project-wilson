@@ -4,6 +4,7 @@ namespace App\Livewire\Maintenance;
 
 use App\Models\Asset;
 use App\Models\MaintenanceOccurrence;
+use App\Models\MaintenanceTask;
 use App\Services\MaintenanceScheduler;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,9 @@ class MaintenanceTaskList extends Component
 
     public function deactivateTask(int $taskId): void
     {
-        Auth::user()->maintenanceTasks()->findOrFail($taskId)->update(['is_active' => false]);
+        $task = MaintenanceTask::findOrFail($taskId);
+        abort_if($task->user_id !== Auth::id(), 403);
+        $task->update(['is_active' => false]);
         unset($this->tasks);
     }
 

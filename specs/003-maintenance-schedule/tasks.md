@@ -140,12 +140,12 @@
 
 **Purpose**: Task deactivation, navigation integration, code formatting, and final test run.
 
-- [ ] T032 [P] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceTaskDeactivationTest`; write feature tests covering: deactivated task (`is_active = false`) excluded from `/maintenance` schedule, pending occurrence for deactivated task not generated further, completed occurrences of deactivated task still returned in history query, cannot deactivate another user's task (403) in `tests/Feature/Maintenance/MaintenanceTaskDeactivationTest.php`
-- [ ] T033 Implement `deactivateTask(int $taskId): void` in `app/Livewire/Maintenance/MaintenanceTaskList.php` (auth check, sets `is_active = false`, clears computed cache); update `resources/views/livewire/maintenance/maintenance-task-list.blade.php` to add a `<flux:button variant="danger" wire:click="deactivateTask({{ $task->id }})">` per active task row
-- [ ] T034 [P] Add a "Maintenance" navigation link (using `route('maintenance.schedule')`) to the main application navigation layout (locate in `resources/views/components/` or `resources/views/layouts/`)
-- [ ] T035 [P] Add a "View Maintenance" link (using `route('maintenance.asset', $asset)`) to the asset detail panel in `resources/views/livewire/assets/asset-detail.blade.php` (or equivalent)
-- [ ] T036 Run `vendor/bin/pint --dirty` to auto-fix formatting on all new and modified PHP files
-- [ ] T037 Run `php artisan test --compact --filter=Maintenance` to execute all maintenance tests and confirm every test passes
+- [x] T032 [P] Run `php artisan make:test --pest --no-interaction tests/Feature/Maintenance/MaintenanceTaskDeactivationTest`; write feature tests covering: deactivated task (`is_active = false`) excluded from `/maintenance` schedule, pending occurrence for deactivated task not generated further, completed occurrences of deactivated task still returned in history query, cannot deactivate another user's task (403) in `tests/Feature/Maintenance/MaintenanceTaskDeactivationTest.php`
+- [x] T033 Implement `deactivateTask(int $taskId): void` in `app/Livewire/Maintenance/MaintenanceTaskList.php` (auth check, sets `is_active = false`, clears computed cache); update `resources/views/livewire/maintenance/maintenance-task-list.blade.php` to add a `<flux:button variant="danger" wire:click="deactivateTask({{ $task->id }})">` per active task row
+- [x] T034 [P] Add a "Maintenance" navigation link (using `route('maintenance.schedule')`) to the main application navigation layout (locate in `resources/views/components/` or `resources/views/layouts/`)
+- [x] T035 [P] Add a "View Maintenance" link (using `route('maintenance.asset', $asset)`) to the asset detail panel in `resources/views/livewire/assets/asset-detail.blade.php` (or equivalent)
+- [x] T036 Run `vendor/bin/pint --dirty` to auto-fix formatting on all new and modified PHP files
+- [x] T037 Run `php artisan test --compact --filter=Maintenance` to execute all maintenance tests and confirm every test passes
 
 ---
 

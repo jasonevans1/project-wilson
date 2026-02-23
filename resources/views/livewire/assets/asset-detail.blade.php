@@ -71,6 +71,10 @@
                 {{ __('Edit') }}
             </flux:button>
 
+            <flux:button variant="ghost" size="sm" :href="route('maintenance.asset', $asset)" wire:navigate>
+                {{ __('View Maintenance') }}
+            </flux:button>
+
             @if ($asset->status === \App\Enums\AssetStatus::Active)
                 <flux:modal.trigger name="confirm-archive">
                     <flux:button variant="ghost" size="sm">

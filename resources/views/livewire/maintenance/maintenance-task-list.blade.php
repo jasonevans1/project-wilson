@@ -68,7 +68,7 @@
                             @endif
 
                             <flux:button
-                                variant="ghost"
+                                variant="danger"
                                 size="sm"
                                 wire:click="deactivateTask({{ $task->id }})"
                                 wire:confirm="{{ __('Deactivate this task? Its history will be preserved.') }}"
