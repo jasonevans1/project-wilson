@@ -18,6 +18,9 @@
                     <flux:sidebar.item icon="wrench" :href="route('assets.index')" :current="request()->routeIs('assets.*')" wire:navigate>
                         {{ __('Assets') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar-days" :href="route('maintenance.schedule')" :current="request()->routeIs('maintenance.*')" wire:navigate>
+                        {{ __('Maintenance') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

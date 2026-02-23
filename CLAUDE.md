@@ -285,6 +285,7 @@ ddev exec --raw <command> [args...]
 - PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1 (001-home-asset-crud)
 - MariaDB 10.11 (via Laravel Eloquent; migrations only) (001-home-asset-crud)
 - MariaDB 10.11 (via Eloquent; 2 new tables: template_groups, asset_templates) (002-asset-template-system)
+- MariaDB 10.11 via Eloquent — 2 new tables: `maintenance_tasks`, `maintenance_occurrences` (003-maintenance-schedule)
 
 ## Recent Changes
 - 001-home-asset-crud: Added PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1
