@@ -2,8 +2,8 @@
     <flux:heading size="xl">{{ __('Maintenance Schedule') }}</flux:heading>
 
     <div>
-        <flux:select wire:model.live="filterAssetId" placeholder="{{ __('All Assets') }}">
-            <flux:select.option :value="null">{{ __('All Assets') }}</flux:select.option>
+        <flux:select wire:model.live="filterAssetId">
+            <flux:select.option value="">{{ __('All Assets') }}</flux:select.option>
             @foreach ($this->assets as $asset)
                 <flux:select.option :value="$asset->id">{{ $asset->name }}</flux:select.option>
             @endforeach
