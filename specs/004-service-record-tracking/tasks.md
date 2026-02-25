@@ -19,8 +19,8 @@
 
 **Purpose**: Create the foundational enum and validation concern before any model or component work.
 
-- [ ] T001 [P] Create `app/Enums/ServiceType.php` — backed string enum with `Maintenance`, `Repair`, `Inspection`, `Replacement` cases (TitleCase) and a `label(): string` method; follow `app/Enums/RecurrenceUnit.php` as structure reference
-- [ ] T002 [P] Create `app/Concerns/ServiceRecordValidationRules.php` — `trait ServiceRecordValidationRules` with `serviceRecordRules(): array` method; rules for `serviceDate` (required, date), `serviceType` (required, Rule::enum), `description` (required, string, max:5000), `providerName` (nullable, string, max:255), `cost` (nullable, numeric, min:0, decimal:0,2), `underWarranty` (boolean), `warrantyExpiresOn` (nullable, date, required_if:underWarranty,true); follow `app/Concerns/AssetValidationRules.php` as structure reference
+- [x] T001 [P] Create `app/Enums/ServiceType.php` — backed string enum with `Maintenance`, `Repair`, `Inspection`, `Replacement` cases (TitleCase) and a `label(): string` method; follow `app/Enums/RecurrenceUnit.php` as structure reference
+- [x] T002 [P] Create `app/Concerns/ServiceRecordValidationRules.php` — `trait ServiceRecordValidationRules` with `serviceRecordRules(): array` method; rules for `serviceDate` (required, date), `serviceType` (required, Rule::enum), `description` (required, string, max:5000), `providerName` (nullable, string, max:255), `cost` (nullable, numeric, min:0, decimal:0,2), `underWarranty` (boolean), `warrantyExpiresOn` (nullable, date, required_if:underWarranty,true); follow `app/Concerns/AssetValidationRules.php` as structure reference
 
 ---
 
