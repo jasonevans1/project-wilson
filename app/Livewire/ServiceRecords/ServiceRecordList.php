@@ -151,4 +151,12 @@ class ServiceRecordList extends Component
         $this->warrantyExpiresOn = null;
         unset($this->records);
     }
+
+    public function deleteRecord(int $id): void
+    {
+        $record = ServiceRecord::findOrFail($id);
+        abort_if($record->user_id !== Auth::id(), 403);
+        $record->delete();
+        unset($this->records);
+    }
 }

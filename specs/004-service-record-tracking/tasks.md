@@ -115,13 +115,13 @@
 
 ### Tests for User Story 4 (TDD — write first, verify FAIL before T028)
 
-- [ ] T027 [US4] Write feature tests in `tests/Feature/ServiceRecords/ServiceRecordDeleteTest.php` via `ddev exec --raw php artisan make:test --pest ServiceRecords/ServiceRecordDeleteTest --no-interaction`; cover: (1) authenticated user deletes own record → `assertDatabaseMissing('service_records', ...)` and record absent from component list, (2) authenticated user attempting to delete another user's record → 403 and record still present, (3) record deletion does not affect other records for the same asset; run tests to confirm RED
+- [x] T027 [US4] Write feature tests in `tests/Feature/ServiceRecords/ServiceRecordDeleteTest.php` via `ddev exec --raw php artisan make:test --pest ServiceRecords/ServiceRecordDeleteTest --no-interaction`; cover: (1) authenticated user deletes own record → `assertDatabaseMissing('service_records', ...)` and record absent from component list, (2) authenticated user attempting to delete another user's record → 403 and record still present, (3) record deletion does not affect other records for the same asset; run tests to confirm RED
 
 ### Implementation for User Story 4
 
-- [ ] T028 [P] [US4] Add `deleteRecord(int $id): void` to `app/Livewire/ServiceRecords/ServiceRecordList.php` — find `ServiceRecord::findOrFail($id)`, `abort_if($record->user_id !== Auth::id(), 403)`, call `$record->delete()`, `unset($this->records)`
-- [ ] T029 [P] [US4] Add delete button to each record row in `resources/views/livewire/service-records/service-record-list.blade.php` — `<flux:button variant="danger" size="sm" wire:click="deleteRecord({{ $record->id }})" wire:confirm="{{ __('Delete this service record? This cannot be undone.') }}">{{ __('Delete') }}</flux:button>` inside the read-only row display (not shown during edit mode)
-- [ ] T030 [US4] Run `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/ServiceRecordDeleteTest.php` — all tests must be GREEN before proceeding
+- [x] T028 [P] [US4] Add `deleteRecord(int $id): void` to `app/Livewire/ServiceRecords/ServiceRecordList.php` — find `ServiceRecord::findOrFail($id)`, `abort_if($record->user_id !== Auth::id(), 403)`, call `$record->delete()`, `unset($this->records)`
+- [x] T029 [P] [US4] Add delete button to each record row in `resources/views/livewire/service-records/service-record-list.blade.php` — `<flux:button variant="danger" size="sm" wire:click="deleteRecord({{ $record->id }})" wire:confirm="{{ __('Delete this service record? This cannot be undone.') }}">{{ __('Delete') }}</flux:button>` inside the read-only row display (not shown during edit mode)
+- [x] T030 [US4] Run `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/ServiceRecordDeleteTest.php` — all tests must be GREEN before proceeding
 
 **Checkpoint**: All four user stories are independently testable and complete. Full CRUD is functional.
 

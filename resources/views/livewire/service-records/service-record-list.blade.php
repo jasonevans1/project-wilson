@@ -179,7 +179,17 @@
                                     <flux:text size="sm">${{ number_format($record->cost, 2) }}</flux:text>
                                 @endif
                             </div>
-                            <flux:button icon="pencil" size="sm" variant="ghost" wire:click="startEdit({{ $record->id }})" />
+                            <div class="flex items-center gap-1">
+                                <flux:button icon="pencil" size="sm" variant="ghost" wire:click="startEdit({{ $record->id }})" />
+                                <flux:button
+                                    variant="danger"
+                                    size="sm"
+                                    wire:click="deleteRecord({{ $record->id }})"
+                                    wire:confirm="{{ __('Delete this service record? This cannot be undone.') }}"
+                                >
+                                    {{ __('Delete') }}
+                                </flux:button>
+                            </div>
                         </div>
                     @endif
                 </flux:card>
