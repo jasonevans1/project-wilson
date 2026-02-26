@@ -93,21 +93,95 @@
         <div class="space-y-3">
             @foreach ($this->records as $record)
                 <flux:card wire:key="record-{{ $record->id }}">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-2">
-                                <flux:badge>{{ $record->service_type->label() }}</flux:badge>
-                                <flux:text size="sm">{{ $record->service_date->format('M j, Y') }}</flux:text>
+                    @if ($editingRecordId === $record->id)
+                        <form wire:submit="updateRecord" class="space-y-5">
+                            <flux:heading size="lg">{{ __('Edit Service Record') }}</flux:heading>
+
+                            <flux:input
+                                wire:model="serviceDate"
+                                :label="__('Service Date')"
+                                type="date"
+                                required
+                                :error="$errors->first('serviceDate')"
+                            />
+
+                            <flux:select
+                                wire:model="serviceType"
+                                :label="__('Service Type')"
+                                required
+                                :error="$errors->first('serviceType')"
+                            >
+                                <flux:select.option value="">{{ __('Select type...') }}</flux:select.option>
+                                @foreach (\App\Enums\ServiceType::cases() as $case)
+                                    <flux:select.option :value="$case->value">{{ $case->label() }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+
+                            <flux:textarea
+                                wire:model="description"
+                                :label="__('Description')"
+                                rows="4"
+                                required
+                                :error="$errors->first('description')"
+                            />
+
+                            <flux:input
+                                wire:model="providerName"
+                                :label="__('Provider / Contractor')"
+                                type="text"
+                                :error="$errors->first('providerName')"
+                            />
+
+                            <flux:input
+                                wire:model="cost"
+                                :label="__('Cost')"
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                :error="$errors->first('cost')"
+                            />
+
+                            <flux:checkbox
+                                wire:model.live="underWarranty"
+                                :label="__('Under Warranty')"
+                            />
+
+                            @if ($underWarranty)
+                                <flux:input
+                                    wire:model="warrantyExpiresOn"
+                                    :label="__('Warranty Expires')"
+                                    type="date"
+                                    :error="$errors->first('warrantyExpiresOn')"
+                                />
+                            @endif
+
+                            <div class="flex items-center gap-2 pt-2">
+                                <flux:button variant="primary" type="submit">
+                                    {{ __('Save Changes') }}
+                                </flux:button>
+                                <flux:button variant="ghost" type="button" wire:click="cancelEdit">
+                                    {{ __('Cancel') }}
+                                </flux:button>
                             </div>
-                            <flux:text>{{ $record->description }}</flux:text>
-                            @if ($record->provider_name)
-                                <flux:text size="sm">{{ $record->provider_name }}</flux:text>
-                            @endif
-                            @if ($record->cost !== null)
-                                <flux:text size="sm">${{ number_format($record->cost, 2) }}</flux:text>
-                            @endif
+                        </form>
+                    @else
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <flux:badge>{{ $record->service_type->label() }}</flux:badge>
+                                    <flux:text size="sm">{{ $record->service_date->format('M j, Y') }}</flux:text>
+                                </div>
+                                <flux:text>{{ $record->description }}</flux:text>
+                                @if ($record->provider_name)
+                                    <flux:text size="sm">{{ $record->provider_name }}</flux:text>
+                                @endif
+                                @if ($record->cost !== null)
+                                    <flux:text size="sm">${{ number_format($record->cost, 2) }}</flux:text>
+                                @endif
+                            </div>
+                            <flux:button icon="pencil" size="sm" variant="ghost" wire:click="startEdit({{ $record->id }})" />
                         </div>
-                    </div>
+                    @endif
                 </flux:card>
             @endforeach
         </div>
