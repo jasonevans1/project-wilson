@@ -131,12 +131,12 @@
 
 **Purpose**: Edge cases, unit coverage, formatting, and final validation.
 
-- [ ] T031 [P] Write unit test for `ServiceType::label()` in `tests/Unit/Enums/ServiceTypeTest.php` via `ddev exec --raw php artisan make:test --pest --unit Enums/ServiceTypeTest --no-interaction`; assert each case returns the expected human-readable label string
-- [ ] T032 [P] Add future service date warning in `resources/views/livewire/service-records/service-record-list.blade.php` — in the read-only record row, display a `<flux:badge color="yellow">Future Date</flux:badge>` when `$record->service_date->isFuture()` (edge case from spec)
-- [ ] T033 Run `ddev exec --raw vendor/bin/pint --dirty` to fix all formatting issues across new and modified files before final commit
-- [ ] T034 Run full feature test suite `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/` — all tests GREEN
-- [ ] T035 Run unit test `ddev exec --raw php artisan test --compact tests/Unit/Enums/ServiceTypeTest.php` — GREEN
-- [ ] T036 Verify navigation end-to-end: confirm `route('service-records.index', $asset)` resolves correctly via `ddev exec --raw php artisan route:list --name=service-records` and that the "View Service Records" link appears in `asset-detail.blade.php`
+- [x] T031 [P] Write unit test for `ServiceType::label()` in `tests/Unit/Enums/ServiceTypeTest.php` via `ddev exec --raw php artisan make:test --pest --unit Enums/ServiceTypeTest --no-interaction`; assert each case returns the expected human-readable label string
+- [x] T032 [P] Add future service date warning in `resources/views/livewire/service-records/service-record-list.blade.php` — in the read-only record row, display a `<flux:badge color="yellow">Future Date</flux:badge>` when `$record->service_date->isFuture()` (edge case from spec)
+- [x] T033 Run `ddev exec --raw vendor/bin/pint --dirty` to fix all formatting issues across new and modified files before final commit
+- [x] T034 Run full feature test suite `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/` — all tests GREEN
+- [x] T035 Run unit test `ddev exec --raw php artisan test --compact tests/Unit/Enums/ServiceTypeTest.php` — GREEN
+- [x] T036 Verify navigation end-to-end: confirm `route('service-records.index', $asset)` resolves correctly via `ddev exec --raw php artisan route:list --name=service-records` and that the "View Service Records" link appears in `asset-detail.blade.php`
 
 ---
 

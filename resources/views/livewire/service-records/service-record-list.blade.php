@@ -170,6 +170,9 @@
                                 <div class="flex items-center gap-2">
                                     <flux:badge>{{ $record->service_type->label() }}</flux:badge>
                                     <flux:text size="sm">{{ $record->service_date->format('M j, Y') }}</flux:text>
+                                    @if ($record->service_date->isFuture())
+                                        <flux:badge color="yellow">{{ __('Future Date') }}</flux:badge>
+                                    @endif
                                 </div>
                                 <flux:text>{{ $record->description }}</flux:text>
                                 @if ($record->provider_name)
