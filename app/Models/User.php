@@ -78,4 +78,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(MaintenanceTask::class);
     }
+
+    /**
+     * Get the service records owned by the user.
+     */
+    public function serviceRecords(): HasMany
+    {
+        return $this->hasMany(ServiceRecord::class);
+    }
 }

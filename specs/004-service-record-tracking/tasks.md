@@ -30,16 +30,16 @@
 
 **⚠️ CRITICAL**: No user story work begins until this phase is complete.
 
-- [ ] T003 Run `ddev exec --raw php artisan make:model ServiceRecord -mfs --no-interaction` to scaffold `app/Models/ServiceRecord.php`, migration stub, `database/factories/ServiceRecordFactory.php`, `database/seeders/ServiceRecordSeeder.php`
-- [ ] T004 [P] Implement migration at `database/migrations/*_create_service_records_table.php` — columns: `id`, `foreignIdFor(User)->constrained()->cascadeOnDelete()`, `foreignIdFor(Asset)->constrained()->cascadeOnDelete()`, `date('service_date')`, `string('service_type')`, `text('description')`, `string('provider_name')->nullable()`, `decimal('cost', 10, 2)->nullable()`, `boolean('under_warranty')->default(false)`, `date('warranty_expires_on')->nullable()`, `timestamps()`; see `data-model.md` for full blueprint
-- [ ] T005 [P] Implement `app/Models/ServiceRecord.php` — `$fillable` with all 9 fields; `casts()` returning `service_date => 'date'`, `service_type => ServiceType::class`, `cost => 'decimal:2'`, `under_warranty => 'boolean'`, `warranty_expires_on => 'date'`; `user(): BelongsTo` → `User::class`; `asset(): BelongsTo` → `Asset::class`; explicit return types on all methods
-- [ ] T006 [P] Implement `database/factories/ServiceRecordFactory.php` — `definition()` with `user_id`, `asset_id`, `service_date` (past 2 years to now), `service_type` (random ServiceType case value), `description` (paragraph), `provider_name` (optional company), `cost` (optional float 0–5000), `under_warranty` (false), `warranty_expires_on` (null); `underWarranty(): static` state setting `under_warranty = true` and `warranty_expires_on` to a future date
-- [ ] T007 [P] Implement `database/seeders/ServiceRecordSeeder.php` — creates ≥3 records per seeded asset covering all four `ServiceType` values; use `ServiceRecord::factory()` with appropriate states
-- [ ] T008 [P] Add `serviceRecords(): HasMany` relationship returning `$this->hasMany(ServiceRecord::class)` to `app/Models/Asset.php`
-- [ ] T009 [P] Add `serviceRecords(): HasMany` relationship returning `$this->hasMany(ServiceRecord::class)` to `app/Models/User.php`
-- [ ] T010 Run `ddev exec --raw php artisan migrate --no-interaction` to apply the new `service_records` migration
-- [ ] T011 [P] Create `routes/service-records.php` — `Route::middleware(['auth', 'verified'])->group(...)` containing `Route::get('/assets/{asset}/service-records', ServiceRecordList::class)->name('service-records.index')`
-- [ ] T012 Add `require __DIR__.'/service-records.php';` to `routes/web.php` (after the existing maintenance.php require)
+- [x] T003 Run `ddev exec --raw php artisan make:model ServiceRecord -mfs --no-interaction` to scaffold `app/Models/ServiceRecord.php`, migration stub, `database/factories/ServiceRecordFactory.php`, `database/seeders/ServiceRecordSeeder.php`
+- [x] T004 [P] Implement migration at `database/migrations/*_create_service_records_table.php` — columns: `id`, `foreignIdFor(User)->constrained()->cascadeOnDelete()`, `foreignIdFor(Asset)->constrained()->cascadeOnDelete()`, `date('service_date')`, `string('service_type')`, `text('description')`, `string('provider_name')->nullable()`, `decimal('cost', 10, 2)->nullable()`, `boolean('under_warranty')->default(false)`, `date('warranty_expires_on')->nullable()`, `timestamps()`; see `data-model.md` for full blueprint
+- [x] T005 [P] Implement `app/Models/ServiceRecord.php` — `$fillable` with all 9 fields; `casts()` returning `service_date => 'date'`, `service_type => ServiceType::class`, `cost => 'decimal:2'`, `under_warranty => 'boolean'`, `warranty_expires_on => 'date'`; `user(): BelongsTo` → `User::class`; `asset(): BelongsTo` → `Asset::class`; explicit return types on all methods
+- [x] T006 [P] Implement `database/factories/ServiceRecordFactory.php` — `definition()` with `user_id`, `asset_id`, `service_date` (past 2 years to now), `service_type` (random ServiceType case value), `description` (paragraph), `provider_name` (optional company), `cost` (optional float 0–5000), `under_warranty` (false), `warranty_expires_on` (null); `underWarranty(): static` state setting `under_warranty = true` and `warranty_expires_on` to a future date
+- [x] T007 [P] Implement `database/seeders/ServiceRecordSeeder.php` — creates ≥3 records per seeded asset covering all four `ServiceType` values; use `ServiceRecord::factory()` with appropriate states
+- [x] T008 [P] Add `serviceRecords(): HasMany` relationship returning `$this->hasMany(ServiceRecord::class)` to `app/Models/Asset.php`
+- [x] T009 [P] Add `serviceRecords(): HasMany` relationship returning `$this->hasMany(ServiceRecord::class)` to `app/Models/User.php`
+- [x] T010 Run `ddev exec --raw php artisan migrate --no-interaction` to apply the new `service_records` migration
+- [x] T011 [P] Create `routes/service-records.php` — `Route::middleware(['auth', 'verified'])->group(...)` containing `Route::get('/assets/{asset}/service-records', ServiceRecordList::class)->name('service-records.index')`
+- [x] T012 Add `require __DIR__.'/service-records.php';` to `routes/web.php` (after the existing maintenance.php require)
 
 **Checkpoint**: Run `ddev exec --raw php artisan route:list --name=service-records` — route must appear before proceeding.
 

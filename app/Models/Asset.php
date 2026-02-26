@@ -61,4 +61,12 @@ class Asset extends Model
     {
         return $this->hasMany(MaintenanceTask::class);
     }
+
+    /**
+     * Get the service records for this asset.
+     */
+    public function serviceRecords(): HasMany
+    {
+        return $this->hasMany(ServiceRecord::class);
+    }
 }
