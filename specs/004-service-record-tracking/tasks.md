@@ -74,14 +74,14 @@
 
 ### Tests for User Story 2 (TDD — write first, verify FAIL before T019)
 
-- [ ] T018 [US2] Write feature tests in `tests/Feature/ServiceRecords/ServiceRecordViewTest.php` via `ddev exec --raw php artisan make:test --pest ServiceRecords/ServiceRecordViewTest --no-interaction`; cover: (1) multiple records display sorted by `service_date` descending, (2) empty state message shown when asset has no records, (3) service type label, date, provider name, and cost visible in list, (4) 403 for authenticated user accessing another user's asset; run tests to confirm RED
+- [x] T018 [US2] Write feature tests in `tests/Feature/ServiceRecords/ServiceRecordViewTest.php` via `ddev exec --raw php artisan make:test --pest ServiceRecords/ServiceRecordViewTest --no-interaction`; cover: (1) multiple records display sorted by `service_date` descending, (2) empty state message shown when asset has no records, (3) service type label, date, provider name, and cost visible in list, (4) 403 for authenticated user accessing another user's asset; run tests to confirm RED
 
 ### Implementation for User Story 2
 
-- [ ] T019 [P] [US2] Add `#[Computed] public function records(): Collection` to `app/Livewire/ServiceRecords/ServiceRecordList.php` — returns `$this->asset->serviceRecords()->orderBy('service_date', 'desc')->get()`; add `unset($this->records)` after save, edit, and delete operations
-- [ ] T020 [P] [US2] Implement service record list display in `resources/views/livewire/service-records/service-record-list.blade.php` — `@if ($this->records->isEmpty())`: empty state `<flux:card>` with "No service records yet" text and CTA button to add first record; `@else`: `@foreach ($this->records as $record)` with `<flux:card wire:key="record-{{ $record->id }}">` showing formatted `service_date` (e.g. `M j, Y`), `service_type->label()` as `<flux:badge>`, `provider_name` (if present), cost formatted as currency (show "—" if null)
-- [ ] T021 [P] [US2] Add "View Service Records" button to `resources/views/livewire/assets/asset-detail.blade.php` — `<flux:button variant="ghost" size="sm" :href="route('service-records.index', $asset)" wire:navigate>{{ __('View Service Records') }}</flux:button>` adjacent to the existing "View Maintenance" button
-- [ ] T022 [US2] Run `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/ServiceRecordViewTest.php` — all tests must be GREEN before proceeding
+- [x] T019 [P] [US2] Add `#[Computed] public function records(): Collection` to `app/Livewire/ServiceRecords/ServiceRecordList.php` — returns `$this->asset->serviceRecords()->orderBy('service_date', 'desc')->get()`; add `unset($this->records)` after save, edit, and delete operations
+- [x] T020 [P] [US2] Implement service record list display in `resources/views/livewire/service-records/service-record-list.blade.php` — `@if ($this->records->isEmpty())`: empty state `<flux:card>` with "No service records yet" text and CTA button to add first record; `@else`: `@foreach ($this->records as $record)` with `<flux:card wire:key="record-{{ $record->id }}">` showing formatted `service_date` (e.g. `M j, Y`), `service_type->label()` as `<flux:badge>`, `provider_name` (if present), cost formatted as currency (show "—" if null)
+- [x] T021 [P] [US2] Add "View Service Records" button to `resources/views/livewire/assets/asset-detail.blade.php` — `<flux:button variant="ghost" size="sm" :href="route('service-records.index', $asset)" wire:navigate>{{ __('View Service Records') }}</flux:button>` adjacent to the existing "View Maintenance" button
+- [x] T022 [US2] Run `ddev exec --raw php artisan test --compact tests/Feature/ServiceRecords/ServiceRecordViewTest.php` — all tests must be GREEN before proceeding
 
 **Checkpoint**: US1 and US2 are both independently testable. Users can create and browse service records.
 
