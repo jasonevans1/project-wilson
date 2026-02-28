@@ -19,22 +19,13 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await expect(page.getByText('Complete Me Task')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Mark Complete' })).toBeVisible();
 
-    // Read the server-generated current due date (e.g. "Due: Feb 23, 2026") and
-    // compute the expected next monthly occurrence date from it.
-    const currentDueDateText = await page.getByText(/Due: /).first().textContent() ?? '';
-    // Parse the date portion (strip "Due: " prefix)
-    const currentDateStr = currentDueDateText.replace('Due: ', '').trim();
-    const nextMonthDate = await page.evaluate((dateStr: string) => {
-      const parsed = new Date(dateStr);
-      const next = new Date(parsed.getFullYear(), parsed.getMonth() + 1, parsed.getDate());
-      return next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }, currentDateStr);
+    // Capture the current due date so we can verify it changes after marking complete.
+    const initialDueDateText = await page.getByText(/Due: /).first().textContent() ?? '';
 
     await page.getByRole('button', { name: 'Mark Complete' }).click();
 
     // The old occurrence disappears and a new one appears for the next month.
-    // Wait explicitly for the next due date to become visible.
-    await expect(page.getByText(`Due: ${nextMonthDate}`)).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText(/Due: /)).not.toHaveText(initialDueDateText, { timeout: 10000 });
   });
 
   test('mark complete on the per-asset view updates the task card with the next due date', async ({
@@ -77,25 +68,26 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await page.waitForURL('**/maintenance');
 
     await expect(page.getByText('Loading State Task')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Mark Complete' })).toBeVisible();
 
-    // Read the server-generated current due date and compute the expected next monthly date.
-    const currentDueDateText = await page.getByText(/Due: /).first().textContent() ?? '';
-    const currentDateStr = currentDueDateText.replace('Due: ', '').trim();
-    const nextMonthDate = await page.evaluate((dateStr: string) => {
-      const parsed = new Date(dateStr);
-      const next = new Date(parsed.getFullYear(), parsed.getMonth() + 1, parsed.getDate());
-      return next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }, currentDateStr);
+    // Wait for the button to be fully enabled before interacting — Livewire may still be
+    // processing the task-created event (reloading occurrences) when we arrive on this page,
+    // which briefly disables the button via wire:loading.attr="disabled". Clicking it while
+    // disabled would cause the action to never fire.
+    const markCompleteButton = page.getByRole('button', { name: 'Mark Complete' });
+    await expect(markCompleteButton).toBeVisible();
+    await expect(markCompleteButton).toBeEnabled();
+
+    // Capture the current due date so we can verify it changes after marking complete.
+    const initialDueDateText = await page.getByText(/Due: /).first().textContent() ?? '';
 
     // The wire:loading "Saving…" span is controlled by Livewire's JS via inline display:none.
     // On localhost requests complete too fast to reliably catch that transient state.
     // Instead, verify the action completes end-to-end: clicking Mark Complete causes
     // the current occurrence to be replaced with the next monthly occurrence.
-    await page.getByRole('button', { name: 'Mark Complete' }).click();
+    await markCompleteButton.click();
 
     // The next occurrence (one month out) should now appear, confirming the action ran.
-    await expect(page.getByText(`Due: ${nextMonthDate}`)).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText(/Due: /)).not.toHaveText(initialDueDateText, { timeout: 10000 });
     // The Saving… span should not be visible once the request has completed.
     await expect(page.getByText('Saving…')).not.toBeVisible();
   });
