@@ -19,16 +19,11 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await goToAssetMaintenance('Test Unit');
     await createMaintenanceTask({ name: 'Complete Me Task', startDate: FIXED_START_DATE });
 
-    await page.getByRole('link', { name: 'Maintenance' }).click();
+    // Use page.goto instead of clicking the sidebar link (wire:navigate) to avoid
+    // the race condition where Alpine hasn't finished binding wire:click handlers
+    // after SPA navigation, causing clicks to be silently ignored in CI.
+    await page.goto('/maintenance');
     await page.waitForURL('**/maintenance');
-
-    // After wire:navigate SPA navigation, wait for Livewire to fully initialize
-    // the component before interacting — the DOM may render before wire:click
-    // handlers are attached, causing clicks to be silently ignored in CI.
-    await page.waitForFunction(() =>
-      typeof (window as any).Livewire !== 'undefined' &&
-      (window as any).Livewire.all().length > 0
-    );
 
     await expect(page.getByText('Complete Me Task')).toBeVisible();
 
@@ -84,16 +79,11 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await goToAssetMaintenance('Test Unit');
     await createMaintenanceTask({ name: 'Loading State Task', startDate: FIXED_START_DATE });
 
-    await page.getByRole('link', { name: 'Maintenance' }).click();
+    // Use page.goto instead of clicking the sidebar link (wire:navigate) to avoid
+    // the race condition where Alpine hasn't finished binding wire:click handlers
+    // after SPA navigation, causing clicks to be silently ignored in CI.
+    await page.goto('/maintenance');
     await page.waitForURL('**/maintenance');
-
-    // After wire:navigate SPA navigation, wait for Livewire to fully initialize
-    // the component before interacting — the DOM may render before wire:click
-    // handlers are attached, causing clicks to be silently ignored in CI.
-    await page.waitForFunction(() =>
-      typeof (window as any).Livewire !== 'undefined' &&
-      (window as any).Livewire.all().length > 0
-    );
 
     await expect(page.getByText('Loading State Task')).toBeVisible();
 
