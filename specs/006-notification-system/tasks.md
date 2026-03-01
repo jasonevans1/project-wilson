@@ -38,10 +38,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Scaffold SendMaintenanceReminders command via `php artisan make:command SendMaintenanceReminders --no-interaction` in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T010 Set command signature to `maintenance:send-reminders` and add empty `handle()` method with return type in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T011 Register daily schedule for `maintenance:send-reminders` command in `routes/console.php`
-- [ ] T012 Create `routes/reminders.php` route file with placeholder structure and include it from `routes/web.php`
+- [x] T009 Scaffold SendMaintenanceReminders command via `php artisan make:command SendMaintenanceReminders --no-interaction` in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T010 Set command signature to `maintenance:send-reminders` and add empty `handle()` method with return type in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T011 Register daily schedule for `maintenance:send-reminders` command in `routes/console.php`
+- [x] T012 Create `routes/reminders.php` route file with placeholder structure and include it from `routes/web.php`
 
 **Checkpoint**: Foundation ready — command and route skeleton in place, schedule registered
 
