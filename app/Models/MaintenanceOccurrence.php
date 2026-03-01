@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MaintenanceOccurrence extends Model
 {
@@ -42,6 +43,14 @@ class MaintenanceOccurrence extends Model
     public function task(): BelongsTo
     {
         return $this->belongsTo(MaintenanceTask::class, 'maintenance_task_id');
+    }
+
+    /**
+     * Get the reminders for this occurrence.
+     */
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(MaintenanceReminder::class);
     }
 
     /**

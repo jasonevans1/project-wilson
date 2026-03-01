@@ -19,14 +19,14 @@
 
 **Purpose**: Create the foundational model, enum, migration, and factory shared by all user stories
 
-- [ ] T001 Create ReminderType enum with ThirtyDay, SevenDay, OneDay cases in `app/Enums/ReminderType.php`
-- [ ] T002 Scaffold MaintenanceReminder model with migration and factory via `php artisan make:model MaintenanceReminder -mf --no-interaction`
-- [ ] T003 Implement `maintenance_reminders` migration with all columns (user_id, maintenance_occurrence_id, reminder_type, sent_at, snoozed_until, snooze_count), foreign keys with cascade delete, unique constraint on (maintenance_occurrence_id, reminder_type), and indexes per `data-model.md` in `database/migrations/xxxx_create_maintenance_reminders_table.php`
-- [ ] T004 Implement MaintenanceReminder model with fillable fields, casts (reminder_type → ReminderType enum, sent_at → datetime, snoozed_until → date, snooze_count → integer), and relationships (user, occurrence) in `app/Models/MaintenanceReminder.php`
-- [ ] T005 Implement MaintenanceReminderFactory with default state and factory states for `sent`, `snoozed`, and `pending` in `database/factories/MaintenanceReminderFactory.php`
-- [ ] T006 Add `reminders()` HasMany relationship to MaintenanceOccurrence model in `app/Models/MaintenanceOccurrence.php`
-- [ ] T007 Add `maintenanceReminders()` HasMany relationship to User model in `app/Models/User.php`
-- [ ] T008 Run migration to verify schema via `php artisan migrate`
+- [x] T001 Create ReminderType enum with ThirtyDay, SevenDay, OneDay cases in `app/Enums/ReminderType.php`
+- [x] T002 Scaffold MaintenanceReminder model with migration and factory via `php artisan make:model MaintenanceReminder -mf --no-interaction`
+- [x] T003 Implement `maintenance_reminders` migration with all columns (user_id, maintenance_occurrence_id, reminder_type, sent_at, snoozed_until, snooze_count), foreign keys with cascade delete, unique constraint on (maintenance_occurrence_id, reminder_type), and indexes per `data-model.md` in `database/migrations/xxxx_create_maintenance_reminders_table.php`
+- [x] T004 Implement MaintenanceReminder model with fillable fields, casts (reminder_type → ReminderType enum, sent_at → datetime, snoozed_until → date, snooze_count → integer), and relationships (user, occurrence) in `app/Models/MaintenanceReminder.php`
+- [x] T005 Implement MaintenanceReminderFactory with default state and factory states for `sent`, `snoozed`, and `pending` in `database/factories/MaintenanceReminderFactory.php`
+- [x] T006 Add `reminders()` HasMany relationship to MaintenanceOccurrence model in `app/Models/MaintenanceOccurrence.php`
+- [x] T007 Add `maintenanceReminders()` HasMany relationship to User model in `app/Models/User.php`
+- [x] T008 Run migration to verify schema via `php artisan migrate`
 
 **Checkpoint**: MaintenanceReminder model ready with relationships, factory, and migration applied
 

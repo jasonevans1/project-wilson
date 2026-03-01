@@ -86,4 +86,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(ServiceRecord::class);
     }
+
+    /**
+     * Get the maintenance reminders for the user.
+     */
+    public function maintenanceReminders(): HasMany
+    {
+        return $this->hasMany(MaintenanceReminder::class);
+    }
 }
