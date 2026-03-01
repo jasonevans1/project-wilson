@@ -288,6 +288,7 @@ ddev exec --raw <command> [args...]
 - MariaDB 10.11 via Eloquent — 2 new tables: `maintenance_tasks`, `maintenance_occurrences` (003-maintenance-schedule)
 - PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Pest 4 (001-service-record-tracking)
 - MariaDB 10.11 — one new table: `service_records` (001-service-record-tracking)
+- MariaDB 10.11 (via Eloquent — 1 new table: `maintenance_reminders`) (006-notification-system)
 
 ## Recent Changes
 - 001-home-asset-crud: Added PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1
