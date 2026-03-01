@@ -22,12 +22,16 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await page.getByRole('link', { name: 'Maintenance' }).click();
     await page.waitForURL('**/maintenance');
 
+    // After wire:navigate SPA navigation, wait for Livewire to fully initialize
+    // the component before interacting — the DOM may render before wire:click
+    // handlers are attached, causing clicks to be silently ignored in CI.
+    await page.waitForFunction(() =>
+      typeof (window as any).Livewire !== 'undefined' &&
+      (window as any).Livewire.all().length > 0
+    );
+
     await expect(page.getByText('Complete Me Task')).toBeVisible();
 
-    // Wait for the button to be fully enabled before interacting — Livewire may still be
-    // processing the task-created event (reloading occurrences) when we arrive on this page,
-    // which briefly disables the button via wire:loading.attr="disabled". Clicking it while
-    // disabled would cause the action to never fire.
     const markCompleteButton = page.getByRole('button', { name: 'Mark Complete' });
     await expect(markCompleteButton).toBeVisible();
     await expect(markCompleteButton).toBeEnabled();
@@ -83,12 +87,16 @@ test.describe('US3 — Mark Occurrence Complete', () => {
     await page.getByRole('link', { name: 'Maintenance' }).click();
     await page.waitForURL('**/maintenance');
 
+    // After wire:navigate SPA navigation, wait for Livewire to fully initialize
+    // the component before interacting — the DOM may render before wire:click
+    // handlers are attached, causing clicks to be silently ignored in CI.
+    await page.waitForFunction(() =>
+      typeof (window as any).Livewire !== 'undefined' &&
+      (window as any).Livewire.all().length > 0
+    );
+
     await expect(page.getByText('Loading State Task')).toBeVisible();
 
-    // Wait for the button to be fully enabled before interacting — Livewire may still be
-    // processing the task-created event (reloading occurrences) when we arrive on this page,
-    // which briefly disables the button via wire:loading.attr="disabled". Clicking it while
-    // disabled would cause the action to never fire.
     const markCompleteButton = page.getByRole('button', { name: 'Mark Complete' });
     await expect(markCompleteButton).toBeVisible();
     await expect(markCompleteButton).toBeEnabled();
