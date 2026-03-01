@@ -75,6 +75,10 @@
                 {{ __('View Maintenance') }}
             </flux:button>
 
+            <flux:button variant="ghost" size="sm" :href="route('service-records.index', $asset)" wire:navigate>
+                {{ __('View Service Records') }}
+            </flux:button>
+
             @if ($asset->status === \App\Enums\AssetStatus::Active)
                 <flux:modal.trigger name="confirm-archive">
                     <flux:button variant="ghost" size="sm">
