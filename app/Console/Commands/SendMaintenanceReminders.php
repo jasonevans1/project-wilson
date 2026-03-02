@@ -49,7 +49,7 @@ class SendMaintenanceReminders extends Command
     }
 
     /**
-     * Collect all pending reminders that need to be sent today.
+     * Collect all pending reminders that need to be sent today across all reminder intervals.
      *
      * @return Collection<int, MaintenanceReminder>
      */
@@ -58,43 +58,45 @@ class SendMaintenanceReminders extends Command
         $today = today();
         $pendingReminders = collect();
 
-        $occurrences = MaintenanceOccurrence::query()
-            ->with(['task.user', 'task.asset'])
-            ->whereNull('completed_at')
-            ->where('due_date', '<=', $today->copy()->addDays(ReminderType::ThirtyDay->daysBeforeDue()))
-            ->whereHas('task', fn ($query) => $query
-                ->where('is_active', true)
-                ->whereHas('user', fn ($query) => $query->whereNotNull('email_verified_at'))
-            )
-            ->get();
+        foreach (ReminderType::cases() as $reminderType) {
+            $occurrences = MaintenanceOccurrence::query()
+                ->with(['task.user', 'task.asset'])
+                ->whereNull('completed_at')
+                ->where('due_date', '<=', $today->copy()->addDays($reminderType->daysBeforeDue()))
+                ->whereHas('task', fn ($query) => $query
+                    ->where('is_active', true)
+                    ->whereHas('user', fn ($query) => $query->whereNotNull('email_verified_at'))
+                )
+                ->get();
 
-        foreach ($occurrences as $occurrence) {
-            $user = $occurrence->task->user;
+            foreach ($occurrences as $occurrence) {
+                $user = $occurrence->task->user;
 
-            $alreadySent = MaintenanceReminder::query()
-                ->where('maintenance_occurrence_id', $occurrence->id)
-                ->where('reminder_type', ReminderType::ThirtyDay)
-                ->whereNotNull('sent_at')
-                ->exists();
+                $alreadySent = MaintenanceReminder::query()
+                    ->where('maintenance_occurrence_id', $occurrence->id)
+                    ->where('reminder_type', $reminderType)
+                    ->whereNotNull('sent_at')
+                    ->exists();
 
-            if ($alreadySent) {
-                continue;
+                if ($alreadySent) {
+                    continue;
+                }
+
+                $reminder = MaintenanceReminder::firstOrCreate(
+                    [
+                        'maintenance_occurrence_id' => $occurrence->id,
+                        'reminder_type' => $reminderType,
+                    ],
+                    [
+                        'user_id' => $user->id,
+                        'snooze_count' => 0,
+                    ]
+                );
+
+                $reminder->setRelation('occurrence', $occurrence);
+
+                $pendingReminders->push($reminder);
             }
-
-            $reminder = MaintenanceReminder::firstOrCreate(
-                [
-                    'maintenance_occurrence_id' => $occurrence->id,
-                    'reminder_type' => ReminderType::ThirtyDay,
-                ],
-                [
-                    'user_id' => $user->id,
-                    'snooze_count' => 0,
-                ]
-            );
-
-            $reminder->setRelation('occurrence', $occurrence);
-
-            $pendingReminders->push($reminder);
         }
 
         return $pendingReminders;

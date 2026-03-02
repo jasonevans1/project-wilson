@@ -139,19 +139,19 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T041 [US4] Write test: it sends a 7-day escalation reminder for an uncompleted occurrence due in 7 days in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T042 [US4] Write test: it sends a 1-day escalation reminder for an uncompleted occurrence due in 1 day in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T043 [US4] Write test: it does not send escalation reminders for completed occurrences in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T044 [US4] Write test: 7-day email subject is "Reminder: {task} for {asset} due in 7 days" in `tests/Feature/MaintenanceReminderNotificationTest.php`
-- [ ] T045 [US4] Write test: 1-day email subject is "Urgent: {task} for {asset} due tomorrow" in `tests/Feature/MaintenanceReminderNotificationTest.php`
-- [ ] T046 [US4] Write test: it sends separate reminder records for 30-day and 7-day on different days for the same occurrence in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T041 [US4] Write test: it sends a 7-day escalation reminder for an uncompleted occurrence due in 7 days in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T042 [US4] Write test: it sends a 1-day escalation reminder for an uncompleted occurrence due in 1 day in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T043 [US4] Write test: it does not send escalation reminders for completed occurrences in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T044 [US4] Write test: 7-day email subject is "Reminder: {task} for {asset} due in 7 days" in `tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T045 [US4] Write test: 1-day email subject is "Urgent: {task} for {asset} due tomorrow" in `tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T046 [US4] Write test: it sends separate reminder records for 30-day and 7-day on different days for the same occurrence in `tests/Feature/SendMaintenanceRemindersTest.php`
 
 ### Implementation for User Story 4
 
-- [ ] T047 [US4] Update SendMaintenanceReminders handle() to check all three intervals (30-day, 7-day, 1-day) by iterating ReminderType cases and calculating due_date minus days for each in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T048 [US4] Update MaintenanceReminderNotification to vary subject line and urgency messaging based on ReminderType (30-day: "Upcoming", 7-day: "Reminder", 1-day: "Urgent") in `app/Notifications/MaintenanceReminderNotification.php`
-- [ ] T049 [US4] Update single-reminder email template to display urgency-appropriate styling and messaging based on reminder type in `resources/views/mail/maintenance-reminder.blade.php`
-- [ ] T050 [US4] Run US4 tests and verify all pass via `php artisan test --compact --filter=escalation`
+- [x] T047 [US4] Update SendMaintenanceReminders handle() to check all three intervals (30-day, 7-day, 1-day) by iterating ReminderType cases and calculating due_date minus days for each in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T048 [US4] Update MaintenanceReminderNotification to vary subject line and urgency messaging based on ReminderType (30-day: "Upcoming", 7-day: "Reminder", 1-day: "Urgent") in `app/Notifications/MaintenanceReminderNotification.php`
+- [x] T049 [US4] Update single-reminder email template to display urgency-appropriate styling and messaging based on reminder type in `resources/views/mail/maintenance-reminder.blade.php`
+- [x] T050 [US4] Run US4 tests and verify all pass via `php artisan test --compact --filter=escalation`
 
 **Checkpoint**: Escalation reminders at 7-day and 1-day intervals working with urgency-differentiated emails
 

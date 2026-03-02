@@ -225,3 +225,96 @@ test('it does not send reminders for inactive recurring tasks', function () {
 
     Notification::assertNothingSent();
 });
+
+// ─── T041 ──────────────────────────────────────────────────────────────────────
+
+test('it sends a 7-day escalation reminder for an uncompleted occurrence due in 7 days', function () {
+    Notification::fake();
+
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(7);
+
+    // ThirtyDay already sent so only SevenDay is pending
+    MaintenanceReminder::factory()->sent()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::ThirtyDay,
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertSentTo($user, MaintenanceReminderNotification::class, function ($notification) {
+        return $notification->reminder->reminder_type === ReminderType::SevenDay;
+    });
+});
+
+// ─── T042 ──────────────────────────────────────────────────────────────────────
+
+test('it sends a 1-day escalation reminder for an uncompleted occurrence due in 1 day', function () {
+    Notification::fake();
+
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(1);
+
+    // ThirtyDay and SevenDay already sent so only OneDay is pending
+    MaintenanceReminder::factory()->sent()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::ThirtyDay,
+    ]);
+    MaintenanceReminder::factory()->sent()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::SevenDay,
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertSentTo($user, MaintenanceReminderNotification::class, function ($notification) {
+        return $notification->reminder->reminder_type === ReminderType::OneDay;
+    });
+});
+
+// ─── T043 ──────────────────────────────────────────────────────────────────────
+
+test('it does not send escalation reminders for completed occurrences', function () {
+    Notification::fake();
+
+    $user = User::factory()->create();
+    $asset = Asset::factory()->create(['user_id' => $user->id]);
+    $task = MaintenanceTask::factory()->active()->create(['user_id' => $user->id, 'asset_id' => $asset->id]);
+    MaintenanceOccurrence::factory()->completed()->create([
+        'maintenance_task_id' => $task->id,
+        'due_date' => today()->addDays(7),
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertNothingSent();
+});
+
+// ─── T046 ──────────────────────────────────────────────────────────────────────
+
+test('it sends separate reminder records for 30-day and 7-day on different days for the same occurrence', function () {
+    Notification::fake();
+
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(7);
+
+    // Simulate ThirtyDay reminder having been sent 23 days ago
+    MaintenanceReminder::factory()->sent()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::ThirtyDay,
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    // Both records should exist now
+    expect(MaintenanceReminder::where('maintenance_occurrence_id', $occurrence->id)->count())->toBe(2);
+
+    // SevenDay record should have been created and marked sent
+    $sevenDayReminder = MaintenanceReminder::where('maintenance_occurrence_id', $occurrence->id)
+        ->where('reminder_type', ReminderType::SevenDay)
+        ->first();
+
+    expect($sevenDayReminder)->not->toBeNull();
+    expect($sevenDayReminder->sent_at)->not->toBeNull();
+});
