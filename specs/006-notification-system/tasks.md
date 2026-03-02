@@ -57,24 +57,24 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T013 [P] [US1] Create test file via `php artisan make:test SendMaintenanceRemindersTest --pest --no-interaction` in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T014 [P] [US1] Create test file via `php artisan make:test MaintenanceReminderNotificationTest --pest --no-interaction` in `tests/Feature/MaintenanceReminderNotificationTest.php`
-- [ ] T015 [US1] Write test: it sends a 30-day reminder for an active occurrence due in exactly 30 days in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T016 [US1] Write test: it skips completed occurrences (completed_at not null) in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T017 [US1] Write test: it skips occurrences due in 31 days (not yet in window) in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T018 [US1] Write test: it skips occurrences for inactive maintenance tasks in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T019 [US1] Write test: it skips users without verified email in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T020 [US1] Write test: it does not send duplicate reminders for the same occurrence and interval in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T021 [US1] Write test: it catches up on missed notifications (due_date - 30 was yesterday) in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T022 [US1] Write test: notification email contains asset name, task name, due date, and view link in `tests/Feature/MaintenanceReminderNotificationTest.php`
-- [ ] T023 [US1] Write test: notification email subject is "Upcoming maintenance: {task} for {asset}" for 30-day type in `tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T013 [P] [US1] Create test file via `php artisan make:test SendMaintenanceRemindersTest --pest --no-interaction` in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T014 [P] [US1] Create test file via `php artisan make:test MaintenanceReminderNotificationTest --pest --no-interaction` in `tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T015 [US1] Write test: it sends a 30-day reminder for an active occurrence due in exactly 30 days in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T016 [US1] Write test: it skips completed occurrences (completed_at not null) in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T017 [US1] Write test: it skips occurrences due in 31 days (not yet in window) in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T018 [US1] Write test: it skips occurrences for inactive maintenance tasks in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T019 [US1] Write test: it skips users without verified email in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T020 [US1] Write test: it does not send duplicate reminders for the same occurrence and interval in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T021 [US1] Write test: it catches up on missed notifications (due_date - 30 was yesterday) in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T022 [US1] Write test: notification email contains asset name, task name, due date, and view link in `tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T023 [US1] Write test: notification email subject is "Upcoming maintenance: {task} for {asset}" for 30-day type in `tests/Feature/MaintenanceReminderNotificationTest.php`
 
 ### Implementation for User Story 1
 
-- [ ] T024 [US1] Create MaintenanceReminderNotification class implementing ShouldQueue with mail channel, accepting MaintenanceReminder model, building MailMessage with subject, greeting, content (asset name, task name, description, due date), action button (view task URL), and urgency-based messaging in `app/Notifications/MaintenanceReminderNotification.php`
-- [ ] T025 [US1] Create single-reminder markdown email template with asset name, task description, due date, view task button, and placeholder snooze links in `resources/views/mail/maintenance-reminder.blade.php`
-- [ ] T026 [US1] Implement `handle()` method in SendMaintenanceReminders: query MaintenanceOccurrence where completed_at is null, parent task is_active is true, parent user email_verified_at is not null, due_date minus 30 days <= today; check for existing sent MaintenanceReminder records; create new records; dispatch MaintenanceReminderNotification for single reminders per user; update sent_at in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T027 [US1] Run US1 tests and verify all pass via `php artisan test --compact tests/Feature/SendMaintenanceRemindersTest.php tests/Feature/MaintenanceReminderNotificationTest.php`
+- [x] T024 [US1] Create MaintenanceReminderNotification class implementing ShouldQueue with mail channel, accepting MaintenanceReminder model, building MailMessage with subject, greeting, content (asset name, task name, description, due date), action button (view task URL), and urgency-based messaging in `app/Notifications/MaintenanceReminderNotification.php`
+- [x] T025 [US1] Create single-reminder markdown email template with asset name, task description, due date, view task button, and placeholder snooze links in `resources/views/mail/maintenance-reminder.blade.php`
+- [x] T026 [US1] Implement `handle()` method in SendMaintenanceReminders: query MaintenanceOccurrence where completed_at is null, parent task is_active is true, parent user email_verified_at is not null, due_date minus 30 days <= today; check for existing sent MaintenanceReminder records; create new records; dispatch MaintenanceReminderNotification for single reminders per user; update sent_at in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T027 [US1] Run US1 tests and verify all pass via `php artisan test --compact tests/Feature/SendMaintenanceRemindersTest.php tests/Feature/MaintenanceReminderNotificationTest.php`
 
 **Checkpoint**: 30-day single-task reminder fully functional and tested independently
 
