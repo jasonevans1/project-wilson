@@ -167,26 +167,26 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T051 [P] [US5] Create test file via `php artisan make:test ReminderSnoozeTest --pest --no-interaction` in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T052 [US5] Write test: it snoozes a reminder for 7 days via signed URL and redirects to confirmation page in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T053 [US5] Write test: it snoozes a reminder for 3 days via signed URL in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T054 [US5] Write test: it rejects an invalid or expired signed URL with 403 in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T055 [US5] Write test: it rejects snooze when resulting date would be on or after due date in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T056 [US5] Write test: it increments snooze_count and clears sent_at on snooze in `tests/Feature/ReminderSnoozeTest.php`
-- [ ] T057 [US5] Write test: the daily command resends a reminder when snoozed_until date arrives in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T058 [US5] Write test: the daily command does not resend a snoozed reminder if snoozed_until is past due date in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T051 [P] [US5] Create test file via `php artisan make:test ReminderSnoozeTest --pest --no-interaction` in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T052 [US5] Write test: it snoozes a reminder for 7 days via signed URL and redirects to confirmation page in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T053 [US5] Write test: it snoozes a reminder for 3 days via signed URL in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T054 [US5] Write test: it rejects an invalid or expired signed URL with 403 in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T055 [US5] Write test: it rejects snooze when resulting date would be on or after due date in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T056 [US5] Write test: it increments snooze_count and clears sent_at on snooze in `tests/Feature/ReminderSnoozeTest.php`
+- [x] T057 [US5] Write test: the daily command resends a reminder when snoozed_until date arrives in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T058 [US5] Write test: the daily command does not resend a snoozed reminder if snoozed_until is past due date in `tests/Feature/SendMaintenanceRemindersTest.php`
 
 ### Implementation for User Story 5
 
-- [ ] T059 [US5] Scaffold controller via `php artisan make:controller ReminderSnoozeController --no-interaction` in `app/Http/Controllers/ReminderSnoozeController.php`
-- [ ] T060 [US5] Implement `snooze()` method in ReminderSnoozeController: validate days (3 or 7), validate snooze date < due date, update reminder (snoozed_until, snooze_count++, clear sent_at), redirect to confirmation in `app/Http/Controllers/ReminderSnoozeController.php`
-- [ ] T061 [US5] Implement `snoozed()` method in ReminderSnoozeController to render the confirmation page in `app/Http/Controllers/ReminderSnoozeController.php`
-- [ ] T062 [US5] Define signed snooze route `GET /maintenance/reminders/{reminder}/snooze/{days}` named `maintenance.reminder.snooze` with signed middleware, and confirmation route `GET /maintenance/reminders/snoozed` named `maintenance.reminder.snoozed` in `routes/reminders.php`
-- [ ] T063 [US5] Create snooze confirmation Blade view with "Reminder snoozed" heading, new reminder date, and link to login in `resources/views/reminders/snoozed.blade.php`
-- [ ] T064 [US5] Update MaintenanceReminderNotification to generate signed snooze URLs (3-day and 7-day) and pass them to the email template in `app/Notifications/MaintenanceReminderNotification.php`
-- [ ] T065 [US5] Update single-reminder email template to include "Snooze 3 days" and "Snooze 7 days" action links in `resources/views/mail/maintenance-reminder.blade.php`
-- [ ] T066 [US5] Update SendMaintenanceReminders handle() to also query for snoozed reminders where snoozed_until <= today and snoozed_until < due_date, then re-dispatch them in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T067 [US5] Run US5 tests and verify all pass via `php artisan test --compact tests/Feature/ReminderSnoozeTest.php`
+- [x] T059 [US5] Scaffold controller via `php artisan make:controller ReminderSnoozeController --no-interaction` in `app/Http/Controllers/ReminderSnoozeController.php`
+- [x] T060 [US5] Implement `snooze()` method in ReminderSnoozeController: validate days (3 or 7), validate snooze date < due date, update reminder (snoozed_until, snooze_count++, clear sent_at), redirect to confirmation in `app/Http/Controllers/ReminderSnoozeController.php`
+- [x] T061 [US5] Implement `snoozed()` method in ReminderSnoozeController to render the confirmation page in `app/Http/Controllers/ReminderSnoozeController.php`
+- [x] T062 [US5] Define signed snooze route `GET /maintenance/reminders/{reminder}/snooze/{days}` named `maintenance.reminder.snooze` with signed middleware, and confirmation route `GET /maintenance/reminders/snoozed` named `maintenance.reminder.snoozed` in `routes/reminders.php`
+- [x] T063 [US5] Create snooze confirmation Blade view with "Reminder snoozed" heading, new reminder date, and link to login in `resources/views/reminders/snoozed.blade.php`
+- [x] T064 [US5] Update MaintenanceReminderNotification to generate signed snooze URLs (3-day and 7-day) and pass them to the email template in `app/Notifications/MaintenanceReminderNotification.php`
+- [x] T065 [US5] Update single-reminder email template to include "Snooze 3 days" and "Snooze 7 days" action links in `resources/views/mail/maintenance-reminder.blade.php`
+- [x] T066 [US5] Update SendMaintenanceReminders handle() to also query for snoozed reminders where snoozed_until <= today and snoozed_until < due_date, then re-dispatch them in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T067 [US5] Run US5 tests and verify all pass via `php artisan test --compact tests/Feature/ReminderSnoozeTest.php`
 
 **Checkpoint**: Snooze functionality working end-to-end — signed URLs in emails, controller processes snooze, daily command handles rescheduled reminders
 

@@ -25,6 +25,9 @@ This task is coming up in **30 days**.
 View Maintenance Tasks
 </x-mail::button>
 
+**Need more time?** Snooze this reminder:
+[Snooze 3 days]({{ $snooze3Url }}) · [Snooze 7 days]({{ $snooze7Url }})
+
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>

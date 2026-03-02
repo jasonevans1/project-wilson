@@ -318,3 +318,47 @@ test('it sends separate reminder records for 30-day and 7-day on different days 
     expect($sevenDayReminder)->not->toBeNull();
     expect($sevenDayReminder->sent_at)->not->toBeNull();
 });
+
+// ─── T057 ──────────────────────────────────────────────────────────────────────
+
+test('the daily command resends a reminder when snoozed_until date arrives', function () {
+    Notification::fake();
+
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(30);
+
+    // Reminder was previously sent, then snoozed; snoozed_until is today
+    MaintenanceReminder::factory()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::ThirtyDay,
+        'sent_at' => null,
+        'snoozed_until' => today(),
+        'snooze_count' => 1,
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertSentTo($user, MaintenanceReminderNotification::class);
+});
+
+// ─── T058 ──────────────────────────────────────────────────────────────────────
+
+test('the daily command does not resend a snoozed reminder if snoozed_until is on or after due date', function () {
+    Notification::fake();
+
+    // Occurrence due in 15 days (only in ThirtyDay window); snoozed until the due date itself
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(15);
+
+    MaintenanceReminder::factory()->create([
+        'user_id' => $user->id,
+        'maintenance_occurrence_id' => $occurrence->id,
+        'reminder_type' => ReminderType::ThirtyDay,
+        'sent_at' => null,
+        'snoozed_until' => today()->addDays(15),
+        'snooze_count' => 1,
+    ]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertNothingSent();
+});

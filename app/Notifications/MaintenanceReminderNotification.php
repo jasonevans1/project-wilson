@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class MaintenanceReminderNotification extends Notification implements ShouldQueue
 {
@@ -51,6 +52,14 @@ class MaintenanceReminderNotification extends Notification implements ShouldQueu
                 'dueDate' => $occurrence->due_date,
                 'reminderType' => $reminderType,
                 'taskUrl' => route('maintenance.schedule'),
+                'snooze3Url' => URL::signedRoute('maintenance.reminder.snooze', [
+                    'reminder' => $this->reminder->id,
+                    'days' => 3,
+                ]),
+                'snooze7Url' => URL::signedRoute('maintenance.reminder.snooze', [
+                    'reminder' => $this->reminder->id,
+                    'days' => 7,
+                ]),
             ]);
     }
 

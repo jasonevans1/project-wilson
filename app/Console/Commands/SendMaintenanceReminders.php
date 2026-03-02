@@ -49,7 +49,8 @@ class SendMaintenanceReminders extends Command
     }
 
     /**
-     * Collect all pending reminders that need to be sent today across all reminder intervals.
+     * Collect all pending reminders that need to be sent today across all reminder intervals,
+     * including snoozed reminders whose snooze period has expired.
      *
      * @return Collection<int, MaintenanceReminder>
      */
@@ -58,6 +59,7 @@ class SendMaintenanceReminders extends Command
         $today = today();
         $pendingReminders = collect();
 
+        // Part 1: new reminders for each interval
         foreach (ReminderType::cases() as $reminderType) {
             $occurrences = MaintenanceOccurrence::query()
                 ->with(['task.user', 'task.asset'])
@@ -72,6 +74,7 @@ class SendMaintenanceReminders extends Command
             foreach ($occurrences as $occurrence) {
                 $user = $occurrence->task->user;
 
+                // Skip if already sent
                 $alreadySent = MaintenanceReminder::query()
                     ->where('maintenance_occurrence_id', $occurrence->id)
                     ->where('reminder_type', $reminderType)
@@ -79,6 +82,18 @@ class SendMaintenanceReminders extends Command
                     ->exists();
 
                 if ($alreadySent) {
+                    continue;
+                }
+
+                // Skip if currently snoozed (snooze has not expired yet, or expires today — Part 2 handles resend)
+                $currentlySnoozed = MaintenanceReminder::query()
+                    ->where('maintenance_occurrence_id', $occurrence->id)
+                    ->where('reminder_type', $reminderType)
+                    ->whereNotNull('snoozed_until')
+                    ->where('snoozed_until', '>=', $today)
+                    ->exists();
+
+                if ($currentlySnoozed) {
                     continue;
                 }
 
@@ -95,6 +110,29 @@ class SendMaintenanceReminders extends Command
 
                 $reminder->setRelation('occurrence', $occurrence);
 
+                $pendingReminders->push($reminder);
+            }
+        }
+
+        // Part 2: snoozed reminders whose snooze period has expired
+        $snoozedReminders = MaintenanceReminder::query()
+            ->with(['occurrence.task.user', 'occurrence.task.asset'])
+            ->whereNull('sent_at')
+            ->whereNotNull('snoozed_until')
+            ->where('snoozed_until', '<=', $today)
+            ->whereHas('occurrence', fn ($query) => $query
+                ->whereNull('completed_at')
+                ->whereHas('task', fn ($query) => $query
+                    ->where('is_active', true)
+                    ->whereHas('user', fn ($query) => $query->whereNotNull('email_verified_at'))
+                )
+            )
+            ->get()
+            ->filter(fn ($reminder) => $reminder->snoozed_until->lt($reminder->occurrence->due_date));
+
+        foreach ($snoozedReminders as $reminder) {
+            // Avoid duplicates if the same reminder is already in the collection
+            if (! $pendingReminders->contains('id', $reminder->id)) {
                 $pendingReminders->push($reminder);
             }
         }

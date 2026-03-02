@@ -1,4 +1,15 @@
 <?php
 
-// Snooze routes (signed URLs — no auth required)
-// Implementation will be added in Phase 7 (User Story 5)
+use App\Http\Controllers\ReminderSnoozeController;
+use Illuminate\Support\Facades\Route;
+
+// Snooze routes — signed URLs, no authentication required
+Route::get(
+    '/maintenance/reminders/{reminder}/snooze/{days}',
+    [ReminderSnoozeController::class, 'snooze']
+)->middleware('signed')->name('maintenance.reminder.snooze');
+
+Route::get(
+    '/maintenance/reminders/snoozed',
+    [ReminderSnoozeController::class, 'snoozed']
+)->name('maintenance.reminder.snoozed');
