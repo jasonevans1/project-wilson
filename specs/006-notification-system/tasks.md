@@ -90,18 +90,18 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T028 [P] [US2] Create test file via `php artisan make:test MaintenanceDigestNotificationTest --pest --no-interaction` in `tests/Feature/MaintenanceDigestNotificationTest.php`
-- [ ] T029 [US2] Write test: it sends a digest email when user has 3 reminders on the same day in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T030 [US2] Write test: it sends a single-task email (not digest) when user has only 1 reminder in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T031 [US2] Write test: digest notification contains all task names, asset names, and due dates in `tests/Feature/MaintenanceDigestNotificationTest.php`
-- [ ] T032 [US2] Write test: digest email subject is "Wilson: You have {count} upcoming maintenance tasks" in `tests/Feature/MaintenanceDigestNotificationTest.php`
+- [x] T028 [P] [US2] Create test file via `php artisan make:test MaintenanceDigestNotificationTest --pest --no-interaction` in `tests/Feature/MaintenanceDigestNotificationTest.php`
+- [x] T029 [US2] Write test: it sends a digest email when user has 3 reminders on the same day in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T030 [US2] Write test: it sends a single-task email (not digest) when user has only 1 reminder in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T031 [US2] Write test: digest notification contains all task names, asset names, and due dates in `tests/Feature/MaintenanceDigestNotificationTest.php`
+- [x] T032 [US2] Write test: digest email subject is "Wilson: You have {count} upcoming maintenance tasks" in `tests/Feature/MaintenanceDigestNotificationTest.php`
 
 ### Implementation for User Story 2
 
-- [ ] T033 [US2] Create MaintenanceDigestNotification class implementing ShouldQueue with mail channel, accepting a collection of MaintenanceReminder models, building MailMessage with count, table of tasks (asset, task, due date, link), and subject line in `app/Notifications/MaintenanceDigestNotification.php`
-- [ ] T034 [US2] Create digest markdown email template with greeting, count summary, table listing each task (asset name, task name, due date, link), and footer in `resources/views/mail/maintenance-digest.blade.php`
-- [ ] T035 [US2] Update SendMaintenanceReminders handle() to group pending reminders by user_id and dispatch MaintenanceDigestNotification when count > 1 (instead of individual notifications) in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T036 [US2] Run US2 tests and verify all pass via `php artisan test --compact tests/Feature/MaintenanceDigestNotificationTest.php --filter=digest`
+- [x] T033 [US2] Create MaintenanceDigestNotification class implementing ShouldQueue with mail channel, accepting a collection of MaintenanceReminder models, building MailMessage with count, table of tasks (asset, task, due date, link), and subject line in `app/Notifications/MaintenanceDigestNotification.php`
+- [x] T034 [US2] Create digest markdown email template with greeting, count summary, table listing each task (asset name, task name, due date, link), and footer in `resources/views/mail/maintenance-digest.blade.php`
+- [x] T035 [US2] Update SendMaintenanceReminders handle() to group pending reminders by user_id and dispatch MaintenanceDigestNotification when count > 1 (instead of individual notifications) in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T036 [US2] Run US2 tests and verify all pass via `php artisan test --compact tests/Feature/MaintenanceDigestNotificationTest.php --filter=digest`
 
 **Checkpoint**: Digest emails working — users with multiple reminders receive one consolidated email
 

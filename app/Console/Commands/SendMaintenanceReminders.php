@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\ReminderType;
 use App\Models\MaintenanceOccurrence;
 use App\Models\MaintenanceReminder;
+use App\Notifications\MaintenanceDigestNotification;
 use App\Notifications\MaintenanceReminderNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -33,11 +34,15 @@ class SendMaintenanceReminders extends Command
         $pendingReminders = $this->collectPendingReminders();
 
         $pendingReminders->groupBy('user_id')->each(function (Collection $userReminders) {
-            foreach ($userReminders as $reminder) {
-                $user = $reminder->occurrence->task->user;
-                $user->notify(new MaintenanceReminderNotification($reminder));
-                $reminder->update(['sent_at' => now()]);
+            $user = $userReminders->first()->occurrence->task->user;
+
+            if ($userReminders->count() > 1) {
+                $user->notify(new MaintenanceDigestNotification($userReminders));
+            } else {
+                $user->notify(new MaintenanceReminderNotification($userReminders->first()));
             }
+
+            $userReminders->each(fn ($reminder) => $reminder->update(['sent_at' => now()]));
         });
 
         return self::SUCCESS;

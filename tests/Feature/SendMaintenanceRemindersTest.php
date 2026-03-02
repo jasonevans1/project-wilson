@@ -130,3 +130,39 @@ test('it catches up on missed notifications when due_date minus 30 was yesterday
 
     Notification::assertSentTo($user, MaintenanceReminderNotification::class);
 });
+
+// ─── T029 ──────────────────────────────────────────────────────────────────────
+
+test('it sends a digest email when user has 3 reminders on the same day', function () {
+    Notification::fake();
+
+    $user = User::factory()->create();
+
+    // Three separate assets/tasks/occurrences all due in 30 days for the same user
+    foreach (range(1, 3) as $i) {
+        $asset = Asset::factory()->create(['user_id' => $user->id]);
+        $task = MaintenanceTask::factory()->active()->create(['user_id' => $user->id, 'asset_id' => $asset->id]);
+        MaintenanceOccurrence::factory()->pending()->create([
+            'maintenance_task_id' => $task->id,
+            'due_date' => today()->addDays(30),
+        ]);
+    }
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertSentTo($user, \App\Notifications\MaintenanceDigestNotification::class);
+    Notification::assertNotSentTo($user, MaintenanceReminderNotification::class);
+});
+
+// ─── T030 ──────────────────────────────────────────────────────────────────────
+
+test('it sends a single-task email when user has only 1 reminder', function () {
+    Notification::fake();
+
+    ['user' => $user] = makeOccurrence(30);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertSentTo($user, MaintenanceReminderNotification::class);
+    Notification::assertNotSentTo($user, \App\Notifications\MaintenanceDigestNotification::class);
+});
