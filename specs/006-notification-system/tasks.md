@@ -117,13 +117,13 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T037 [US3] Write test: it sends a reminder for the next pending occurrence of a recurring task after the previous occurrence is completed in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T038 [US3] Write test: it does not send reminders for inactive recurring tasks in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T037 [US3] Write test: it sends a reminder for the next pending occurrence of a recurring task after the previous occurrence is completed in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T038 [US3] Write test: it does not send reminders for inactive recurring tasks in `tests/Feature/SendMaintenanceRemindersTest.php`
 
 ### Implementation for User Story 3
 
-- [ ] T039 [US3] Verify that SendMaintenanceReminders command already handles recurring tasks correctly via the pendingOccurrence relationship query (the command queries all pending occurrences regardless of recurrence — no code changes expected, only test validation) in `app/Console/Commands/SendMaintenanceReminders.php`
-- [ ] T040 [US3] Run US3 tests and verify all pass via `php artisan test --compact --filter=recurring`
+- [x] T039 [US3] Verify that SendMaintenanceReminders command already handles recurring tasks correctly via the pendingOccurrence relationship query (the command queries all pending occurrences regardless of recurrence — no code changes expected, only test validation) in `app/Console/Commands/SendMaintenanceReminders.php`
+- [x] T040 [US3] Run US3 tests and verify all pass via `php artisan test --compact --filter=recurring`
 
 **Checkpoint**: Recurring task reminders verified — no additional code needed if US1 implementation correctly queries all pending occurrences
 
