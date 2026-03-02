@@ -196,11 +196,11 @@
 
 **Purpose**: Code quality, edge cases, and final validation
 
-- [ ] T068 [P] Write ReminderType enum unit test verifying cases, values, and labels in `tests/Unit/ReminderTypeTest.php`
-- [ ] T069 Write test: occurrence due in less than 30 days from creation receives the first applicable reminder (7-day or 1-day) in `tests/Feature/SendMaintenanceRemindersTest.php`
-- [ ] T070 Run full test suite via `php artisan test --compact` to verify no regressions
-- [ ] T071 Run `vendor/bin/pint --dirty` to fix code formatting
-- [ ] T072 Run quickstart.md validation — verify all files listed exist and all environment notes are accurate
+- [x] T068 [P] Write ReminderType enum unit test verifying cases, values, and labels in `tests/Unit/ReminderTypeTest.php`
+- [x] T069 Write test: occurrence due in less than 30 days from creation receives the first applicable reminder (7-day or 1-day) in `tests/Feature/SendMaintenanceRemindersTest.php`
+- [x] T070 Run full test suite via `php artisan test --compact` to verify no regressions
+- [x] T071 Run `vendor/bin/pint --dirty` to fix code formatting
+- [x] T072 Run quickstart.md validation — verify all files listed exist and all environment notes are accurate
 
 ---
 

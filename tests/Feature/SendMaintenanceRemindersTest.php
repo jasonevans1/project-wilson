@@ -362,3 +362,26 @@ test('the daily command does not resend a snoozed reminder if snoozed_until is o
 
     Notification::assertNothingSent();
 });
+
+// ─── T069 ──────────────────────────────────────────────────────────────────────
+
+test('an occurrence due within 7 days receives all applicable interval reminders on first run', function () {
+    Notification::fake();
+
+    // Due in 5 days — falls within ThirtyDay and SevenDay windows, but not OneDay
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(5);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    // Two reminders for one user → digest
+    Notification::assertSentTo($user, MaintenanceDigestNotification::class);
+
+    expect(MaintenanceReminder::where('maintenance_occurrence_id', $occurrence->id)->count())->toBe(2);
+
+    $sevenDay = MaintenanceReminder::where('maintenance_occurrence_id', $occurrence->id)
+        ->where('reminder_type', ReminderType::SevenDay)
+        ->first();
+
+    expect($sevenDay)->not->toBeNull();
+    expect($sevenDay->sent_at)->not->toBeNull();
+});
