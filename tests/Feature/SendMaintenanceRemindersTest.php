@@ -363,6 +363,19 @@ test('the daily command does not resend a snoozed reminder if snoozed_until is o
     Notification::assertNothingSent();
 });
 
+// ─── T070 ──────────────────────────────────────────────────────────────────────
+
+test('it skips users who have disabled maintenance reminders', function () {
+    Notification::fake();
+
+    ['user' => $user, 'occurrence' => $occurrence] = makeOccurrence(30);
+    $user->update(['maintenance_reminders_enabled' => false]);
+
+    $this->artisan('maintenance:send-reminders')->assertSuccessful();
+
+    Notification::assertNothingSent();
+});
+
 // ─── T069 ──────────────────────────────────────────────────────────────────────
 
 test('an occurrence due within 7 days receives all applicable interval reminders on first run', function () {

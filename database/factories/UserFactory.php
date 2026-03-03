@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
+            'maintenance_reminders_enabled' => true,
         ];
     }
 
@@ -42,6 +43,16 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user has disabled maintenance reminder emails.
+     */
+    public function withRemindersDisabled(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'maintenance_reminders_enabled' => false,
         ]);
     }
 

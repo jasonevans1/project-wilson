@@ -67,7 +67,10 @@ class SendMaintenanceReminders extends Command
                 ->where('due_date', '<=', $today->copy()->addDays($reminderType->daysBeforeDue()))
                 ->whereHas('task', fn ($query) => $query
                     ->where('is_active', true)
-                    ->whereHas('user', fn ($query) => $query->whereNotNull('email_verified_at'))
+                    ->whereHas('user', fn ($query) => $query
+                        ->whereNotNull('email_verified_at')
+                        ->where('maintenance_reminders_enabled', true)
+                    )
                 )
                 ->get();
 
@@ -124,7 +127,10 @@ class SendMaintenanceReminders extends Command
                 ->whereNull('completed_at')
                 ->whereHas('task', fn ($query) => $query
                     ->where('is_active', true)
-                    ->whereHas('user', fn ($query) => $query->whereNotNull('email_verified_at'))
+                    ->whereHas('user', fn ($query) => $query
+                        ->whereNotNull('email_verified_at')
+                        ->where('maintenance_reminders_enabled', true)
+                    )
                 )
             )
             ->get()
