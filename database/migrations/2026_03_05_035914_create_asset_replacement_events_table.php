@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('asset_replacement_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Asset::class)->constrained()->cascadeOnDelete();
+            $table->date('installed_at');
+            $table->decimal('cost', 10, 2)->nullable();
+            $table->unsignedSmallInteger('expected_lifespan_years')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
+
+            $table->index(['asset_id', 'installed_at']);
         });
     }
 

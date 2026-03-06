@@ -28,6 +28,8 @@ class Asset extends Model
         'warranty_expiration_date',
         'notes',
         'status',
+        'expected_lifespan_years',
+        'replacement_alerts_enabled',
     ];
 
     /**
@@ -43,6 +45,8 @@ class Asset extends Model
             'purchase_date' => 'date',
             'install_date' => 'date',
             'warranty_expiration_date' => 'date',
+            'expected_lifespan_years' => 'integer',
+            'replacement_alerts_enabled' => 'boolean',
         ];
     }
 
@@ -68,5 +72,21 @@ class Asset extends Model
     public function serviceRecords(): HasMany
     {
         return $this->hasMany(ServiceRecord::class);
+    }
+
+    /**
+     * Get the replacement events for this asset.
+     */
+    public function replacementEvents(): HasMany
+    {
+        return $this->hasMany(AssetReplacementEvent::class);
+    }
+
+    /**
+     * Get the replacement alerts for this asset.
+     */
+    public function replacementAlerts(): HasMany
+    {
+        return $this->hasMany(AssetReplacementAlert::class);
     }
 }

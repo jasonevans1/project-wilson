@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('asset_replacement_alerts', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Asset::class)->constrained()->cascadeOnDelete();
+            $table->string('alert_type');
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamp('dismissed_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['asset_id', 'alert_type']);
+            $table->index('sent_at');
         });
     }
 
