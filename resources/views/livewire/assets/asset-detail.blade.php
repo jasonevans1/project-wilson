@@ -73,6 +73,8 @@
 
             @if ($showingReplacementSetup)
                 <livewire:replacement-tracking.replacement-setup-form :asset="$asset" />
+            @elseif ($showingRecordReplacement)
+                <livewire:replacement-tracking.record-replacement-form :asset="$asset" />
             @elseif ($asset->install_date && $asset->expected_lifespan_years)
                 @php
                     $replacementDate = $asset->install_date->copy()->addYears($asset->expected_lifespan_years);
@@ -96,10 +98,33 @@
                         <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $usefulLifePct }}%"></div>
                     </div>
 
-                    <flux:button variant="ghost" size="sm" wire:click="openSetupForm">
-                        {{ __('Edit') }}
-                    </flux:button>
+                    <div class="flex items-center gap-2">
+                        <flux:button variant="ghost" size="sm" wire:click="openSetupForm">
+                            {{ __('Edit') }}
+                        </flux:button>
+                        <flux:button variant="ghost" size="sm" wire:click="openRecordForm">
+                            {{ __('Record Replacement') }}
+                        </flux:button>
+                    </div>
                 </div>
+
+                {{-- Replacement history --}}
+                @php $history = $asset->replacementEvents()->latest('installed_at')->get(); @endphp
+                @if ($history->isNotEmpty())
+                    <div class="mt-3 space-y-1">
+                        <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                            {{ __('Replacement History') }}
+                        </flux:text>
+                        @foreach ($history as $event)
+                            <div class="flex items-center justify-between text-sm py-1 border-b border-zinc-100 dark:border-zinc-700 last:border-0">
+                                <flux:text>{{ $event->installed_at->format('Y-m-d') }}</flux:text>
+                                <flux:text class="text-zinc-500 dark:text-zinc-400">
+                                    {{ $event->cost ? '$'.number_format($event->cost, 2) : __('Not recorded') }}
+                                </flux:text>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             @else
                 <flux:text class="text-zinc-500 dark:text-zinc-400">
                     {{ __('Replacement tracking not yet configured.') }}

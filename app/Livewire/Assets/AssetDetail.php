@@ -20,12 +20,15 @@ class AssetDetail extends Component
 
     public bool $showingReplacementSetup = false;
 
+    public bool $showingRecordReplacement = false;
+
     /**
      * Open the replacement setup form.
      */
     public function openSetupForm(): void
     {
         $this->showingReplacementSetup = true;
+        $this->showingRecordReplacement = false;
     }
 
     /**
@@ -45,6 +48,34 @@ class AssetDetail extends Component
     {
         $this->asset->refresh();
         $this->showingReplacementSetup = false;
+    }
+
+    /**
+     * Open the record replacement form.
+     */
+    public function openRecordForm(): void
+    {
+        $this->showingRecordReplacement = true;
+        $this->showingReplacementSetup = false;
+    }
+
+    /**
+     * Close the record replacement form without saving.
+     */
+    #[On('close-record-form')]
+    public function handleCloseRecordForm(): void
+    {
+        $this->showingRecordReplacement = false;
+    }
+
+    /**
+     * Refresh the asset and close the record form after replacement is recorded.
+     */
+    #[On('replacement-recorded')]
+    public function handleReplacementRecorded(): void
+    {
+        $this->asset->refresh();
+        $this->showingRecordReplacement = false;
     }
 
     /**

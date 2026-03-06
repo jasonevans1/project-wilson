@@ -135,24 +135,24 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T055 [P] [US3] Create feature test file via `php artisan make:test RecordReplacementFormTest --pest --no-interaction` in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T056 [US3] Write test: save() creates a new AssetReplacementEvent record with the correct asset_id, installed_at, cost, and notes in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T057 [US3] Write test: save() updates the asset's install_date to the submitted installedAt value in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T058 [US3] Write test: save() updates the asset's expected_lifespan_years when the form's lifespan field is changed from the pre-filled value in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T059 [US3] Write test: save() deletes all existing AssetReplacementAlert rows for the asset (alert cycle reset) in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T060 [US3] Write test: save() dispatches the replacement-recorded event in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T061 [US3] Write test: save() succeeds when cost and notes are omitted; cost appears as "Not recorded" in the history view in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T062 [US3] Write test: save() fails validation when installedAt is a future date in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T063 [US3] Write test: save() is rejected with 403 when the asset does not belong to the authenticated user in `tests/Feature/RecordReplacementFormTest.php`
-- [ ] T064 [US3] Write test: the replacement history section displays all past AssetReplacementEvent records ordered by installed_at descending in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T055 [P] [US3] Create feature test file via `php artisan make:test RecordReplacementFormTest --pest --no-interaction` in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T056 [US3] Write test: save() creates a new AssetReplacementEvent record with the correct asset_id, installed_at, cost, and notes in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T057 [US3] Write test: save() updates the asset's install_date to the submitted installedAt value in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T058 [US3] Write test: save() updates the asset's expected_lifespan_years when the form's lifespan field is changed from the pre-filled value in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T059 [US3] Write test: save() deletes all existing AssetReplacementAlert rows for the asset (alert cycle reset) in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T060 [US3] Write test: save() dispatches the replacement-recorded event in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T061 [US3] Write test: save() succeeds when cost and notes are omitted; cost appears as "Not recorded" in the history view in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T062 [US3] Write test: save() fails validation when installedAt is a future date in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T063 [US3] Write test: save() is rejected with 403 when the asset does not belong to the authenticated user in `tests/Feature/RecordReplacementFormTest.php`
+- [x] T064 [US3] Write test: the replacement history section displays all past AssetReplacementEvent records ordered by installed_at descending in `tests/Feature/RecordReplacementFormTest.php`
 
 ### Implementation for User Story 3
 
-- [ ] T065 [US3] Implement RecordReplacementRequest: authorize() verifies asset belongs to Auth::user(); rules() returns array-syntax rules for installedAt (required|date|before_or_equal:today), cost (nullable|numeric|min:0|max:9999999.99), notes (nullable|string|max:1000), expectedLifespanYears (nullable|integer|min:1|max:100) in `app/Http/Requests/Replacement/RecordReplacementRequest.php`
-- [ ] T066 [US3] Implement RecordReplacementForm Livewire component: mount(Asset $asset) pre-fills $expectedLifespanYears from asset->expected_lifespan_years; save() validates via RecordReplacementRequest rules, creates AssetReplacementEvent, updates asset install_date and expected_lifespan_years (if field provided), deletes all AssetReplacementAlert rows for the asset, dispatches replacement-recorded; cancel() dispatches close-record-form in `app/Livewire/ReplacementTracking/RecordReplacementForm.php`
-- [ ] T067 [US3] Implement record-replacement-form Blade view using Flux UI: required date field (installedAt), optional numeric field (cost), optional textarea (notes), lifespan field pre-filled with current value (optional override), save and cancel buttons, validation error display in `resources/views/livewire/replacement-tracking/record-replacement-form.blade.php`
-- [ ] T068 [US3] Add replacement history display to the asset's replacement section: a list of past AssetReplacementEvent records showing installed_at date, cost (or "Not recorded"), ordered newest first; load via `$asset->replacementEvents()->latest('installed_at')->get()` in `resources/views/livewire/assets/asset-detail.blade.php`
-- [ ] T069 [US3] Run US3 tests and verify all pass via `php artisan test --compact tests/Feature/RecordReplacementFormTest.php`
+- [x] T065 [US3] Implement RecordReplacementRequest: authorize() verifies asset belongs to Auth::user(); rules() returns array-syntax rules for installedAt (required|date|before_or_equal:today), cost (nullable|numeric|min:0|max:9999999.99), notes (nullable|string|max:1000), expectedLifespanYears (nullable|integer|min:1|max:100) in `app/Http/Requests/Replacement/RecordReplacementRequest.php`
+- [x] T066 [US3] Implement RecordReplacementForm Livewire component: mount(Asset $asset) pre-fills $expectedLifespanYears from asset->expected_lifespan_years; save() validates via RecordReplacementRequest rules, creates AssetReplacementEvent, updates asset install_date and expected_lifespan_years (if field provided), deletes all AssetReplacementAlert rows for the asset, dispatches replacement-recorded; cancel() dispatches close-record-form in `app/Livewire/ReplacementTracking/RecordReplacementForm.php`
+- [x] T067 [US3] Implement record-replacement-form Blade view using Flux UI: required date field (installedAt), optional numeric field (cost), optional textarea (notes), lifespan field pre-filled with current value (optional override), save and cancel buttons, validation error display in `resources/views/livewire/replacement-tracking/record-replacement-form.blade.php`
+- [x] T068 [US3] Add replacement history display to the asset's replacement section: a list of past AssetReplacementEvent records showing installed_at date, cost (or "Not recorded"), ordered newest first; load via `$asset->replacementEvents()->latest('installed_at')->get()` in `resources/views/livewire/assets/asset-detail.blade.php`
+- [x] T069 [US3] Run US3 tests and verify all pass via `php artisan test --compact tests/Feature/RecordReplacementFormTest.php`
 
 **Checkpoint**: Replacement history logging complete — timeline resets on record, alert cycle resets, history displays on asset detail
 

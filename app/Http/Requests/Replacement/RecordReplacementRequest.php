@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Replacement;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RecordReplacementRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class RecordReplacementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->asset->user_id === Auth::id();
     }
 
     /**
@@ -22,7 +23,10 @@ class RecordReplacementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'installedAt' => ['required', 'date', 'before_or_equal:today'],
+            'cost' => ['nullable', 'numeric', 'min:0', 'max:9999999.99'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'expectedLifespanYears' => ['nullable', 'integer', 'min:1', 'max:100'],
         ];
     }
 }
