@@ -68,27 +68,27 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T024 [P] [US1] Create unit test file via `php artisan make:test AssetLifespanDefaultsTest --pest --unit --no-interaction` in `tests/Unit/AssetLifespanDefaultsTest.php`
-- [ ] T025 [P] [US1] Create feature test file via `php artisan make:test ReplacementSetupFormTest --pest --no-interaction` in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T026 [US1] Write unit test: it returns 10 for Appliance, 15 for Hvac, 20 for Plumbing, 25 for Electrical, 20 for Roofing, 25 for Flooring, 15 for Exterior in `tests/Unit/AssetLifespanDefaultsTest.php`
-- [ ] T027 [US1] Write unit test: it returns null for AssetCategory::Other in `tests/Unit/AssetLifespanDefaultsTest.php`
-- [ ] T028 [US1] Write test: component mount pre-fills expectedLifespanYears from asset->expected_lifespan_years when it is already set in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T029 [US1] Write test: component mount pre-fills expectedLifespanYears from AssetLifespanDefaults::forCategory when asset has no lifespan set in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T030 [US1] Write test: component mount pre-fills installDate from asset->install_date when it is already set in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T031 [US1] Write test: save() persists expected_lifespan_years and install_date on the asset and dispatches the tracking-configured event in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T032 [US1] Write test: save() fails validation when expectedLifespanYears is 0 in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T033 [US1] Write test: save() fails validation when expectedLifespanYears exceeds 100 in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T034 [US1] Write test: save() fails validation when installDate is a future date in `tests/Feature/ReplacementSetupFormTest.php`
-- [ ] T035 [US1] Write test: save() is rejected with 403 when the asset does not belong to the authenticated user in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T024 [P] [US1] Create unit test file via `php artisan make:test AssetLifespanDefaultsTest --pest --unit --no-interaction` in `tests/Unit/AssetLifespanDefaultsTest.php`
+- [x] T025 [P] [US1] Create feature test file via `php artisan make:test ReplacementSetupFormTest --pest --no-interaction` in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T026 [US1] Write unit test: it returns 10 for Appliance, 15 for Hvac, 20 for Plumbing, 25 for Electrical, 20 for Roofing, 25 for Flooring, 15 for Exterior in `tests/Unit/AssetLifespanDefaultsTest.php`
+- [x] T027 [US1] Write unit test: it returns null for AssetCategory::Other in `tests/Unit/AssetLifespanDefaultsTest.php`
+- [x] T028 [US1] Write test: component mount pre-fills expectedLifespanYears from asset->expected_lifespan_years when it is already set in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T029 [US1] Write test: component mount pre-fills expectedLifespanYears from AssetLifespanDefaults::forCategory when asset has no lifespan set in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T030 [US1] Write test: component mount pre-fills installDate from asset->install_date when it is already set in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T031 [US1] Write test: save() persists expected_lifespan_years and install_date on the asset and dispatches the tracking-configured event in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T032 [US1] Write test: save() fails validation when expectedLifespanYears is 0 in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T033 [US1] Write test: save() fails validation when expectedLifespanYears exceeds 100 in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T034 [US1] Write test: save() fails validation when installDate is a future date in `tests/Feature/ReplacementSetupFormTest.php`
+- [x] T035 [US1] Write test: save() is rejected with 403 when the asset does not belong to the authenticated user in `tests/Feature/ReplacementSetupFormTest.php`
 
 ### Implementation for User Story 1
 
-- [ ] T036 [US1] Implement SaveReplacementSetupRequest: authorize() verifies asset belongs to Auth::user(); rules() returns array-syntax rules for `expectedLifespanYears` (required|integer|min:1|max:100) and `installDate` (required|date|before_or_equal:today) in `app/Http/Requests/Replacement/SaveReplacementSetupRequest.php`
-- [ ] T037 [US1] Implement ReplacementSetupForm Livewire component: mount(Asset $asset) pre-fills properties per contract; save() validates via SaveReplacementSetupRequest rules, updates asset->expected_lifespan_years and asset->install_date, dispatches tracking-configured; cancel() dispatches close-setup-form in `app/Livewire/ReplacementTracking/ReplacementSetupForm.php`
-- [ ] T038 [US1] Implement replacement-setup-form Blade view with Flux UI: `flux:input` for lifespan years (type=number), `flux:input` for install date (type=date), `flux:button` for save and cancel, display validation errors inline in `resources/views/livewire/replacement-tracking/replacement-setup-form.blade.php`
-- [ ] T039 [US1] Add replacement section to AssetDetail Livewire component: render `<livewire:replacement-tracking.replacement-setup-form :asset="$asset" />` within a new "Replacement" tab or collapsible section; listen for close-setup-form to collapse the section; refresh asset on tracking-configured in `app/Livewire/Assets/AssetDetail.php`
-- [ ] T040 [US1] Add Replacement section to AssetDetail Blade view: show computed replacement date (install_date + expected_lifespan_years), years remaining, useful life percentage, and progress bar when both fields are set; show "Not yet configured" state when missing; embed ReplacementSetupForm component in `resources/views/livewire/assets/asset-detail.blade.php`
-- [ ] T041 [US1] Run US1 tests and verify all pass via `php artisan test --compact tests/Unit/AssetLifespanDefaultsTest.php tests/Feature/ReplacementSetupFormTest.php`
+- [x] T036 [US1] Implement SaveReplacementSetupRequest: authorize() verifies asset belongs to Auth::user(); rules() returns array-syntax rules for `expectedLifespanYears` (required|integer|min:1|max:100) and `installDate` (required|date|before_or_equal:today) in `app/Http/Requests/Replacement/SaveReplacementSetupRequest.php`
+- [x] T037 [US1] Implement ReplacementSetupForm Livewire component: mount(Asset $asset) pre-fills properties per contract; save() validates via SaveReplacementSetupRequest rules, updates asset->expected_lifespan_years and asset->install_date, dispatches tracking-configured; cancel() dispatches close-setup-form in `app/Livewire/ReplacementTracking/ReplacementSetupForm.php`
+- [x] T038 [US1] Implement replacement-setup-form Blade view with Flux UI: `flux:input` for lifespan years (type=number), `flux:input` for install date (type=date), `flux:button` for save and cancel, display validation errors inline in `resources/views/livewire/replacement-tracking/replacement-setup-form.blade.php`
+- [x] T039 [US1] Add replacement section to AssetDetail Livewire component: render `<livewire:replacement-tracking.replacement-setup-form :asset="$asset" />` within a new "Replacement" tab or collapsible section; listen for close-setup-form to collapse the section; refresh asset on tracking-configured in `app/Livewire/Assets/AssetDetail.php`
+- [x] T040 [US1] Add Replacement section to AssetDetail Blade view: show computed replacement date (install_date + expected_lifespan_years), years remaining, useful life percentage, and progress bar when both fields are set; show "Not yet configured" state when missing; embed ReplacementSetupForm component in `resources/views/livewire/assets/asset-detail.blade.php`
+- [x] T041 [US1] Run US1 tests and verify all pass via `php artisan test --compact tests/Unit/AssetLifespanDefaultsTest.php tests/Feature/ReplacementSetupFormTest.php`
 
 **Checkpoint**: Users can configure replacement tracking per asset and see the computed timeline — deliverable as an independently testable MVP
 

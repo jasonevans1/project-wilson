@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Replacement;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SaveReplacementSetupRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class SaveReplacementSetupRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->asset->user_id === Auth::id();
     }
 
     /**
@@ -22,7 +23,8 @@ class SaveReplacementSetupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'expectedLifespanYears' => ['required', 'integer', 'min:1', 'max:100'],
+            'installDate' => ['required', 'date', 'before_or_equal:today'],
         ];
     }
 }

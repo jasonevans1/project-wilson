@@ -5,6 +5,7 @@ namespace App\Livewire\Assets;
 use App\Enums\AssetStatus;
 use App\Models\Asset;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Prop;
 use Livewire\Component;
 
@@ -16,6 +17,35 @@ class AssetDetail extends Component
     public bool $confirmingArchive = false;
 
     public bool $editMode = false;
+
+    public bool $showingReplacementSetup = false;
+
+    /**
+     * Open the replacement setup form.
+     */
+    public function openSetupForm(): void
+    {
+        $this->showingReplacementSetup = true;
+    }
+
+    /**
+     * Close the replacement setup form without saving.
+     */
+    #[On('close-setup-form')]
+    public function handleCloseSetupForm(): void
+    {
+        $this->showingReplacementSetup = false;
+    }
+
+    /**
+     * Refresh the asset and close the setup form after tracking is configured.
+     */
+    #[On('tracking-configured')]
+    public function handleTrackingConfigured(): void
+    {
+        $this->asset->refresh();
+        $this->showingReplacementSetup = false;
+    }
 
     /**
      * Close the detail panel and notify the parent.
