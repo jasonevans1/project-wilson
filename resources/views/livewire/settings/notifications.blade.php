@@ -15,6 +15,16 @@
                 </flux:text>
             </div>
 
+            <div>
+                <flux:switch
+                    wire:model="replacementAlertsEnabled"
+                    :label="__('Replacement reminders')"
+                />
+                <flux:text class="mt-2">
+                    {{ __('Receive email alerts when assets are approaching or past their expected replacement date.') }}
+                </flux:text>
+            </div>
+
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
                     <flux:button variant="primary" type="submit" class="w-full">{{ __('Save') }}</flux:button>
