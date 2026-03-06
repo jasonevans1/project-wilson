@@ -205,9 +205,9 @@
 
 **Purpose**: Code quality, formatting, regression validation, and quickstart verification
 
-- [ ] T095 [P] Run `vendor/bin/pint --dirty` to fix formatting across all new and modified PHP files
-- [ ] T096 [P] Run full test suite via `php artisan test --compact` to verify no regressions across all prior feature tests
-- [ ] T097 Run quickstart.md validation — verify every file listed in quickstart.md exists on disk, every named route resolves, and every factory state defined in quickstart.md is implemented in the factory files
+- [x] T095 [P] Run `vendor/bin/pint --dirty` to fix formatting across all new and modified PHP files
+- [x] T096 [P] Run full test suite via `php artisan test --compact` to verify no regressions across all prior feature tests
+- [x] T097 Run quickstart.md validation — verify every file listed in quickstart.md exists on disk, every named route resolves, and every factory state defined in quickstart.md is implemented in the factory files
 
 ---
 

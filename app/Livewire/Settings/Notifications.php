@@ -13,8 +13,8 @@ class Notifications extends Component
 
     public function mount(): void
     {
-        $this->maintenanceRemindersEnabled = Auth::user()->maintenance_reminders_enabled;
-        $this->replacementAlertsEnabled = Auth::user()->replacement_alerts_enabled;
+        $this->maintenanceRemindersEnabled = (bool) Auth::user()->maintenance_reminders_enabled;
+        $this->replacementAlertsEnabled = (bool) (Auth::user()->replacement_alerts_enabled ?? true);
     }
 
     public function updateNotificationPreferences(): void
