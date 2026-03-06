@@ -21,6 +21,9 @@
                     <flux:sidebar.item icon="calendar-days" :href="route('maintenance.schedule')" :current="request()->routeIs('maintenance.*')" wire:navigate>
                         {{ __('Maintenance') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="arrow-path" :href="route('replacement-tracking')" :current="request()->routeIs('replacement-tracking')" wire:navigate>
+                        {{ __('Replacement Tracking') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

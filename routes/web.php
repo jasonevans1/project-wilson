@@ -15,3 +15,4 @@ require __DIR__.'/assets.php';
 require __DIR__.'/maintenance.php';
 require __DIR__.'/service-records.php';
 require __DIR__.'/reminders.php';
+require __DIR__.'/replacement-tracking.php';

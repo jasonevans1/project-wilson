@@ -104,22 +104,22 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T042 [P] [US2] Create feature test file via `php artisan make:test ReplacementDashboardTest --pest --no-interaction` in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T043 [US2] Write test: the `/replacement-tracking` route renders and returns 200 for an authenticated user in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T044 [US2] Write test: unauthenticated access to `/replacement-tracking` redirects to login in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T045 [US2] Write test: tracked assets appear before untracked assets in the list in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T046 [US2] Write test: tracked assets are ordered by days remaining ascending — the asset with the fewest days remaining appears first in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T047 [US2] Write test: an overdue asset (replacement date in the past) appears at the top of the tracked list in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T048 [US2] Write test: untracked assets display a "Set up tracking" call-to-action button in `tests/Feature/ReplacementDashboardTest.php`
-- [ ] T049 [US2] Write test: assets belonging to other users do not appear on the authenticated user's dashboard in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T042 [P] [US2] Create feature test file via `php artisan make:test ReplacementDashboardTest --pest --no-interaction` in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T043 [US2] Write test: the `/replacement-tracking` route renders and returns 200 for an authenticated user in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T044 [US2] Write test: unauthenticated access to `/replacement-tracking` redirects to login in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T045 [US2] Write test: tracked assets appear before untracked assets in the list in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T046 [US2] Write test: tracked assets are ordered by days remaining ascending — the asset with the fewest days remaining appears first in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T047 [US2] Write test: an overdue asset (replacement date in the past) appears at the top of the tracked list in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T048 [US2] Write test: untracked assets display a "Set up tracking" call-to-action button in `tests/Feature/ReplacementDashboardTest.php`
+- [x] T049 [US2] Write test: assets belonging to other users do not appear on the authenticated user's dashboard in `tests/Feature/ReplacementDashboardTest.php`
 
 ### Implementation for User Story 2
 
-- [ ] T050 [US2] Create `routes/replacement-tracking.php` with an authenticated middleware group containing `GET /replacement-tracking` → `ReplacementDashboard` component named `replacement-tracking`; include the file from `routes/web.php` in `routes/replacement-tracking.php`
-- [ ] T051 [US2] Implement ReplacementDashboard Livewire component: `render()` loads Auth::user()->assets()->with(['replacementEvents' => fn($q) => $q->latest('installed_at')->limit(1)]) and splits into tracked (both install_date and expected_lifespan_years set, sorted by days-remaining ASC) and untracked (sorted by name ASC); exposes `$setupAssetId` and `$recordingAssetId` properties; implements openSetupForm, closeSetupForm, openRecordForm, closeRecordForm, handleTrackingConfigured, handleReplacementRecorded actions per contract in `app/Livewire/ReplacementTracking/ReplacementDashboard.php`
-- [ ] T052 [US2] Implement replacement-dashboard Blade view using Flux UI: page heading "Replacement Tracking", tracked asset rows with asset name, expected replacement year, years remaining label (e.g., "7.2 years remaining" or "Past due by 1.3 years"), `flux:badge` for overdue state, progress bar for useful life %, inline ReplacementSetupForm when $setupAssetId matches, inline RecordReplacementForm when $recordingAssetId matches, untracked asset rows with "Set up tracking" button in `resources/views/livewire/replacement-tracking/replacement-dashboard.blade.php`
-- [ ] T053 [US2] Add "Replacement Tracking" navigation link to the main app navigation Blade partial pointing to `route('replacement-tracking')`
-- [ ] T054 [US2] Run US2 tests and verify all pass via `php artisan test --compact tests/Feature/ReplacementDashboardTest.php`
+- [x] T050 [US2] Create `routes/replacement-tracking.php` with an authenticated middleware group containing `GET /replacement-tracking` → `ReplacementDashboard` component named `replacement-tracking`; include the file from `routes/web.php` in `routes/replacement-tracking.php`
+- [x] T051 [US2] Implement ReplacementDashboard Livewire component: `render()` loads Auth::user()->assets()->with(['replacementEvents' => fn($q) => $q->latest('installed_at')->limit(1)]) and splits into tracked (both install_date and expected_lifespan_years set, sorted by days-remaining ASC) and untracked (sorted by name ASC); exposes `$setupAssetId` and `$recordingAssetId` properties; implements openSetupForm, closeSetupForm, openRecordForm, closeRecordForm, handleTrackingConfigured, handleReplacementRecorded actions per contract in `app/Livewire/ReplacementTracking/ReplacementDashboard.php`
+- [x] T052 [US2] Implement replacement-dashboard Blade view using Flux UI: page heading "Replacement Tracking", tracked asset rows with asset name, expected replacement year, years remaining label (e.g., "7.2 years remaining" or "Past due by 1.3 years"), `flux:badge` for overdue state, progress bar for useful life %, inline ReplacementSetupForm when $setupAssetId matches, inline RecordReplacementForm when $recordingAssetId matches, untracked asset rows with "Set up tracking" button in `resources/views/livewire/replacement-tracking/replacement-dashboard.blade.php`
+- [x] T053 [US2] Add "Replacement Tracking" navigation link to the main app navigation Blade partial pointing to `route('replacement-tracking')`
+- [x] T054 [US2] Run US2 tests and verify all pass via `php artisan test --compact tests/Feature/ReplacementDashboardTest.php`
 
 **Checkpoint**: Dedicated replacement tracking dashboard accessible from main nav, showing all assets with urgency sort
 
