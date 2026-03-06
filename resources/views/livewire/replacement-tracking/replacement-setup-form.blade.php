@@ -24,7 +24,7 @@
             <flux:button variant="primary" type="submit">
                 {{ __('Save') }}
             </flux:button>
-            <flux:button variant="ghost" type="button" wire:click="cancel">
+            <flux:button variant="ghost" type="button" wire:click="$parent.closeSetupForm()">
                 {{ __('Cancel') }}
             </flux:button>
         </div>

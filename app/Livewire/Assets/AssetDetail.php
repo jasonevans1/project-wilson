@@ -37,6 +37,11 @@ class AssetDetail extends Component
     #[On('close-setup-form')]
     public function handleCloseSetupForm(): void
     {
+        $this->closeSetupForm();
+    }
+
+    public function closeSetupForm(): void
+    {
         $this->showingReplacementSetup = false;
     }
 
@@ -64,6 +69,11 @@ class AssetDetail extends Component
      */
     #[On('close-record-form')]
     public function handleCloseRecordForm(): void
+    {
+        $this->closeRecordForm();
+    }
+
+    public function closeRecordForm(): void
     {
         $this->showingRecordReplacement = false;
     }
