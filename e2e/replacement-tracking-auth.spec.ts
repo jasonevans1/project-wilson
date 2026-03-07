@@ -6,7 +6,7 @@ import { test, expect } from './replacement-tracking-fixtures';
 test.describe('RT1 — Authentication and Access Control', () => {
   test('unauthenticated user visiting /replacement-tracking is redirected to /login', async ({ page }) => {
     // 1. Without logging in, navigate directly to /replacement-tracking
-    await page.goto('https://project-wilson.ddev.site/replacement-tracking');
+    await page.goto('/replacement-tracking');
     await page.waitForURL('**/login');
 
     // expect: The browser is redirected to /login
