@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'maintenance_reminders_enabled',
+        'replacement_alerts_enabled',
     ];
 
     /**
@@ -50,6 +51,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'maintenance_reminders_enabled' => 'boolean',
+            'replacement_alerts_enabled' => 'boolean',
         ];
     }
 
@@ -95,5 +97,13 @@ class User extends Authenticatable
     public function maintenanceReminders(): HasMany
     {
         return $this->hasMany(MaintenanceReminder::class);
+    }
+
+    /**
+     * Get all replacement alerts for this user's assets.
+     */
+    public function replacementAlerts(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(AssetReplacementAlert::class, Asset::class);
     }
 }
