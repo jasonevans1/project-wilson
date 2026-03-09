@@ -290,6 +290,8 @@ ddev exec --raw <command> [args...]
 - MariaDB 10.11 — one new table: `service_records` (001-service-record-tracking)
 - MariaDB 10.11 (via Eloquent — 1 new table: `maintenance_reminders`) (006-notification-system)
 - MariaDB 10.11 — 2 new tables (`asset_replacement_events`, `asset_replacement_alerts`); 2 existing tables extended (`assets`, `users`) (007-replacement-tracking)
+- PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Blade templates (009-wilson-logo)
+- N/A — pure UI change, no persistence (009-wilson-logo)
 
 ## Recent Changes
 - 001-home-asset-crud: Added PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1
