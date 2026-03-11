@@ -4,25 +4,25 @@
 import { test, expect } from '@playwright/test';
 
 async function login(page: any, email: string, password = 'password') {
-  await page.goto('https://project-wilson.ddev.site/login');
+  await page.goto('/login');
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password' }).fill(password);
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function registerNewUser(page: any, email: string, name = 'New User') {
-  await page.goto('https://project-wilson.ddev.site/register');
+  await page.goto('/register');
   await page.getByRole('textbox', { name: 'Name' }).fill(name);
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password', exact: true }).fill('password');
   await page.getByRole('textbox', { name: 'Confirm password' }).fill('password');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function addAsset(page: any, name = 'Test Asset') {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: 'Add Asset' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill(name);
   await page.getByRole('combobox', { name: 'Category' }).selectOption('Other');
@@ -32,7 +32,7 @@ async function addAsset(page: any, name = 'Test Asset') {
 }
 
 async function addMaintenanceTask(page: any, assetName: string, taskName: string, startDate: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: new RegExp(assetName) }).click();
   await page.getByRole('link', { name: 'View Maintenance' }).click();
   await page.getByRole('textbox', { name: 'Task Name' }).fill(taskName);
@@ -48,7 +48,7 @@ test.describe('Maintenance Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: The text 'No maintenance tasks scheduled yet.' is displayed
@@ -62,8 +62,8 @@ test.describe('Maintenance Panel', () => {
     // 3. Click the 'Create your first task' button
     await page.getByRole('link', { name: 'Create your first task' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/maintenance
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/maintenance');
+    // expect: The browser navigates to /maintenance
+    await expect(page).toHaveURL('/maintenance');
   });
 
   test("Maintenance panel shows 'All caught up!' when tasks exist but nothing is overdue or upcoming", async ({ page }) => {
@@ -78,10 +78,10 @@ test.describe('Maintenance Panel', () => {
     await addMaintenanceTask(page, 'Test Asset', 'Future Task', '2030-01-01');
 
     // Navigate to dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: The text 'All caught up!' is displayed
@@ -99,7 +99,7 @@ test.describe('Maintenance Panel', () => {
     await login(page, 'test@example.com');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: A red badge is displayed reading '[N] overdue'
@@ -110,8 +110,8 @@ test.describe('Maintenance Panel', () => {
     // 3. Click the 'View schedule' button
     await page.getByRole('link', { name: 'View schedule' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/maintenance
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/maintenance');
+    // expect: The browser navigates to /maintenance
+    await expect(page).toHaveURL('/maintenance');
   });
 
   test('Maintenance panel shows zinc upcoming badge for tasks due within 7 days', async ({ page }) => {
@@ -126,10 +126,10 @@ test.describe('Maintenance Panel', () => {
     await addMaintenanceTask(page, 'Test Asset', 'Soon Task', todayStr);
 
     // Navigate to dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: A neutral (zinc) badge is displayed reading '[N] upcoming'
@@ -148,7 +148,7 @@ test.describe('Maintenance Panel', () => {
     // Add an overdue task (start date in the past)
     await addMaintenanceTask(page, 'Test Asset', 'Overdue Task', '2024-01-01');
     // Add an upcoming task (start date today)
-    await page.goto('https://project-wilson.ddev.site/assets');
+    await page.goto('/assets');
     await page.getByRole('button', { name: /Test Asset/ }).click();
     await page.getByRole('link', { name: 'View Maintenance' }).click();
     const today = new Date();
@@ -159,10 +159,10 @@ test.describe('Maintenance Panel', () => {
     await expect(page.getByText('Upcoming Task')).toBeVisible();
 
     // Navigate to dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: Both the red overdue badge and the zinc upcoming badge are visible simultaneously
@@ -179,7 +179,7 @@ test.describe('Maintenance Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed for User A
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Maintenance panel
     // expect: 'No maintenance tasks scheduled yet.' is displayed

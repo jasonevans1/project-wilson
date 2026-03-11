@@ -4,25 +4,25 @@
 import { test, expect } from '@playwright/test';
 
 async function login(page: any, email: string, password = 'password') {
-  await page.goto('https://project-wilson.ddev.site/login');
+  await page.goto('/login');
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password' }).fill(password);
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function registerNewUser(page: any, email: string, name = 'New User') {
-  await page.goto('https://project-wilson.ddev.site/register');
+  await page.goto('/register');
   await page.getByRole('textbox', { name: 'Name' }).fill(name);
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password', exact: true }).fill('password');
   await page.getByRole('textbox', { name: 'Confirm password' }).fill('password');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function addAsset(page: any, assetName: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: 'Add Asset' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill(assetName);
   await page.getByRole('combobox', { name: 'Category' }).selectOption('Other');
@@ -30,7 +30,7 @@ async function addAsset(page: any, assetName: string) {
 }
 
 async function addServiceRecord(page: any, assetName: string, serviceDate: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: new RegExp(assetName) }).click();
   await page.getByRole('link', { name: 'View Service Records' }).click();
   await page.getByRole('button', { name: 'Add Service Record' }).click();
@@ -47,7 +47,7 @@ test.describe('Service Records Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Service Records panel (clipboard icon, 'SERVICE RECORDS' heading)
     // expect: The text 'No service records logged yet.' is displayed
@@ -60,8 +60,8 @@ test.describe('Service Records Panel', () => {
     // 3. Click the 'Log your first service record' button
     await page.getByRole('link', { name: 'Log your first service record' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/assets
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/assets');
+    // expect: The browser navigates to /assets
+    await expect(page).toHaveURL('/assets');
   });
 
   test('Service Records panel shows the most recent service record', async ({ page }) => {
@@ -70,7 +70,7 @@ test.describe('Service Records Panel', () => {
     await login(page, 'test@example.com');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Service Records panel
     // expect: The asset name of the most recently serviced asset is displayed
@@ -85,8 +85,8 @@ test.describe('Service Records Panel', () => {
     // 3. Click the 'View assets' button
     await page.getByRole('link', { name: 'View assets' }).first().click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/assets
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/assets');
+    // expect: The browser navigates to /assets
+    await expect(page).toHaveURL('/assets');
   });
 
   test("Service Records panel does not display another user's records", async ({ page }) => {
@@ -96,7 +96,7 @@ test.describe('Service Records Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed for User A
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Service Records panel
     // expect: 'No service records logged yet.' is displayed

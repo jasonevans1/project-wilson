@@ -4,25 +4,25 @@
 import { test, expect } from '@playwright/test';
 
 async function login(page: any, email: string, password = 'password') {
-  await page.goto('https://project-wilson.ddev.site/login');
+  await page.goto('/login');
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password' }).fill(password);
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function registerNewUser(page: any, email: string, name = 'New User') {
-  await page.goto('https://project-wilson.ddev.site/register');
+  await page.goto('/register');
   await page.getByRole('textbox', { name: 'Name' }).fill(name);
   await page.getByRole('textbox', { name: 'Email address' }).fill(email);
   await page.getByRole('textbox', { name: 'Password', exact: true }).fill('password');
   await page.getByRole('textbox', { name: 'Confirm password' }).fill('password');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 async function addAsset(page: any, assetName: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: 'Add Asset' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill(assetName);
   await page.getByRole('combobox', { name: 'Category' }).selectOption('Other');
@@ -32,7 +32,7 @@ async function addAsset(page: any, assetName: string) {
 }
 
 async function setupReplacementTracking(page: any, assetName: string, installDate: string, lifespanYears: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: new RegExp(assetName) }).click();
   await page.getByRole('button', { name: 'Set Up' }).click();
   await page.getByLabel('Expected Lifespan (Years)').fill(lifespanYears);
@@ -42,7 +42,7 @@ async function setupReplacementTracking(page: any, assetName: string, installDat
 }
 
 async function archiveAsset(page: any, assetName: string) {
-  await page.goto('https://project-wilson.ddev.site/assets');
+  await page.goto('/assets');
   await page.getByRole('button', { name: new RegExp(assetName) }).click();
   // Wait for the detail panel to fully load and Alpine.js to initialize
   await page.waitForLoadState('networkidle');
@@ -59,7 +59,7 @@ test.describe('Replacement Tracking Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel (arrow-path icon, 'REPLACEMENT TRACKING' heading)
     // expect: The text 'No replacement timelines configured.' is displayed
@@ -72,8 +72,8 @@ test.describe('Replacement Tracking Panel', () => {
     // 3. Click the 'Set up replacement tracking' button
     await page.getByRole('link', { name: 'Set up replacement tracking' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/replacement-tracking
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/replacement-tracking');
+    // expect: The browser navigates to /replacement-tracking
+    await expect(page).toHaveURL('/replacement-tracking');
   });
 
   test("Replacement Tracking panel shows 'All assets within lifespan' when no assets are approaching replacement", async ({ page }) => {
@@ -86,10 +86,10 @@ test.describe('Replacement Tracking Panel', () => {
     await setupReplacementTracking(page, 'New Asset', '2020-01-01', '50');
 
     // Navigate to dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel
     // expect: The text 'All assets within lifespan.' is displayed
@@ -102,8 +102,8 @@ test.describe('Replacement Tracking Panel', () => {
     // 3. Click the 'View replacement tracking' button
     await page.getByRole('link', { name: 'View replacement tracking' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/replacement-tracking
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/replacement-tracking');
+    // expect: The browser navigates to /replacement-tracking
+    await expect(page).toHaveURL('/replacement-tracking');
   });
 
   test('Replacement Tracking panel shows amber attention count for approaching replacements', async ({ page }) => {
@@ -112,7 +112,7 @@ test.describe('Replacement Tracking Panel', () => {
     await login(page, 'test@example.com');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel
     // expect: A large amber/orange number is displayed
@@ -125,8 +125,8 @@ test.describe('Replacement Tracking Panel', () => {
     // 3. Click the 'View replacement tracking' button
     await page.getByRole('link', { name: 'View replacement tracking' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/replacement-tracking
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/replacement-tracking');
+    // expect: The browser navigates to /replacement-tracking
+    await expect(page).toHaveURL('/replacement-tracking');
   });
 
   test('Replacement Tracking panel uses singular label for exactly one approaching asset', async ({ page }) => {
@@ -135,7 +135,7 @@ test.describe('Replacement Tracking Panel', () => {
     await login(page, 'test@example.com');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel count label
     // expect: The count shows '1'
@@ -164,10 +164,10 @@ test.describe('Replacement Tracking Panel', () => {
     await setupReplacementTracking(page, 'New Asset', '2020-01-01', '50');
 
     // Navigate to dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel
     // expect: The archived asset is not counted; only active asset evaluated and it's within lifespan
@@ -181,7 +181,7 @@ test.describe('Replacement Tracking Panel', () => {
     await registerNewUser(page, uniqueEmail);
 
     // expect: The dashboard is displayed for User A
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the Replacement Tracking panel
     // expect: 'No replacement timelines configured.' is displayed

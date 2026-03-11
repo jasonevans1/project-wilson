@@ -4,20 +4,20 @@
 import { test, expect } from '@playwright/test';
 
 async function login(page: any) {
-  await page.goto('https://project-wilson.ddev.site/login');
+  await page.goto('/login');
   await page.getByRole('textbox', { name: 'Email address' }).fill('test@example.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('password');
   await page.locator('[data-test="login-button"]').click();
-  await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+  await expect(page).toHaveURL('/dashboard');
 }
 
 test.describe('Dashboard Layout and Navigation', () => {
   test('Dashboard page renders heading and four panels', async ({ page }) => {
-    // 1. Log in with valid credentials and navigate to https://project-wilson.ddev.site/dashboard
+    // 1. Log in with valid credentials and navigate to /dashboard
     await login(page);
 
     // expect: The user is on the dashboard page
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the main content area of the page
     // expect: A 'Dashboard' heading is visible
@@ -34,7 +34,7 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The dashboard page is displayed with the sidebar visible
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Inspect the sidebar navigation
     // expect: The Wilson logo link is present in the sidebar header
@@ -65,8 +65,8 @@ test.describe('Dashboard Layout and Navigation', () => {
     // 2. Click the 'Assets' link in the sidebar
     await page.getByRole('link', { name: 'Assets', exact: true }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/assets
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/assets');
+    // expect: The browser navigates to /assets
+    await expect(page).toHaveURL('/assets');
     // expect: The 'Assets' sidebar item is now highlighted as active
     await expect(page.locator('a[href$="/assets"][data-current]')).toBeVisible();
   });
@@ -76,13 +76,13 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The sidebar is visible
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Click the 'Maintenance' link in the sidebar
     await page.getByRole('link', { name: 'Maintenance' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/maintenance
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/maintenance');
+    // expect: The browser navigates to /maintenance
+    await expect(page).toHaveURL('/maintenance');
     // expect: The 'Maintenance' sidebar item is now highlighted as active
     await expect(page.locator('a[href$="/maintenance"][data-current]')).toBeVisible();
   });
@@ -92,30 +92,30 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The sidebar is visible
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Click the 'Replacement Tracking' link in the sidebar
     await page.getByRole('link', { name: 'Replacement Tracking', exact: true }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/replacement-tracking
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/replacement-tracking');
+    // expect: The browser navigates to /replacement-tracking
+    await expect(page).toHaveURL('/replacement-tracking');
     // expect: The 'Replacement Tracking' sidebar item is now highlighted as active
     await expect(page.locator('a[href$="/replacement-tracking"][data-current]')).toBeVisible();
   });
 
   test('Wilson logo in sidebar navigates back to dashboard', async ({ page }) => {
-    // 1. Log in and navigate to https://project-wilson.ddev.site/assets
+    // 1. Log in and navigate to /assets
     await login(page);
-    await page.goto('https://project-wilson.ddev.site/assets');
+    await page.goto('/assets');
 
     // expect: The assets page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/assets');
+    await expect(page).toHaveURL('/assets');
 
     // 2. Click the 'Wilson' logo in the sidebar header
     await page.getByRole('link', { name: 'Wilson' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/dashboard
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    // expect: The browser navigates to /dashboard
+    await expect(page).toHaveURL('/dashboard');
     // expect: The dashboard with all four panels is displayed
     await expect(page.getByText('ASSETS').first()).toBeVisible();
     await expect(page.getByText('MAINTENANCE').first()).toBeVisible();
@@ -128,7 +128,7 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Click the user profile button at the bottom of the sidebar
     await page.locator('[data-test="sidebar-menu-button"]').click();
@@ -148,7 +148,7 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Click the user profile button to open the dropdown menu
     await page.locator('[data-test="sidebar-menu-button"]').click();
@@ -161,7 +161,7 @@ test.describe('Dashboard Layout and Navigation', () => {
     await page.getByRole('menuitem', { name: 'Settings' }).click();
 
     // expect: The browser navigates to the profile/settings page
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/settings/profile');
+    await expect(page).toHaveURL('/settings/profile');
     // expect: A settings or profile edit form is displayed
     await expect(page.getByRole('textbox', { name: 'Name' })).toBeVisible();
   });
@@ -171,19 +171,19 @@ test.describe('Dashboard Layout and Navigation', () => {
     await login(page);
 
     // expect: The dashboard is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
 
     // 2. Click the user profile button to open the dropdown menu, then click 'Log Out'
     await page.locator('[data-test="sidebar-menu-button"]').click();
     await page.getByRole('menuitem', { name: 'Log Out' }).click();
 
     // expect: The user's session is terminated and redirected away from dashboard
-    await expect(page).not.toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).not.toHaveURL('/dashboard');
 
-    // 3. Navigate directly to https://project-wilson.ddev.site/dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    // 3. Navigate directly to /dashboard
+    await page.goto('/dashboard');
 
     // expect: The browser redirects to /login because the session has ended
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
   });
 });

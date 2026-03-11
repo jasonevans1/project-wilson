@@ -9,10 +9,10 @@ test.describe('Authentication Guard', () => {
     // (fresh page context has no auth cookies by default)
 
     // 2. Navigate directly to /dashboard
-    await page.goto('https://project-wilson.ddev.site/dashboard');
+    await page.goto('/dashboard');
 
     // expect: Redirected to /login
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
     // expect: Page title reads 'Wilson'
     await expect(page).toHaveTitle('Wilson');
     // expect: Login form is visible with email and password fields
@@ -21,11 +21,11 @@ test.describe('Authentication Guard', () => {
   });
 
   test('Authenticated user can access the dashboard', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Enter a valid registered email address in the Email address field
     await page.getByRole('textbox', { name: 'Email address' }).fill('test@example.com');
@@ -40,7 +40,7 @@ test.describe('Authentication Guard', () => {
     await page.locator('[data-test="login-button"]').click();
 
     // expect: Redirected to /dashboard
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/dashboard');
+    await expect(page).toHaveURL('/dashboard');
     // expect: The page heading 'Dashboard' is visible
     await expect(page.getByText('Dashboard').first()).toBeVisible();
     // expect: All four dashboard panels are rendered on the page
@@ -51,11 +51,11 @@ test.describe('Authentication Guard', () => {
   });
 
   test('Login with invalid credentials shows error message', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Enter 'wrong@example.com' in the Email address field
     await page.getByRole('textbox', { name: 'Email address' }).fill('wrong@example.com');
@@ -70,17 +70,17 @@ test.describe('Authentication Guard', () => {
     await page.locator('[data-test="login-button"]').click();
 
     // expect: The page does not redirect to the dashboard
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
     // expect: An authentication error message is displayed on the login page
     await expect(page.getByRole('alert')).toContainText('These credentials do not match our records.');
   });
 
   test('Login form requires email field to be filled', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Leave the Email address field empty and enter any value in the Password field
     await page.getByRole('textbox', { name: 'Password' }).fill('somepassword');
@@ -92,15 +92,15 @@ test.describe('Authentication Guard', () => {
     await page.locator('[data-test="login-button"]').click();
 
     // expect: The form does not submit successfully - remains on login page
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
   });
 
   test('Password visibility toggle works on login page', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Enter 'mypassword' in the Password field
     await page.getByRole('textbox', { name: 'Password' }).fill('mypassword');
@@ -123,33 +123,33 @@ test.describe('Authentication Guard', () => {
   });
 
   test('Forgot password link navigates to password reset page', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Click the 'Forgot your password?' link
     await page.getByRole('link', { name: 'Forgot your password?' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/forgot-password
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/forgot-password');
+    // expect: The browser navigates to /forgot-password
+    await expect(page).toHaveURL('/forgot-password');
     // expect: A password reset request form is displayed
     await expect(page.getByRole('textbox', { name: 'Email Address' })).toBeVisible();
   });
 
   test('Sign up link navigates to the registration page', async ({ page }) => {
-    // 1. Navigate to https://project-wilson.ddev.site/login
-    await page.goto('https://project-wilson.ddev.site/login');
+    // 1. Navigate to /login
+    await page.goto('/login');
 
     // expect: The login page is displayed
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/login');
+    await expect(page).toHaveURL('/login');
 
     // 2. Click the 'Sign up' link below the login form
     await page.getByRole('link', { name: 'Sign up' }).click();
 
-    // expect: The browser navigates to https://project-wilson.ddev.site/register
-    await expect(page).toHaveURL('https://project-wilson.ddev.site/register');
+    // expect: The browser navigates to /register
+    await expect(page).toHaveURL('/register');
     // expect: A user registration form is displayed
     await expect(page.getByRole('textbox', { name: 'Name' })).toBeVisible();
     await expect(page.getByRole('textbox', { name: 'Email address' })).toBeVisible();
