@@ -50,6 +50,9 @@ async function archiveAsset(page: any, assetName: string) {
   // Wait for the confirmation dialog to open and confirm
   await page.locator('dialog[open]').waitFor();
   await page.locator('dialog[open]').getByRole('button', { name: 'Archive' }).click();
+  // Wait for dialog to close and archive to complete before navigating
+  await page.locator('dialog[open]').waitFor({ state: 'hidden' });
+  await page.waitForLoadState('networkidle');
 }
 
 test.describe('Replacement Tracking Panel', () => {

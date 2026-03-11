@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\ServiceType;
 use App\Models\Asset;
 use App\Models\ServiceRecord;
 use Illuminate\Database\Seeder;
@@ -14,19 +13,24 @@ class ServiceRecordSeeder extends Seeder
      */
     public function run(): void
     {
-        Asset::all()->each(function (Asset $asset): void {
-            foreach (ServiceType::cases() as $type) {
+        Asset::whereHas('user')
+            ->where('name', '!=', 'HVAC Unit')
+            ->each(function (Asset $asset): void {
                 ServiceRecord::factory()->create([
                     'user_id' => $asset->user_id,
                     'asset_id' => $asset->id,
-                    'service_type' => $type->value,
+                    'service_date' => '2025-06-15',
                 ]);
-            }
+            });
 
-            ServiceRecord::factory()->underWarranty()->create([
-                'user_id' => $asset->user_id,
-                'asset_id' => $asset->id,
+        $hvacUnit = Asset::where('name', 'HVAC Unit')->first();
+
+        if ($hvacUnit) {
+            ServiceRecord::factory()->create([
+                'user_id' => $hvacUnit->user_id,
+                'asset_id' => $hvacUnit->id,
+                'service_date' => '2026-02-12',
             ]);
-        });
+        }
     }
 }
