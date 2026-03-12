@@ -16,14 +16,14 @@
 
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     {{ __('Category') }}
                 </flux:text>
                 <flux:text class="mt-0.5">{{ $asset->category->label() }}</flux:text>
             </div>
 
             <div>
-                <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     {{ __('Location') }}
                 </flux:text>
                 <flux:text class="mt-0.5">{{ $asset->location }}</flux:text>
@@ -31,7 +31,7 @@
 
             @if ($asset->purchase_date)
                 <div>
-                    <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                         {{ __('Purchase Date') }}
                     </flux:text>
                     <flux:text class="mt-0.5">{{ $asset->purchase_date->format('Y-m-d') }}</flux:text>
@@ -40,7 +40,7 @@
 
             @if ($asset->install_date)
                 <div>
-                    <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                         {{ __('Install Date') }}
                     </flux:text>
                     <flux:text class="mt-0.5">{{ $asset->install_date->format('Y-m-d') }}</flux:text>
@@ -49,7 +49,7 @@
 
             @if ($asset->warranty_expiration_date)
                 <div>
-                    <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                         {{ __('Warranty Expiration') }}
                     </flux:text>
                     <flux:text class="mt-0.5">{{ $asset->warranty_expiration_date->format('Y-m-d') }}</flux:text>
@@ -59,15 +59,15 @@
 
         @if ($asset->notes)
             <div>
-                <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     {{ __('Notes') }}
                 </flux:text>
                 <flux:text class="mt-0.5">{{ $asset->notes }}</flux:text>
             </div>
         @endif
 
-        <div class="pt-2 border-t border-zinc-200 dark:border-zinc-700">
-            <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400 mb-2">
+        <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
+            <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
                 {{ __('Replacement') }}
             </flux:text>
 
@@ -94,7 +94,7 @@
                         <flux:badge color="red">{{ abs($yearsRemaining) }} {{ __('years overdue') }}</flux:badge>
                     @endif
 
-                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                         <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $usefulLifePct }}%"></div>
                     </div>
 
@@ -112,13 +112,13 @@
                 @php $history = $asset->replacementEvents()->latest('installed_at')->get(); @endphp
                 @if ($history->isNotEmpty())
                     <div class="mt-3 space-y-1">
-                        <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                        <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                             {{ __('Replacement History') }}
                         </flux:text>
                         @foreach ($history as $event)
-                            <div class="flex items-center justify-between text-sm py-1 border-b border-zinc-100 dark:border-zinc-700 last:border-0">
+                            <div class="flex items-center justify-between text-sm py-1 border-b border-slate-100 dark:border-slate-700 last:border-0">
                                 <flux:text>{{ $event->installed_at->format('Y-m-d') }}</flux:text>
-                                <flux:text class="text-zinc-500 dark:text-zinc-400">
+                                <flux:text class="text-slate-500 dark:text-slate-400">
                                     {{ $event->cost ? '$'.number_format($event->cost, 2) : __('Not recorded') }}
                                 </flux:text>
                             </div>
@@ -126,7 +126,7 @@
                     </div>
                 @endif
             @else
-                <flux:text class="text-zinc-500 dark:text-zinc-400">
+                <flux:text class="text-slate-500 dark:text-slate-400">
                     {{ __('Replacement tracking not yet configured.') }}
                 </flux:text>
                 <div class="mt-2">
@@ -137,7 +137,7 @@
             @endif
         </div>
 
-        <div class="flex items-center gap-2 pt-2 border-t border-zinc-200 dark:border-zinc-700">
+        <div class="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700">
             <flux:button variant="ghost" size="sm" wire:click="startEdit">
                 {{ __('Edit') }}
             </flux:button>

@@ -4,7 +4,7 @@
     {{-- Tracked Assets --}}
     @if ($trackedAssets->isNotEmpty())
         <div class="space-y-4">
-            <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <flux:heading size="sm" class="text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                 {{ __('Tracked Assets') }}
             </flux:heading>
 
@@ -21,7 +21,7 @@
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <flux:heading>{{ $asset->name }}</flux:heading>
-                            <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
+                            <flux:text size="sm" class="text-slate-500 dark:text-slate-400">
                                 {{ $asset->category->label() }} &middot; {{ $asset->location }}
                             </flux:text>
                         </div>
@@ -41,13 +41,13 @@
 
                     <div class="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                            <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                            <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                                 {{ __('Expected Replacement') }}
                             </flux:text>
                             <flux:text class="mt-0.5 font-medium">{{ $replacementDate->format('Y') }}</flux:text>
                         </div>
                         <div>
-                            <flux:text size="xs" class="uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                            <flux:text size="xs" class="uppercase tracking-wide text-slate-500 dark:text-slate-400">
                                 {{ __('Status') }}
                             </flux:text>
                             <flux:text class="mt-0.5">
@@ -60,13 +60,13 @@
                         </div>
                     </div>
 
-                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                         <div class="h-2 rounded-full {{ $isOverdue ? 'bg-red-500' : 'bg-blue-500' }}"
                              style="width: {{ $usefulLifePct }}%"></div>
                     </div>
 
                     @if ($setupAssetId === $asset->id)
-                        <div class="pt-2 border-t border-zinc-200 dark:border-zinc-700">
+                        <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
                             <livewire:replacement-tracking.replacement-setup-form
                                 :asset="$asset"
                                 :key="'setup-'.$asset->id"
@@ -75,7 +75,7 @@
                     @endif
 
                     @if ($recordingAssetId === $asset->id)
-                        <div class="pt-2 border-t border-zinc-200 dark:border-zinc-700">
+                        <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
                             <livewire:replacement-tracking.record-replacement-form
                                 :asset="$asset"
                                 :key="'record-'.$asset->id"
@@ -90,7 +90,7 @@
     {{-- Untracked Assets --}}
     @if ($untrackedAssets->isNotEmpty())
         <div class="space-y-4">
-            <flux:heading size="sm" class="text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <flux:heading size="sm" class="text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                 {{ __('Not Yet Tracked') }}
             </flux:heading>
 
@@ -98,7 +98,7 @@
                 <flux:card class="flex items-center justify-between gap-4">
                     <div>
                         <flux:heading>{{ $asset->name }}</flux:heading>
-                        <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
+                        <flux:text size="sm" class="text-slate-500 dark:text-slate-400">
                             {{ $asset->category->label() }} &middot; {{ $asset->location }}
                         </flux:text>
                     </div>
@@ -122,7 +122,7 @@
 
     @if ($trackedAssets->isEmpty() && $untrackedAssets->isEmpty())
         <flux:card>
-            <flux:text class="text-center text-zinc-500 dark:text-zinc-400">
+            <flux:text class="text-center text-slate-500 dark:text-slate-400">
                 {{ __('No assets found. Add an asset to start tracking replacements.') }}
             </flux:text>
         </flux:card>
