@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(AssetSeeder::class);
+        $this->call(ServiceRecordSeeder::class);
+        $this->call(MaintenanceSeeder::class);
         $this->call(TemplateGroupSeeder::class);
         $this->call(AssetTemplateSeeder::class);
     }
