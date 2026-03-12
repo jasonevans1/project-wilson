@@ -26,7 +26,7 @@
                 <button
                     type="button"
                     x-on:click="open = !open; $wire.toggleGroup({{ $group->id }})"
-                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                 >
                     <div class="flex items-center gap-2">
                         <flux:heading size="lg">{{ $group->name }}</flux:heading>
