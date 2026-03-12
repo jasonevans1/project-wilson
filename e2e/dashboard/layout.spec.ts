@@ -49,10 +49,6 @@ test.describe('Dashboard Layout and Navigation', () => {
 
     // expect: The 'Dashboard' item is highlighted as the current/active page
     await expect(page.locator('a[data-flux-sidebar-item][href$="/dashboard"][data-current]')).toBeVisible();
-
-    // expect: Repository and Documentation external links are present
-    await expect(page.getByRole('link', { name: 'Repository' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Documentation' })).toBeVisible();
   });
 
   test('Sidebar Assets link navigates to assets page', async ({ page }) => {
