@@ -25,7 +25,9 @@ jobs:
         run: composer global require laravel/cloud-cli --no-interaction
 
       - name: Authenticate with Laravel Cloud
-        run: cloud auth:token --add ${{ secrets.LARAVEL_CLOUD_TOKEN }}
+        run: |
+          mkdir -p ~/.config/cloud
+          echo '{"api_tokens":["${{ secrets.LARAVEL_CLOUD_TOKEN }}"]}' > ~/.config/cloud/config.json
 
       - name: Deploy to Laravel Cloud
         run: cloud deploy
