@@ -1,3 +1,11 @@
+## Feature Development
+
+For any feature or change beyond a simple fix, use the `hcf:plan-create` skill to trigger the autonomous development workflow. Never use Claude Code's built-in plan mode. After writing a plan, ask the user if they want to execute it, and provide the command to run it later with the `hcf:plan-orchestrate` skill.
+
+Use this workflow for: new features, multi-file changes, anything requiring multiple steps or tests.
+
+Skip for: quick bug fixes, single-line changes, questions, documentation. When skipped, still ensure appropriate tests exist for any added functionality.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
@@ -301,3 +309,10 @@ ddev exec --raw <command> [args...]
 
 ## Recent Changes
 - 001-home-asset-crud: Added PHP 8.3 + Laravel 12, Livewire 4, Flux UI Free v2, Laravel Fortify v1
+
+## Detailed Configuration
+
+Project configuration files are in `.claude/`:
+- `architecture.md` - Technical patterns and structure
+- `testing.md` - Test configuration and commands
+- `code-standards.md` - Coding conventions
